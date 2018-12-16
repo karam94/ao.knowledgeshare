@@ -4,6 +4,21 @@
 const Model = use("Model");
 
 class Post extends Model {
+  poster() {
+    return this.belongsTo("App/Models/User");
+  }
+
+  category() {
+    return this.belongsTo("App/Models/Category");
+  }
+
+  likes() {
+    return this.hasMany("App/Models/Like");
+  }
+
+  comments() {
+    return this.hasMany("App/Models/Comment");
+  }
 }
 
 module.exports = Post;

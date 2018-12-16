@@ -7,6 +7,24 @@ class User extends Model {
   static boot() {
     super.boot();
   }
+
+  posts() {
+    return this.hasMany("App/Models/Post");
+  }
+
+  likes() {
+    return this.hasMany("App/Models/Like");
+  }
+
+  comments() {
+    return this.hasMany("App/Models/Comment");
+  }
+
+  subscriptions() {
+    return this.belongsToMany("App/Models/Category")
+      .pivotTable("subscriptions")
+      .withTimestamps();
+  }
 }
 
 module.exports = User;
