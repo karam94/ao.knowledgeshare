@@ -38,7 +38,8 @@
     "laravel-mix": "^4.0.8",
     "resolve-url-loader": "^2.3.1",
     "sass": "^1.15.2",
-    "sass-loader": "^7.1.0"
+    "sass-loader": "^7.1.0",
+    "username": "^4.0.0"
   },
   "autoload": {
     "App": "./app"
