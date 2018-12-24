@@ -17,12 +17,13 @@ class PostController {
     post.title = request.input("title");
     post.category_id = request.input("category_id");
     post.text = request.input("text");
-    await user.podcast().save(post);
+    post.url = request.input("url");
+    await user.posts().save(post);
 
     session.flash({
       notification: {
         type: "success",
-        message: "Podcast created!"
+        message: "Post created!"
       }
     });
 
