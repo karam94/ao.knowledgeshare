@@ -24,6 +24,8 @@ class PostSchema extends Schema {
         .inTable("categories")
         .onDelete("cascade");
 
+      table.string("title");
+      
       table.string("text");
 
       table.string("url").notNullable();

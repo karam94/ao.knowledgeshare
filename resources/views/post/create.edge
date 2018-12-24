@@ -10,7 +10,105 @@
           <h2 class="title has-text-centered">Add a Post</h2>
           @include('partials._notification')
 
-          
+          <form action="{{ route('add') }}" method="post" enctype="multipart/form-data">
+            {{ csrfField() }}
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label">Title</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      class="input"
+                      name="title"
+                      value="{{ old('title', '') }}"
+                      placeholder="Post title">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('title'), hasErrorFor('title')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label">Category</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select name="category_id">
+                        <option value="">Choose a category</option>
+                        @each((name, id) in categories)
+                          <option value="{{ id }}">{{ name }}</option>
+                        @endeach
+                      </select>
+                    </div>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('category'), hasErrorFor('category')) }}
+                </div>
+              </div>
+            </div>
+
+            
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label">Description</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <textarea
+                      class="textarea"
+                      name="text"
+                      rows="10"
+                      placeholder="Post description">{{ old('text', '') }}</textarea>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('text'), hasErrorFor('text')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-label">
+                <label class="label">Url</label>
+              </div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="url"
+                      class="input"
+                      name="url"
+                      value="{{ old('url', '') }}"
+                      placeholder="Post URL">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('title'), hasErrorFor('title')) }}
+                </div>
+              </div>
+            </div>
+
+
+            <div class="field is-horizontal">
+              <div class="field-label"></div>
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary">
+                      Submit post
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
     </div>
