@@ -18,3 +18,9 @@ const Route = use("Route");
 
 // Home
 Route.get("/", "HomeController.index").as("home");
+
+// Posts
+Route.group(() => {
+  Route.get("/create", "PostController.create").as("create");
+  Route.post("/add", "PostController.add").as("add");
+}).prefix("/post");
