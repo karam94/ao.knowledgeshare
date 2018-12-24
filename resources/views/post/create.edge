@@ -8,6 +8,7 @@
       <div class="columns">
         <div class="column is-three-fifths is-offset-one-fifth">
           <h2 class="title has-text-centered">Add a Post</h2>
+          
           @include('partials._notification')
 
           <form action="{{ route('add') }}" method="post" enctype="multipart/form-data">

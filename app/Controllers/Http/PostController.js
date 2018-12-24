@@ -11,43 +11,23 @@ class PostController {
   }
 
   async add({ request, response, session }) {
-    const user = await User.findOrFail("username", session.get("username"));
+    const user = await User.findByOrFail("username", session.get("username"));
 
     const post = new Post();
+    post.title = request.input("title");
+    post.category_id = request.input("category_id");
+    post.text = request.input("text");
+    await user.podcast().save(post);
+
+    session.flash({
+      notification: {
+        type: "success",
+        message: "Podcast created!"
+      }
+    });
+
+    return response.route("home");
   }
-  // async store({ request, response, auth, session }) {
-  //   const user = auth.user;
-
-  //   const logo = await this._processLogoUpload(request);
-
-  //   if (!logo.moved()) {
-  //     session.flash({
-  //       notification: {
-  //         type: "danger",
-  //         message: logo.error().message
-  //       }
-  //     });
-
-  //     return response.redirect("back");
-  //   }
-
-  //   const podcast = new Podcast();
-  //   podcast.title = request.input("title");
-  //   podcast.category_id = request.input("category_id");
-  //   podcast.description = request.input("description");
-  //   podcast.logo = `uploads/logos/${logo.fileName}`;
-
-  //   await user.podcast().save(podcast);
-
-  //   session.flash({
-  //     notification: {
-  //       type: "success",
-  //       message: "Podcast created!"
-  //     }
-  //   });
-
-  //   return response.route("myPodcast");
-  // }
 }
 
 module.exports = PostController;
