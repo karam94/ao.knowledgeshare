@@ -8,6 +8,7 @@ class PostSchema extends Schema {
     this.create("posts", table => {
       table.increments();
 
+      // Poster User Id
       table
         .integer("user_id")
         .unsigned()
@@ -24,9 +25,13 @@ class PostSchema extends Schema {
         .inTable("categories")
         .onDelete("cascade");
 
+      table.string("author");
+
       table.string("title");
       
-      table.string("text");
+      table.string("description");
+
+      table.string("image");
 
       table.string("url").notNullable();
 

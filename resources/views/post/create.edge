@@ -16,26 +16,6 @@
 
             <div class="field is-horizontal">
               <div class="field-label">
-                <label class="label">Title</label>
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <input
-                      type="text"
-                      class="input"
-                      name="title"
-                      value="{{ old('title', '') }}"
-                      placeholder="Post title">
-                  </div>
-
-                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('title'), hasErrorFor('title')) }}
-                </div>
-              </div>
-            </div>
-
-            <div class="field is-horizontal">
-              <div class="field-label">
                 <label class="label">Category</label>
               </div>
               <div class="field-body">
@@ -56,26 +36,6 @@
               </div>
             </div>
 
-            
-            <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label">Description</label>
-              </div>
-              <div class="field-body">
-                <div class="field">
-                  <div class="control">
-                    <textarea
-                      class="textarea"
-                      name="text"
-                      rows="10"
-                      placeholder="Post description">{{ old('text', '') }}</textarea>
-                  </div>
-
-                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('text'), hasErrorFor('text')) }}
-                </div>
-              </div>
-            </div>
-
             <div class="field is-horizontal">
               <div class="field-label">
                 <label class="label">Url</label>
@@ -91,11 +51,10 @@
                       placeholder="Post URL">
                   </div>
 
-                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('title'), hasErrorFor('title')) }}
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
                 </div>
               </div>
             </div>
-
 
             <div class="field is-horizontal">
               <div class="field-label"></div>
