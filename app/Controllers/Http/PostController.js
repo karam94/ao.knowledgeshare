@@ -51,7 +51,7 @@ class PostController {
       .with("category")
       .with("poster")
       .with("likes")
-      .with("comments")
+      .with("comments.author")
       .firstOrFail();
 
     return view.render("post/details", {
