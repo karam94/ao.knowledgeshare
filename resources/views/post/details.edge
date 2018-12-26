@@ -15,6 +15,7 @@
           <h3 class="subtitle is-6">
               shared by <em>{{ post.poster.username }}</em>
           </h3>
+          
           <p>
             <i class="far fa-thumbs-up"></i> {{ post.likes.length }} &nbsp;
             <i class="far fa-comment"></i> {{ post.comments.length }}
@@ -36,8 +37,17 @@
       <div class="container">
           <div class="columns">
             <div class="column is-three-fifths is-offset-one-fifth">
-              <h2 class="title has-text-centered">Post Comments</h2>
+              <img class="centered-img" src="{{ post.image }}" />
                 
+              <p class="has-text-centered">
+                {{ post.description }}
+              </p>
+
+              <br/>
+
+              <hr>
+
+              <h3 class="title has-text-centered">Post Comments</h3>
               @include('partials._notification')
               
               @each(comment in post.comments)

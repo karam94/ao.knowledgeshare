@@ -7,3 +7,11 @@ $box-radius: 4px;
 $footer-background-color: #f8f9fb;
 
 @import "node_modules/bulma/bulma";
+
+.centered-img {
+  display:block; 
+  margin-left:auto; 
+  margin-right:auto; 
+  width: 250px;
+  padding-bottom: 25px;
+}
