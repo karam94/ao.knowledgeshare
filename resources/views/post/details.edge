@@ -81,6 +81,10 @@
               
               @each(comment in post.comments)
               <div class="box">
+                  @if(comment.author.username === username) 
+                    <a class="delete" style="float:right;"></a>
+                  @endif
+                  
                   <article class="media">
                     <div class="media-left">
                       <figure class="image is-64x64">

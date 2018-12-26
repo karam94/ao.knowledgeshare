@@ -47,7 +47,7 @@ class PostController {
     return response.route("home");
   }
 
-  async details({ params, view }) {
+  async details({ params, view, session }) {
     const post = await Post.query()
       .where("id", params.id)
       .with("category")
@@ -57,7 +57,8 @@ class PostController {
       .firstOrFail();
 
     return view.render("post/details", {
-      post: post.toJSON()
+      post: post.toJSON(),
+      username: session.get("username")
     });
   }
 
