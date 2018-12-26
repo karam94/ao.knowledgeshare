@@ -33,17 +33,28 @@
                         <p class="subtitle is-6">
                           shared by {{ post.poster.username }}
                           <br/>
-                          <a href="">
-                            <span class="tag">
-                              {{ post.category.name }}
-                            </span>
-                          </a>
                         </p>
                       </div>
                     </div>
                 
                     <div class="content">
                       {{ post.description }}
+                      <hr/>
+                      <div class="columns">
+                        <div class="column">
+                          <a href="">
+                              <span class="tag">
+                                {{ post.category.name }}
+                              </span>
+                          </a>
+                        </div>
+
+                        <div class="column" style="text-align:right;">
+                            <i class="far fa-thumbs-up"></i> {{ post.likes.length }} &nbsp;
+                            <i class="far fa-comment"></i> {{ post.comments.length }}
+                        </div>
+                      </div>
+
                     </div>
                   </div>
 
