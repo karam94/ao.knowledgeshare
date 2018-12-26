@@ -61,8 +61,10 @@
               </div>
               @endeach
 
-              <form action="{{ route('add') }}" method="post" enctype="multipart/form-data">
+              <form action="{{ route('comment') }}" method="post" enctype="multipart/form-data">
                 {{ csrfField() }}
+
+                <input type="hidden" name="post_id" value="{{ post.id }}">
 
                 <div class="field is-horizontal">
                     <div class="field-body">

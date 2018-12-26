@@ -3,6 +3,7 @@
 const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
+const Comment = use("App/Models/Comment");
 const got = require("got");
 const metascraper = require("metascraper")([
   require("metascraper-author")(),
@@ -56,6 +57,26 @@ class PostController {
     return view.render("post/details", {
       post: post.toJSON()
     });
+  }
+
+  async comment({ request, response, session }){
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const comment = new Comment();
+    comment.user_id = user.id;
+    comment.post_id = request.input("post_id");
+    comment.comment = request.input("comment");
+    await user.comments().save(comment);
+
+    session.flash({
+      notification: {
+        type: "success",
+        message: "Comment added!"
+      }
+    });
+
+    var route = "/post/details/" + request.input("post_id");
+    return response.route(route);
   }
 }
 
