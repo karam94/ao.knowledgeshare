@@ -7,6 +7,57 @@
     <div class="container">
       <h2 class="subtitle is-3">Latest Posts</h2>
       @include('partials._notification')
+
+      <div class="columns is-multiline">
+        @each(post in posts.data)
+          <div class="column is-one-quarter">
+            <div class="card" style="height: 100%;">
+              
+                <div class="card-image">
+                  <figure class="image is-4by3">
+                      <a href="#">
+                        <img src="{{ assetsUrl(post.image) }}" alt="Post image">
+                      </a>
+                  </figure>
+                </div>
+
+                <div class="card-content">
+                    <div class="media">
+                      <div class="media-content">
+                        <p class="title is-5">                    
+                          <a href="#">
+                            {{ post.title }}
+                          </a>
+                        </p>
+
+                        <p class="subtitle is-6">
+                          shared by {{ post.poster.username }}
+                          <br/>
+                          <a href="">
+                            <span class="tag">
+                              {{ post.category.name }}
+                            </span>
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                
+                    <div class="content">
+                      {{ post.description }}
+                    </div>
+                  </div>
+
+                </div>
+          </div>
+        @else
+          <p>No posts to display.</p>
+        @endeach
+      </div>
+
+      @if(posts.data.length)
+        <hr>
+        @!component('components.pagination', pagination = posts)
+      @endif
     </div>
   </section>
 @endsection

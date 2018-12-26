@@ -17,4 +17,10 @@ hooks.after.providersBooted(() => {
   View.global("encodeURIComponent", token => {
     return encodeURIComponent(token);
   });
+
+  View.global("paginationLinks", total => {
+    return Array.from(new Array(total), (value, index) => {
+      return index + 1;
+    });
+  });
 });
