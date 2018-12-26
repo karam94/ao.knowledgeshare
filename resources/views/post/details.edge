@@ -17,7 +17,7 @@
           </h3>
           
           <p>
-            <i class="far fa-thumbs-up"></i> {{ post.likes.length }} &nbsp;
+            <i class="far fa-heart"></i> {{ post.likes.length }} &nbsp;
             <i class="far fa-comment"></i> {{ post.comments.length }}
           </p>
 
@@ -28,6 +28,27 @@
               </span>
               <span>Read Article</span>
             </a>
+
+            <form action="{{ route('like') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+              {{ csrfField() }}
+
+              <input type="hidden" name="post_id" value="{{ post.id }}">
+
+              <button type="submit" class="button {{ post.likes.length > 0 ? 'is-light' : 'is-danger' }}">
+                @if(post.likes.length > 0)
+                  <span class="icon">
+                    <i class="far fa-frown"></i>
+                  </span>
+                  <span>Unrecommend Article</span>
+                @else
+                  <span class="icon">
+                    <i class="far fa-heart"></i>
+                  </span>
+                  <span>Recommend Article</span>
+                @endif
+              </button>
+            </form>
+
           </div>
         </div>
       </div>

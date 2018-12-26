@@ -4,6 +4,8 @@ const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Comment = use("App/Models/Comment");
+const Like = use("App/Models/Like");
+
 const got = require("got");
 const metascraper = require("metascraper")([
   require("metascraper-author")(),
@@ -59,7 +61,7 @@ class PostController {
     });
   }
 
-  async comment({ request, response, session }){
+  async comment({ request, response, session }) {
     const user = await User.findByOrFail("username", session.get("username"));
 
     const comment = new Comment();
@@ -74,6 +76,30 @@ class PostController {
         message: "Comment added!"
       }
     });
+
+    var route = "/post/details/" + request.input("post_id");
+    return response.route(route);
+  }
+
+  async like({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const existingLike = await Like.query()
+      .where("user_id", user.id)
+      .where("post_id", request.input("post_id"))
+      .getCount();
+
+    if (existingLike > 0) {
+      await Like.query()
+        .where("user_id", user.id)
+        .where("post_id", request.input("post_id"))
+        .delete();
+    } else {
+      const like = new Like();
+      like.user_id = user.id;
+      like.post_id = request.input("post_id");
+      await user.likes().save(like);
+    }
 
     var route = "/post/details/" + request.input("post_id");
     return response.route(route);
