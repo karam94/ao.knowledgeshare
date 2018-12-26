@@ -23,4 +23,5 @@ Route.get("/", "HomeController.index").as("home");
 Route.group(() => {
   Route.get("/create", "PostController.create").as("create");
   Route.post("/add", "PostController.add").as("add");
+  Route.get("/details/:id", "PostController.details").as("details");
 }).prefix("/post");

@@ -23,7 +23,7 @@ class PostController {
 
     const targetUrl = request.input("url");
     const { body: html, url } = await got(targetUrl);
-    const metadata = await metascraper({html, url});
+    const metadata = await metascraper({ html, url });
 
     const post = new Post();
     post.category_id = request.input("category_id");
@@ -42,6 +42,20 @@ class PostController {
     });
 
     return response.route("home");
+  }
+
+  async details({ params, view }) {
+    const post = await Post.query()
+      .where("id", params.id)
+      .with("category")
+      .with("poster")
+      .with("likes")
+      .with("comments")
+      .firstOrFail();
+
+    return view.render("post/details", {
+      post: post.toJSON()
+    });
   }
 }
 
