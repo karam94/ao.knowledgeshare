@@ -21,6 +21,14 @@
             <i class="far fa-comment"></i> {{ post.comments.length }}
           </p>
 
+          <br/>
+
+          <p>
+            <span class="tag ">
+              #{{ post.category.name }}
+            </span>
+          </p>
+
           <div style="padding-top: 25px">
             <a class="button is-info" target="_blank" href="{{ post.url }}">
               <span class="icon">
