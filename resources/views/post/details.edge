@@ -3,5 +3,103 @@
 @section('content')
   @set('title', 'post.title')
 
-  {{ post.title }}
+  <section class="hero is-primary has-text-centered" style="background-color: #73a920">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{ post.title }}
+          </h1>
+          <h2 class="subtitle is-4">
+            written by <em><a href="{{ post.url }}">{{ post.author }}</a></em>
+          </h2>
+          <h3 class="subtitle is-6">
+              shared by <em>{{ post.poster.username }}</em>
+          </h3>
+          <p>
+            <i class="far fa-thumbs-up"></i> {{ post.likes.length }} &nbsp;
+            <i class="far fa-comment"></i> {{ post.comments.length }}
+          </p>
+
+          <div style="padding-top: 25px">
+            <a class="button is-info" target="_blank" href="{{ post.url }}">
+              <span class="icon">
+                <i class="fas fa-glasses"></i>
+              </span>
+              <span>Read Article</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+          <div class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+              <h2 class="title has-text-centered">Post Comments</h2>
+                
+              @include('partials._notification')
+              
+              @each(comment in post.comments)
+              <div class="box">
+                  <article class="media">
+                    <div class="media-left">
+                      <figure class="image is-64x64">
+                        <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong>{{ comment.username }}</strong> <small>{{ comment.created_at }}</small>
+                          <br>
+                          {{ comment.comment }}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+              </div>
+              @endeach
+
+              <form action="{{ route('add') }}" method="post" enctype="multipart/form-data">
+                {{ csrfField() }}
+
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field">
+                        <div class="control">
+                          <input
+                            type="textarea"
+                            class="input"
+                            name="comment"
+                            value="{{ old('url', '') }}"
+                            placeholder="Your comment...">
+                        </div>
+      
+                        {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field">
+                        <div class="control">
+                          <button class="button is-primary" style="float:right;">
+                            <span class="icon">
+                              <i class="far fa-edit"></i>
+                            </span>
+                            <span>
+                            Submit
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </section>
 @endsection
