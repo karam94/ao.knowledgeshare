@@ -47,6 +47,24 @@ class PostController {
     return response.route("home");
   }
 
+  async delete({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const post = await Post.query()
+      .where("id", request.input("post_id"))
+      .where("user_id", user.id)
+      .delete();
+
+    session.flash({
+      notification: {
+        type: "danger",
+        message: "Post deleted!"
+      }
+    });
+
+    return response.route("/");
+  }
+
   async details({ params, view, session }) {
     const post = await Post.query()
       .where("id", params.id)

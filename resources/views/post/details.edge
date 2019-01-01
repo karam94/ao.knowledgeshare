@@ -56,8 +56,24 @@
                 @endif
               </button>
             </form>
-
           </div>
+
+          @if(post.poster.username === username) 
+          <div style="padding-top: 25px">
+            <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+              {{ csrfField() }}
+
+              <input type="hidden" name="post_id" value="{{ post.id }}">
+              <button class="button is-danger">
+                  <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                  </span>
+                  <span>Delete Post</span>
+              </button>
+            </form>
+          </div>
+          @endif
+
         </div>
       </div>
     </section>
@@ -82,7 +98,7 @@
               @each(comment in post.comments)
               <div class="box">
                   @if(comment.author.username === username) 
-                    <form action="{{ route('delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+                    <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
         
                       <input type="hidden" name="post_id" value="{{ post.id }}">
