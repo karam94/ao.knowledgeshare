@@ -5,7 +5,7 @@
 
   <section class="section">
     <div class="container">
-      <h2 class="subtitle is-3">Latest Posts</h2>
+      <h2 class="subtitle is-3">Latest {{ category }} Posts</h2>
       @include('partials._notification')
 
       <div class="columns is-multiline">
@@ -42,7 +42,7 @@
                       <hr/>
                       <div class="columns">
                         <div class="column">
-                          <a href="">
+                          <a href="{{ route('posts', { category_id: post.category_id }) }}">
                               <span class="tag">
                                 #{{ post.category.name }}
                               </span>

@@ -6,7 +6,54 @@
 
     <div class="navbar-menu">
       <div class="navbar-end">
-        <a href="#" class="navbar-item">Hello, {{ username }}!</a>
+        <div class="navbar-item has-dropdown is-hoverable">
+            <a href="#" class="navbar-link">Hello, {{ username }}!</a>
+
+            <div class="navbar-dropdown">
+              <a href="{{ route('home') }}" class="navbar-item">
+                <span class="icon">
+                  <i class="far fa-edit"></i>
+                </span>
+                <span>Latest Posts</span>
+              </a>
+
+              <a href="#" class="navbar-item" style="margin-left: 10px;">
+                <span class="icon">
+                  <i class="fas fa-user-plus"></i>
+                </span>
+                <span>My Subscriptions</span>
+              </a>
+
+              <a href="{{ route('post/create') }}" class="navbar-item" style="margin-left: 10px;">
+                <span class="icon">
+                  <i class="fas fa-user-edit"></i>
+                </span>
+                <span>Add Post</span>
+              </a>
+
+              <a href="#" class="navbar-item">
+                <span class="icon">
+                  <i class="far fa-question-circle"></i>
+                </span>
+                <span>Latest Questions</span>
+              </a>
+
+              <a href="{{ route('post/create') }}" class="navbar-item" style="margin-left: 10px;">
+                <span class="icon">
+                  <i class="fas fa-user-plus"></i>
+                </span>
+                <span>Add Question</span>
+              </a>
+
+              <a href="mailto:karam.kabbara@ao.com" class="navbar-item">
+                <span class="icon">
+                  <i class="fas fa-bug"></i>
+                </span>
+                <span>Report Bug</span>
+              </a>
+            </div>
+
+        </div>
       </div>
     </div>
   </div>
