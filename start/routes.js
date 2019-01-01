@@ -27,3 +27,8 @@ Route.group(() => {
   Route.post("/comment", "PostController.comment").as("comment");
   Route.post("/like", "PostController.like").as("like");
 }).prefix("/post");
+
+// Posts
+Route.group(() => {
+  Route.post("/delete", "CommentController.delete").as("delete");
+}).prefix("/comment");
