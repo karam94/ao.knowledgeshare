@@ -28,14 +28,31 @@ class PostController {
     const { body: html, url } = await got(targetUrl);
     const metadata = await metascraper({ html, url });
 
-    const post = new Post();
-    post.category_id = request.input("category_id");
-    post.author = metadata.author;
-    post.title = metadata.title;
-    post.description = metadata.description;
-    post.image = metadata.image;
-    post.url = metadata.url;
-    await user.posts().save(post);
+    var categoryId = request.input("category_id");
+
+    if (categoryId === "0") {
+      const category = new Category();
+      category.name = request.input("new_category_name");
+      await category.save();
+
+      const post = new Post();
+      post.category_id = category.id;
+      post.author = metadata.author;
+      post.title = metadata.title;
+      post.description = metadata.description;
+      post.image = metadata.image;
+      post.url = metadata.url;
+      await user.posts().save(post);
+    } else {
+      const post = new Post();
+      post.category_id = categoryId;
+      post.author = metadata.author;
+      post.title = metadata.title;
+      post.description = metadata.description;
+      post.image = metadata.image;
+      post.url = metadata.url;
+      await user.posts().save(post);
+    }
 
     session.flash({
       notification: {

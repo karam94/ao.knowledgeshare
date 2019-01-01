@@ -15,18 +15,16 @@
             {{ csrfField() }}
 
             <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label">Category</label>
-              </div>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
                     <div class="select is-fullwidth">
-                      <select name="category_id">
+                      <select name="category_id" id="category_dropdown" onchange="categoryChanged()">
                         <option value="">Choose a category</option>
                         @each((name, id) in categories)
                           <option value="{{ id }}">{{ name }}</option>
                         @endeach
+                        <option value="0">New Category</option>
                       </select>
                     </div>
                   </div>
@@ -36,10 +34,25 @@
               </div>
             </div>
 
+            <div class="field is-horizontal" id="category_input_field">
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input
+                        id="category_input"
+                        type="string"
+                        class="input"
+                        name="new_category_name"
+                        value="{{ old('new_category_name', '') }}"
+                        placeholder="New Category Name">
+                    </div>
+  
+                    {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('new_category_name'), hasErrorFor('new_category_name')) }}
+                  </div>
+                </div>
+            </div>
+
             <div class="field is-horizontal">
-              <div class="field-label">
-                <label class="label">Url</label>
-              </div>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
@@ -57,12 +70,15 @@
             </div>
 
             <div class="field is-horizontal">
-              <div class="field-label"></div>
               <div class="field-body">
                 <div class="field">
                   <div class="control">
-                    <button class="button is-primary">
-                      Submit post
+                    <button class="button is-primary" style="float:right;">
+                      <span class="icon">
+                        <i class="far fa-edit"></i>
+                      </span>
+
+                      <span>Add Post</span>
                     </button>
                   </div>
                 </div>
@@ -73,4 +89,21 @@
       </div>
     </div>
   </section>
+
+  <script>
+    var categoryDropdown = document.getElementById("category_dropdown");
+    var categoryInput = document.getElementById("category_input");
+    var categoryInputField = document.getElementById("category_input_field");
+    categoryInputField.style.display = "none";
+
+    function categoryChanged() {
+      categoryInput.value = "";
+
+      if(categoryDropdown.value == 0){
+        categoryInputField.style.display = "block";
+      } else {
+        categoryInputField.style.display = "none";
+      }
+    }
+  </script>
 @endsection
