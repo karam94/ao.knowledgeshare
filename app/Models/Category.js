@@ -9,9 +9,7 @@ class Category extends Model {
   }
 
   subscribers() {
-    return this.belongsToMany("App/Models/User")
-      .pivotTable("subscriptions")
-      .withTimestamps();
+    return this.hasMany("App/Models/Subscription");
   }
 }
 

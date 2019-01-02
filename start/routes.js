@@ -22,6 +22,7 @@ Route.get("/", "HomeController.index").as("home");
 // Categories
 Route.group(() => {
   Route.get("/:category_id", "CategoryController.index").as("posts");
+  Route.post("/subscribe", "CategoryController.subscribe").as("subscribe");
 }).prefix("/category");
 
 // Posts

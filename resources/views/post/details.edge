@@ -44,8 +44,8 @@
 
               <input type="hidden" name="post_id" value="{{ post.id }}">
 
-              <button type="submit" class="button {{ post.likes.length > 0 ? 'is-light' : 'is-danger' }}">
-                @if(post.likes.length > 0)
+              <button type="submit" class="button {{ userLikesPost ? 'is-light' : 'is-danger' }}">
+                @if(userLikesPost)
                   <span class="icon">
                     <i class="far fa-frown"></i>
                   </span>
@@ -60,7 +60,7 @@
             </form>
           </div>
 
-          @if(post.poster.username === username) 
+          @if(post.poster.username === user.username) 
             <div style="padding-top: 25px">
               <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                 {{ csrfField() }}
@@ -99,7 +99,7 @@
               
               @each(comment in post.comments)
               <div class="box">
-                  @if(comment.author.username === username) 
+                  @if(comment.author.username === user.username) 
                     <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
         

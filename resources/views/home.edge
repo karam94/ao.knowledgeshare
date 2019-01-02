@@ -5,7 +5,29 @@
 
   <section class="section">
     <div class="container">
-      <h2 class="subtitle is-3">Latest {{ category }} Posts</h2>
+      <h2 class="subtitle is-3">Latest {{ category.name }} Posts</h2>
+      @if(category)
+      <div class="column is-full" style="height: 65px;">
+        <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+          {{ csrfField() }}
+
+          <input type="hidden" name="category_id" value="{{ category.id }}">
+          <button class="button {{ userIsSubscribed ? 'is-danger' : 'is-success' }}" style="float:right;" type="submit">
+            @if(userIsSubscribed)
+              <span class="icon">
+                <i class="fas fa-user-plus"></i>
+              </span>
+              <span>Unsubscribe</span>
+            @else
+              <span class="icon">
+                <i class="fas fa-user-plus"></i>
+              </span>
+              <span>Subscribe</span>
+            @endif
+          </button>
+      </div>
+      @endif
+
       @include('partials._notification')
 
       <div class="columns is-multiline">

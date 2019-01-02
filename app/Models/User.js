@@ -21,9 +21,7 @@ class User extends Model {
   }
 
   subscriptions() {
-    return this.belongsToMany("App/Models/Category")
-      .pivotTable("subscriptions")
-      .withTimestamps();
+    return this.hasMany("App/Models/Subscription");
   }
 }
 

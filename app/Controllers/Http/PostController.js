@@ -83,6 +83,10 @@ class PostController {
   }
 
   async details({ params, view, session }) {
+    const user = await User.query()
+      .where("username", session.get("username"))
+      .firstOrFail();
+
     const post = await Post.query()
       .where("id", params.id)
       .with("category")
@@ -91,9 +95,15 @@ class PostController {
       .with("comments.author")
       .firstOrFail();
 
+    const userLikesPost = await Like.query()
+      .where("user_id", user.id)
+      .where("post_id", post.id)
+      .first();
+
     return view.render("post/details", {
       post: post.toJSON(),
-      username: session.get("username")
+      user: user.toJSON(),
+      userLikesPost: userLikesPost ? true : false
     });
   }
 
