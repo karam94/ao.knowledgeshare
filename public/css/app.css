@@ -6466,7 +6466,7 @@ a.list-item {
   color: #0a0a0a;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-white .navbar-start > .navbar-item,
   .navbar.is-white .navbar-start .navbar-link,
   .navbar.is-white .navbar-end > .navbar-item,
@@ -6529,7 +6529,7 @@ a.list-item {
   color: white;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-black .navbar-start > .navbar-item,
   .navbar.is-black .navbar-start .navbar-link,
   .navbar.is-black .navbar-end > .navbar-item,
@@ -6592,7 +6592,7 @@ a.list-item {
   color: #363636;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-light .navbar-start > .navbar-item,
   .navbar.is-light .navbar-start .navbar-link,
   .navbar.is-light .navbar-end > .navbar-item,
@@ -6655,7 +6655,7 @@ a.list-item {
   color: whitesmoke;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-dark .navbar-start > .navbar-item,
   .navbar.is-dark .navbar-start .navbar-link,
   .navbar.is-dark .navbar-end > .navbar-item,
@@ -6718,7 +6718,7 @@ a.list-item {
   color: #fff;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-primary .navbar-start > .navbar-item,
   .navbar.is-primary .navbar-start .navbar-link,
   .navbar.is-primary .navbar-end > .navbar-item,
@@ -6781,7 +6781,7 @@ a.list-item {
   color: rgba(0, 0, 0, 0.7);
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-link .navbar-start > .navbar-item,
   .navbar.is-link .navbar-start .navbar-link,
   .navbar.is-link .navbar-end > .navbar-item,
@@ -6844,7 +6844,7 @@ a.list-item {
   color: #fff;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-info .navbar-start > .navbar-item,
   .navbar.is-info .navbar-start .navbar-link,
   .navbar.is-info .navbar-end > .navbar-item,
@@ -6907,7 +6907,7 @@ a.list-item {
   color: #fff;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-success .navbar-start > .navbar-item,
   .navbar.is-success .navbar-start .navbar-link,
   .navbar.is-success .navbar-end > .navbar-item,
@@ -6970,7 +6970,7 @@ a.list-item {
   color: rgba(0, 0, 0, 0.7);
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-warning .navbar-start > .navbar-item,
   .navbar.is-warning .navbar-start .navbar-link,
   .navbar.is-warning .navbar-end > .navbar-item,
@@ -7033,7 +7033,7 @@ a.list-item {
   color: #fff;
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar.is-danger .navbar-start > .navbar-item,
   .navbar.is-danger .navbar-start .navbar-link,
   .navbar.is-danger .navbar-end > .navbar-item,
@@ -7291,7 +7291,7 @@ a.navbar-item.is-active,
   margin: 0.5rem 0;
 }
 
-@media screen and (max-width: 1087px) {
+@media screen and (max-width: -1px) {
   .navbar > .container {
     display: block;
   }
@@ -7354,7 +7354,7 @@ a.navbar-item.is-active,
   }
 }
 
-@media screen and (min-width: 1088px) {
+@media screen and (min-width: 0) {
   .navbar,
   .navbar-menu,
   .navbar-start,
@@ -11178,5 +11178,17 @@ label.panel-block:hover {
   margin-right: auto;
   width: 250px;
   padding-bottom: 25px;
+}
+
+@media screen and (min-width: 0) {
+  .navbar > .container .navbar-brand,
+  .container > .navbar .navbar-brand {
+    margin-left: 3em;
+  }
+
+  .navbar > .container .navbar-menu,
+  .container > .navbar .navbar-menu {
+    margin-right: 3em;
+  }
 }
 

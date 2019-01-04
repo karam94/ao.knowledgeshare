@@ -1,11 +1,10 @@
 @layout('layouts.app')
 
 @section('content')
-  @set('title', 'Home')
 
   <section class="section">
     <div class="container">
-      <h2 class="subtitle is-3">Latest {{ category.name }} Posts</h2>
+      <h2 class="subtitle is-3">Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Posts</h2>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">

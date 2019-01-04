@@ -30,7 +30,8 @@ class CategoryController {
     return view.render("home", {
       posts: posts.toJSON(),
       category: category.toJSON(),
-      userIsSubscribed: userIsSubscribed ? true : false
+      userIsSubscribed: userIsSubscribed ? true : false,
+      title: category.name
     });
   }
 
@@ -70,6 +71,42 @@ class CategoryController {
 
     var route = "/category/" + request.input("category_id");
     return response.route(route);
+  }
+
+  async subscriptions({ view, request, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const subscriptions = await Subscription.query()
+      .where("user_id", user.id)
+      .pluck("category_id");
+
+    if (subscriptions.length > 0) {
+      const posts = await Post.query()
+        .orderBy("id", "desc")
+        .whereIn("category_id", subscriptions)
+        .with("category")
+        .with("poster")
+        .with("likes")
+        .with("comments")
+        .paginate(Number(request.input("page", 1)), 10);
+
+      return view.render("home", {
+        posts: posts.toJSON(),
+        message: "Subscribed",
+        title: "My Subscriptions"
+      });
+    } else {
+      session.flash({
+        notification: {
+          type: "danger",
+          message: "You are not subscribed to any categories!"
+        }
+      });
+
+      return view.render("home", {
+        title: "My Subscriptions"
+      });
+    }
   }
 }
 

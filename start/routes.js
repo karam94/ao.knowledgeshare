@@ -25,6 +25,9 @@ Route.group(() => {
   Route.post("/subscribe", "CategoryController.subscribe").as("subscribe");
 }).prefix("/category");
 
+// Subscriptions
+Route.get("/subscriptions", "CategoryController.subscriptions").as("subscriptions");
+
 // Posts
 Route.group(() => {
   Route.get("/create", "PostController.create").as("post/create");

@@ -5,6 +5,7 @@ $primary: #7fba23;
 $blue: #98da30;
 $box-radius: 4px;
 $footer-background-color: #f8f9fb;
+$navbar-breakpoint: 0;
 
 @import "node_modules/bulma/bulma";
 
@@ -14,4 +15,16 @@ $footer-background-color: #f8f9fb;
   margin-right:auto; 
   width: 250px;
   padding-bottom: 25px;
+}
+
+@media screen and (min-width: 0) {
+  .navbar > .container .navbar-brand,
+  .container > .navbar .navbar-brand {
+    margin-left: 3em;
+  }
+
+  .navbar > .container .navbar-menu,
+  .container > .navbar .navbar-menu {
+    margin-right: 3em;
+  }
 }

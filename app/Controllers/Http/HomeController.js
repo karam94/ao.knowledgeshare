@@ -12,7 +12,10 @@ class HomeController {
       .with("comments")
       .paginate(Number(request.input("page", 1)), 10);
 
-    return view.render("home", { posts: posts.toJSON() });
+    return view.render("home", {
+      posts: posts.toJSON(),
+      title: "Home"
+    });
   }
 }
 
