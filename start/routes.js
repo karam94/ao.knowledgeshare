@@ -38,9 +38,6 @@ Route.group(() => {
   Route.post("/delete", "PostController.delete").as("post/delete");
 }).prefix("/post");
 
-// Questions
-Route.get("/questions", "QuestionController.questions").as("questions");
-
 Route.group(() => {
   Route.get("/create", "QuestionController.create").as("post/create");
   Route.post("/add", "QuestionController.add").as("add");

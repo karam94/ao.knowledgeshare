@@ -4,6 +4,7 @@ const Post = use("App/Models/Post");
 const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Subscription = use("App/Models/Subscription");
+const Question = use("App/Models/Question");
 
 class CategoryController {
   async index({ view, request, params, session }) {
@@ -18,6 +19,13 @@ class CategoryController {
       .with("comments")
       .paginate(Number(request.input("page", 1)), 10);
 
+    const questions = await Question.query()
+      .orderBy("id", "desc")
+      .where("category_id", params.category_id)
+      .with("category")
+      .with("poster")
+      .paginate(Number(request.input("page", 1)), 10);
+
     const category = await Category.query()
       .where("id", params.category_id)
       .firstOrFail();
@@ -29,6 +37,7 @@ class CategoryController {
 
     return view.render("home", {
       posts: posts.toJSON(),
+      questions: questions.toJSON(),
       category: category.toJSON(),
       userIsSubscribed: userIsSubscribed ? true : false,
       title: category.name
