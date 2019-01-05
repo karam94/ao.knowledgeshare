@@ -38,6 +38,18 @@ Route.group(() => {
   Route.post("/delete", "PostController.delete").as("post/delete");
 }).prefix("/post");
 
+// Questions
+Route.get("/questions", "QuestionController.subscriptions").as("subscriptions");
+
+Route.group(() => {
+  Route.get("/create", "QuestionController.create").as("post/create");
+  Route.post("/add", "QuestionController.add").as("add");
+  Route.get("/details/:id", "QuestionController.details").as("details");
+  Route.post("/comment", "QuestionController.comment").as("comment");
+  Route.post("/like", "QuestionController.like").as("like");
+  Route.post("/delete", "QuestionController.delete").as("post/delete");
+}).prefix("/questions");
+
 // Comments
 Route.group(() => {
   Route.post("/delete", "CommentController.delete").as("comment/delete");
