@@ -1,0 +1,26 @@
+@layout('layouts.app')
+
+@section('content')
+
+  <section class="section">
+    <div class="container">
+      <h2 class="subtitle is-3">Latest Questions</h2>
+      @include('partials._notification')
+
+      <div class="columns is-multiline">
+        @each(question in questions.data)
+          <div class="column is-one-quarter">
+            {{ question.title }}
+          </div>
+        @else
+          <p>There are no unanswered questions at the moment!</p>
+        @endeach
+      </div>
+
+      @if(posts.data.length)
+        <hr>
+        @!component('components.pagination', pagination = posts)
+      @endif
+    </div>
+  </section>
+@endsection

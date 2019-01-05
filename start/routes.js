@@ -39,7 +39,7 @@ Route.group(() => {
 }).prefix("/post");
 
 // Questions
-Route.get("/questions", "QuestionController.subscriptions").as("subscriptions");
+Route.get("/questions", "QuestionController.questions").as("questions");
 
 Route.group(() => {
   Route.get("/create", "QuestionController.create").as("post/create");
