@@ -11,6 +11,10 @@ class Question extends Model {
   category() {
     return this.belongsTo("App/Models/Category");
   }
+
+  answers() {
+    return this.hasMany("App/Models/Answer");
+  }
 }
 
 module.exports = Question;

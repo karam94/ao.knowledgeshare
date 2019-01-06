@@ -12,6 +12,10 @@ class User extends Model {
     return this.hasMany("App/Models/Post");
   }
 
+  questions() {
+    return this.hasMany("App/Models/Question");
+  }
+
   likes() {
     return this.hasMany("App/Models/Like");
   }
