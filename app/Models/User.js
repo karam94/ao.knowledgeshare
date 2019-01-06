@@ -16,6 +16,10 @@ class User extends Model {
     return this.hasMany("App/Models/Question");
   }
 
+  answers() {
+    return this.hasMany("App/Models/Answer");
+  }
+
   likes() {
     return this.hasMany("App/Models/Like");
   }

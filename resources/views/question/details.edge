@@ -61,12 +61,12 @@
 
               <hr>
 
-              <h3 class="title has-text-centered">Your Answers</h3>
+              <h3 class="title has-text-centered">Answers</h3>
               @include('partials._notification')
               
               @each(answer in question.answers)
-              <div class="box">
-                  @if(comment.author.username === user.username) 
+              <div class="box" style="padding-bottom: 0px;">
+                  @if(answer.author.username === user.username) 
                     <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
         
@@ -85,20 +85,34 @@
                     <div class="media-content">
                       <div class="content">
                         <p>
-                          <strong>{{ comment.author.username }}</strong> <small>{{ comment.created_at }}</small>
+                          <strong>{{ answer.author.username }}</strong> <small>{{ answer.created_at }}</small>
                           <br>
-                          {{ comment.comment }}
+                          {{ answer.answer }}
                         </p>
                       </div>
                     </div>
                   </article>
+
+                  <br/>
+
+                  <footer class="card-footer">
+                      <a href="#" class="card-footer-item">
+                        <i class="fas fa-caret-up"></i>
+                      </a>
+                      <span class="card-footer-item">
+                        0 Votes
+                      </span>
+                      <a href="#" class="card-footer-item">
+                        <i class="fas fa-caret-down"></i>
+                      </a>
+                  </footer>
               </div>
               @endeach
 
-              <form action="{{ route('comment') }}" method="post" enctype="multipart/form-data">
+              <form action="{{ route('question/answer') }}" method="post" enctype="multipart/form-data">
                 {{ csrfField() }}
 
-                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <input type="hidden" name="question_id" value="{{ question.id }}">
 
                 <div class="field is-horizontal">
                     <div class="field-body">
@@ -106,13 +120,12 @@
                         <div class="control">
                           <textarea
                             class="textarea"
-                            name="comment"
-                            value="{{ old('url', '') }}"
-                            placeholder="Your answer...">
-                          </textarea>
+                            name="answer"
+                            value="{{ old('answer', '') }}"
+                            placeholder="Your answer..."></textarea>
                         </div>
       
-                        {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                        {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('answer'), hasErrorFor('answer')) }}
                       </div>
                     </div>
                   </div>

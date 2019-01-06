@@ -42,6 +42,7 @@ Route.group(() => {
   Route.get("/create", "QuestionController.create").as("question/create");
   Route.post("/add", "QuestionController.add").as("question/add");
   Route.get("/details/:id", "QuestionController.details").as("questionDetails");
+  Route.post("/answer", "QuestionController.answer").as("question/answer");
 }).prefix("/question");
 
 // Comments

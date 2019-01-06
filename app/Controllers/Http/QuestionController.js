@@ -3,6 +3,7 @@
 const Question = use("App/Models/Question");
 const Category = use("App/Models/Category");
 const User = use("App/Models/User");
+const Answer = use("App/Models/Answer");
 
 class QuestionController {
   async create({ view }) {
@@ -56,6 +57,26 @@ class QuestionController {
     return view.render("question/details", {
       question: question.toJSON()
     });
+  }
+
+  async answer({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const answer = new Answer();
+    answer.user_id = user.id;
+    answer.question_id = request.input("question_id");
+    answer.answer = request.input("answer");
+    await user.answers().save(answer);
+
+    session.flash({
+      notification: {
+        type: "success",
+        message: "Answer added!"
+      }
+    });
+
+    var route = "/question/details/" + request.input("question_id");
+    return response.route(route);
   }
 }
 
