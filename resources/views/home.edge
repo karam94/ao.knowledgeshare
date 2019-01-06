@@ -59,7 +59,7 @@
                     </div>
                 
                     <div class="content">
-                      {{ post.description }}
+                      {{ post.description.length > 40 ? post.description.substring(0, 40) + '...' : post.description }}
                       <hr/>
                       <div class="columns">
                         <div class="column">
@@ -108,7 +108,7 @@
                 </header>
                 <div class="card-content">
                   <div class="content">
-                    {{ question.description }}
+                    {{ question.description.length > 250 ? question.description.substring(0, 250) + '...' : question.description }}
                     <hr>
                     <a href="{{ route('posts', { category_id: question.category.id }) }}">
                       <span class="tag">
