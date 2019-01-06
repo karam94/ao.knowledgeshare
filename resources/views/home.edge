@@ -127,10 +127,10 @@
                     <i class="fas fa-caret-up"></i>
                   </a>
                   <span class="card-footer-item">
-                    0 Votes
+                    {{ question.votes.length }} {{ question.votes.length == 1 ? 'Vote' : 'Votes' }}
                   </span>
                   <span class="card-footer-item">
-                    0 Answers
+                      {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
                   </span>
                   <a href="#" class="card-footer-item">
                     <i class="fas fa-caret-down"></i>

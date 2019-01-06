@@ -17,6 +17,8 @@ class HomeController {
       .orderBy("id", "desc")
       .with("category")
       .with("poster")
+      .with("votes")
+      .with("answers.author")
       .paginate(Number(request.input("page", 1)), 10);
 
     return view.render("home", {
