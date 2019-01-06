@@ -31,6 +31,14 @@ class User extends Model {
   subscriptions() {
     return this.hasMany("App/Models/Subscription");
   }
+
+  questionVotes(){
+    return this.hasMany("App/Models/QuestionVote");
+  }
+
+  answerVotes(){
+    return this.hasMany("App/Models/AnswerVote");
+  }
 }
 
 module.exports = User;

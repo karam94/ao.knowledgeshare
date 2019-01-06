@@ -16,7 +16,11 @@ class Question extends Model {
     return this.hasMany("App/Models/Answer");
   }
 
-  votes() {
+  upvotes() {
+    return this.hasMany("App/Models/QuestionVote");
+  }
+
+  downvotes() {
     return this.hasMany("App/Models/QuestionVote");
   }
 }

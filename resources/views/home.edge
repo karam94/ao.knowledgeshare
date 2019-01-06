@@ -123,18 +123,37 @@
                   </div>
                 </div>
                 <footer class="card-footer">
-                  <a href="#" class="card-footer-item">
-                    <i class="fas fa-caret-up"></i>
-                  </a>
+                  <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                  style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
+                    {{ csrfField() }}
+
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+
+                    <a href="#" onclick="this.parentNode.submit(); return false;"
+                    style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
+                      <i class="fas fa-caret-up"></i>
+                    </a>
+                  </form>
+
                   <span class="card-footer-item">
-                    {{ question.votes.length }} {{ question.votes.length == 1 ? 'Vote' : 'Votes' }}
+                    {{ question.upvotes.length - question.downvotes.length }} {{ (question.upvotes.length - question.downvotes.length) == 1 ? 'Vote' : 'Votes' }}
                   </span>
+
                   <span class="card-footer-item">
-                      {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
+                    {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
                   </span>
-                  <a href="#" class="card-footer-item">
-                    <i class="fas fa-caret-down"></i>
-                  </a>
+
+                  <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                  style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
+                    {{ csrfField() }}
+        
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+
+                    <a href="#" onclick="this.parentNode.submit(); return false;"
+                    style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
+                      <i class="fas fa-caret-down"></i>
+                    </a>
+                  </form>
                 </footer>
               </div>
             </div>

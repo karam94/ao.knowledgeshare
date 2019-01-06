@@ -1,6 +1,7 @@
 "use strict";
 
 const Question = use("App/Models/Question");
+const QuestionVote = use("App/Models/QuestionVote");
 const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Answer = use("App/Models/Answer");
@@ -77,6 +78,58 @@ class QuestionController {
 
     var route = "/question/details/" + request.input("question_id");
     return response.route(route);
+  }
+
+  async upvote({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const vote = await QuestionVote.query()
+      .where("user_id", user.id)
+      .where("question_id", request.input("question_id"))
+      .first();
+
+    if(vote && vote.is_positive){
+      vote.delete();
+    } else if (vote && !vote.is_positive){
+      vote.is_positive = true;
+
+      await user.questionVotes().save(vote);
+    } else {
+      const newVote = new QuestionVote();
+      newVote.user_id = user.id;
+      newVote.question_id = request.input("question_id");
+      newVote.is_positive = true;
+      
+      await user.questionVotes().save(newVote);
+    }
+
+    return response.route("home");
+  }
+
+  async downvote({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+
+    const vote = await QuestionVote.query()
+      .where("user_id", user.id)
+      .where("question_id", request.input("question_id"))
+      .first();
+
+    if(vote && vote.is_positive){
+      vote.is_positive = false;
+
+      await user.questionVotes().save(vote);
+    } else if (vote && !vote.is_positive){
+      vote.delete();
+    } else {
+      const newVote = new QuestionVote();
+      newVote.user_id = user.id;
+      newVote.question_id = request.input("question_id");
+      newVote.is_positive = false;
+      
+      await user.questionVotes().save(newVote);
+    }
+
+    return response.route("home");
   }
 }
 
