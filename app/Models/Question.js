@@ -15,6 +15,10 @@ class Question extends Model {
   answers() {
     return this.hasMany("App/Models/Answer");
   }
+
+  votes() {
+    return this.hasMany("App/Models/QuestionVote");
+  }
 }
 
 module.exports = Question;
