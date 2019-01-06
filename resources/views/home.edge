@@ -100,7 +100,9 @@
               <div class="card">
                 <header class="card-header">
                   <p class="card-header-title">
-                    {{ question.title }}
+                    <a href="{{ route('questionDetails', { id: question.id }) }}">
+                      {{ question.title }}
+                    </a>
                   </p>
                   <span style="padding: 0.75em">
                     asked by {{ question.poster.username }}
