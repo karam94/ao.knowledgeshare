@@ -48,10 +48,28 @@ class QuestionController {
   }
 
   async details({ params, view, session }) {
+    const user = await User.query()
+      .where("username", session.get("username"))
+      .firstOrFail();
+
     const question = await Question.query()
       .where("id", params.id)
       .with("category")
       .with("poster")
+      .with("upvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", true);
+      })
+      .with("downvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", false);
+      })
+      .withCount("allupvotes", (builder) => {
+        builder.where("is_positive", true);
+      }) //rename this to make more flipping sense
+      .withCount("alldownvotes", (builder) => {
+        builder.where("is_positive", false);
+      }) //rename this to make more flipping sense
       .with("answers.author")
       .firstOrFail();
 
@@ -103,7 +121,7 @@ class QuestionController {
       await user.questionVotes().save(newVote);
     }
 
-    return response.route("home");
+    return response.route("back");
   }
 
   async downvote({ request, response, session }) {
@@ -129,7 +147,7 @@ class QuestionController {
       await user.questionVotes().save(newVote);
     }
 
-    return response.route("home");
+    return response.route("back");
   }
 }
 
