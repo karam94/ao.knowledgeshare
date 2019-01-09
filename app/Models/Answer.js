@@ -12,7 +12,19 @@ class Answer extends Model {
     return this.belongsTo("App/Models/Question");
   }
 
-  votes() {
+  upvotes() {
+    return this.hasMany("App/Models/AnswerVote");
+  }
+
+  downvotes() {
+    return this.hasMany("App/Models/AnswerVote");
+  }
+
+  allanswerupvotes() {
+    return this.hasMany("App/Models/AnswerVote");
+  }
+
+  allanswerdownvotes() {
     return this.hasMany("App/Models/AnswerVote");
   }
 }

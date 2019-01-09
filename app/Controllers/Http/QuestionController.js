@@ -71,8 +71,31 @@ class QuestionController {
         builder.where("is_positive", false);
       }) //rename this to make more flipping sense
       .with("answers.author")
+      .with("answers.upvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", true);
+      })
+      .with("answers.downvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", false);
+      })
+      .with("answers", (builder) => {
+        builder.withCount("allanswerupvotes", (builder) => {
+          builder.where("is_positive", true);
+        });
+        builder.withCount("allanswerdownvotes", (builder) => {
+          builder.where("is_positive", false);
+        });
+      })
+      // .withCount("answers.allupvotes", (builder) => {
+      //   builder.where("is_positive", true);
+      // }) //rename this to make more flipping sense
+      // .withCount("answers.alldownvotes", (builder) => {
+      //   builder.where("is_positive", false);
+      // }) //rename this to make more flipping sense
       .firstOrFail();
 
+    var test = question.toJSON();
     return view.render("question/details", {
       question: question.toJSON()
     });

@@ -17,11 +17,11 @@ class AnswerVoteSchema extends Schema {
         .onDelete("cascade");
 
       table
-        .integer("question_id")
+        .integer("answer_id")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("questions")
+        .inTable("answers")
         .onDelete("cascade");
 
       table
