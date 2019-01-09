@@ -23,6 +23,14 @@ class Question extends Model {
   downvotes() {
     return this.hasMany("App/Models/QuestionVote");
   }
+
+  allupvotes() {
+    return this.hasMany("App/Models/QuestionVote");
+  }
+
+  alldownvotes() {
+    return this.hasMany("App/Models/QuestionVote");
+  }
 }
 
 module.exports = Question;

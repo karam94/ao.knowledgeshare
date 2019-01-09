@@ -136,7 +136,7 @@
                   </form>
 
                   <span class="card-footer-item">
-                    {{ question.upvotes.length - question.downvotes.length }} {{ (question.upvotes.length - question.downvotes.length) == 1 ? 'Vote' : 'Votes' }}
+                    {{ question.__meta__.allupvotes_count - question.__meta__.alldownvotes_count }} {{ (question.__meta__.allupvotes_count - question.__meta__.alldownvotes_count) == 1 ? 'Vote' : 'Votes' }}
                   </span>
 
                   <span class="card-footer-item">

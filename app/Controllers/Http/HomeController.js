@@ -1,8 +1,11 @@
 "use strict";
 
+const Database = use("Database");
+
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
+const QuestionVote = use("App/Models/QuestionVote");
 
 class HomeController {
   async index({ view, request, session }) {
@@ -18,8 +21,7 @@ class HomeController {
       .with("comments")
       .paginate(Number(request.input("page", 1)), 10);
 
-    const questions = await Question.query()
-      .orderBy("id", "desc")
+    var questions = await Question.query()
       .with("category")
       .with("poster")
       .with("upvotes", (builder) => {
@@ -30,9 +32,16 @@ class HomeController {
         builder.where("user_id", user.id);
         builder.where("is_positive", false);
       })
+      .withCount("allupvotes", (builder) => {
+        builder.where("is_positive", true);
+      }) //rename this to make more flipping sense
+      .withCount("alldownvotes", (builder) => {
+        builder.where("is_positive", false);
+      }) //rename this to make more flipping sense
       .with("answers.author")
+      .orderBy("allupvotes_count", "desc")
       .paginate(Number(request.input("page", 1)), 10);
-
+    
     return view.render("home", {
       user: user.toJSON(),
       posts: posts.toJSON(),
