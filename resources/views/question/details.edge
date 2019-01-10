@@ -85,7 +85,7 @@
               @include('partials._notification')
               
               @each(answer in question.answers)
-              <div class="box" style="padding-bottom: 0px;">
+              <div class="box" style="padding-bottom: 0px; padding-left: 0px; padding-right: 0px;">
                   @if(answer.author.username === user.username) 
                     <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
@@ -96,7 +96,7 @@
                     </form>
                   @endif
                   
-                  <article class="media">
+                  <article class="media" style="padding-left: 20px; padding-right: 20px">
                     <div class="media-left">
                       <figure class="image is-64x64">
                         <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
@@ -128,15 +128,21 @@
                         </a>
                       </form>
 
-                      <a href="#" class="card-footer-item">
-                        <i class="fas fa-caret-up"></i>
-                      </a>
                       <span class="card-footer-item">
-                        0 Votes
+                        {{ answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count }} {{ (answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count) == 1 || (answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count) == -1 ? 'Vote' : 'Votes' }}
                       </span>
-                      <a href="#" class="card-footer-item">
-                        <i class="fas fa-caret-down"></i>
-                      </a>
+
+                      <form action="{{ route('answer/downvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                      style="cursor:pointer; {{ answer.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
+                        {{ csrfField() }}
+    
+                        <input type="hidden" name="answer_id" value="{{ answer.id }}">
+    
+                        <a href="#" onclick="this.parentNode.submit(); return false;"
+                        style="{{ answer.downvotes.length > 0 ? 'color: white' : '' }}">
+                          <i class="fas fa-caret-down"></i>
+                        </a>
+                      </form>
                   </footer>
               </div>
               @endeach

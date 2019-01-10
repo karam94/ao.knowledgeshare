@@ -86,14 +86,15 @@ class QuestionController {
         builder.withCount("allanswerdownvotes", (builder) => {
           builder.where("is_positive", false);
         });
+        builder.orderBy("allanswerupvotes_count", "desc");
       })
+      .firstOrFail();
       // .withCount("answers.allupvotes", (builder) => {
       //   builder.where("is_positive", true);
       // }) //rename this to make more flipping sense
       // .withCount("answers.alldownvotes", (builder) => {
       //   builder.where("is_positive", false);
       // }) //rename this to make more flipping sense
-      .firstOrFail();
 
     var test = question.toJSON();
     return view.render("question/details", {
