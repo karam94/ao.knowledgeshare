@@ -8,7 +8,9 @@ const Question = use("App/Models/Question");
 
 class CategoryController {
   async index({ view, request, params, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await User.query()
+      .where("username", session.get("username"))
+      .firstOrFail();
 
     const posts = await Post.query()
       .orderBy("id", "desc")
@@ -19,11 +21,27 @@ class CategoryController {
       .with("comments")
       .paginate(Number(request.input("page", 1)), 10);
 
+    // const questions = await Question.query()
+    //   .orderBy("id", "desc")
+    //   .where("category_id", params.category_id)
+    //   .with("category")
+    //   .with("poster")
+    //   .paginate(Number(request.input("page", 1)), 10);
+
     const questions = await Question.query()
-      .orderBy("id", "desc")
-      .where("category_id", params.category_id)
       .with("category")
+      .where("category_id", params.category_id)
       .with("poster")
+      .with("upvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", true);
+      })
+      .with("downvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", false);
+      })
+      .with("answers.author")
+      .orderBy("score", "desc")
       .paginate(Number(request.input("page", 1)), 10);
 
     const category = await Category.query()

@@ -4,7 +4,7 @@
 
   <section class="section">
     <div class="container">
-      <h2 class="subtitle is-3">Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Posts</h2>
+      <h2 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Posts</h2>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -24,6 +24,7 @@
               <span>Subscribe</span>
             @endif
           </button>
+        </form>
       </div>
       @endif
 
@@ -93,7 +94,7 @@
       <br/><br/>
 
       <a name="latestQuestions"></a>
-      <h2 class="subtitle is-3">Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Questions</h2>
+      <h2 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Questions</h2>
       <div class="columns is-multiline">
           @each(question in questions.data)
             <div class="column is-full">
@@ -122,6 +123,7 @@
                     </span>
                   </div>
                 </div>
+                
                 <footer class="card-footer">
                   <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
                   style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
