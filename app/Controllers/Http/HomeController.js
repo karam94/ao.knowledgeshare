@@ -32,14 +32,8 @@ class HomeController {
         builder.where("user_id", user.id);
         builder.where("is_positive", false);
       })
-      .withCount("allupvotes", (builder) => {
-        builder.where("is_positive", true);
-      }) //rename this to make more flipping sense
-      .withCount("alldownvotes", (builder) => {
-        builder.where("is_positive", false);
-      }) //rename this to make more flipping sense
       .with("answers.author")
-      .orderBy("allupvotes_count", "desc")
+      .orderBy("score", "desc")
       .paginate(Number(request.input("page", 1)), 10);
     
     return view.render("home", {

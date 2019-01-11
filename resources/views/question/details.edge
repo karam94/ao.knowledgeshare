@@ -25,7 +25,7 @@
             </button>
           </form>
 
-          {{ question.__meta__.allupvotes_count - question.__meta__.alldownvotes_count }} {{ (question.__meta__.allupvotes_count - question.__meta__.alldownvotes_count) == 1 || (question.__meta__.allupvotes_count - question.__meta__.alldownvotes_count) == -1 ? 'Vote' : 'Votes' }}
+          {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
 
           <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding:10px;">
             {{ csrfField() }}

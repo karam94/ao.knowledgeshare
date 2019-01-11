@@ -29,6 +29,10 @@ class AnswersSchema extends Schema {
         .notNullable()
         .unique();
 
+      table.integer("score")
+        .notNullable()
+        .defaultTo(0);
+      
       table.timestamps();
     });
   }

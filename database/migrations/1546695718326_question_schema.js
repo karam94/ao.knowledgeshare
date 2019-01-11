@@ -28,6 +28,10 @@ class QuestionSchema extends Schema {
           
       table.string("description");
 
+      table.integer("score")
+        .notNullable()
+        .defaultTo(0);
+
       table.timestamps();
     });
   }

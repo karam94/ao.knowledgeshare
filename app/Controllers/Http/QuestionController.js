@@ -71,30 +71,8 @@ class QuestionController {
         builder.where("is_positive", false);
       }) //rename this to make more flipping sense
       .with("answers.author")
-      .with("answers.upvotes", (builder) => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", true);
-      })
-      .with("answers.downvotes", (builder) => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", false);
-      })
-      .with("answers", (builder) => {
-        builder.withCount("allanswerupvotes", (builder) => {
-          builder.where("is_positive", true);
-        });
-        builder.withCount("allanswerdownvotes", (builder) => {
-          builder.where("is_positive", false);
-        });
-        builder.orderBy("allanswerupvotes_count", "desc");
-      })
+      .orderBy("score", "desc")
       .firstOrFail();
-      // .withCount("answers.allupvotes", (builder) => {
-      //   builder.where("is_positive", true);
-      // }) //rename this to make more flipping sense
-      // .withCount("answers.alldownvotes", (builder) => {
-      //   builder.where("is_positive", false);
-      // }) //rename this to make more flipping sense
 
     var test = question.toJSON();
     return view.render("question/details", {
@@ -125,6 +103,10 @@ class QuestionController {
   async upvote({ request, response, session }) {
     const user = await User.findByOrFail("username", session.get("username"));
 
+    const question = await Question.query()
+      .where("id", request.input("question_id"))
+      .first();
+
     const vote = await QuestionVote.query()
       .where("user_id", user.id)
       .where("question_id", request.input("question_id"))
@@ -132,8 +114,15 @@ class QuestionController {
 
     if(vote && vote.is_positive){
       vote.delete();
+      
+      question.score--;
+      question.save(); 
     } else if (vote && !vote.is_positive){
       vote.is_positive = true;
+
+      question.score++;
+      question.score++; 
+      question.save(); 
 
       await user.questionVotes().save(vote);
     } else {
@@ -141,6 +130,9 @@ class QuestionController {
       newVote.user_id = user.id;
       newVote.question_id = request.input("question_id");
       newVote.is_positive = true;
+
+      question.score++;
+      question.save(); 
       
       await user.questionVotes().save(newVote);
     }
@@ -151,6 +143,10 @@ class QuestionController {
   async downvote({ request, response, session }) {
     const user = await User.findByOrFail("username", session.get("username"));
 
+    const question = await Question.query()
+      .where("id", request.input("question_id"))
+      .first();
+
     const vote = await QuestionVote.query()
       .where("user_id", user.id)
       .where("question_id", request.input("question_id"))
@@ -159,8 +155,15 @@ class QuestionController {
     if(vote && vote.is_positive){
       vote.is_positive = false;
 
+      question.score--;
+      question.score--;
+      question.save(); 
+
       await user.questionVotes().save(vote);
     } else if (vote && !vote.is_positive){
+      question.score++;
+      question.save();
+
       vote.delete();
     } else {
       const newVote = new QuestionVote();
@@ -168,6 +171,9 @@ class QuestionController {
       newVote.question_id = request.input("question_id");
       newVote.is_positive = false;
       
+      question.score--;
+      question.save();
+
       await user.questionVotes().save(newVote);
     }
 
