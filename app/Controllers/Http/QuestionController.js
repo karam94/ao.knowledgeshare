@@ -71,6 +71,17 @@ class QuestionController {
         builder.where("is_positive", false);
       }) //rename this to make more flipping sense
       .with("answers.author")
+      .with("answers.upvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", true);
+      })
+      .with("answers.downvotes", (builder) => {
+        builder.where("user_id", user.id);
+        builder.where("is_positive", false);
+      })
+      .with("answers", (builder) => {
+        builder.orderBy("score", "desc");
+      })
       .orderBy("score", "desc")
       .firstOrFail();
 

@@ -129,7 +129,7 @@
                       </form>
 
                       <span class="card-footer-item">
-                        {{ answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count }} {{ (answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count) == 1 || (answer.__meta__.allanswerupvotes_count - answer.__meta__.allanswerdownvotes_count) == -1 ? 'Vote' : 'Votes' }}
+                        {{ answer.score }}  {{ answer.score == 1 || answer.score == -1 ? 'Vote' : 'Votes' }}
                       </span>
 
                       <form action="{{ route('answer/downvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
