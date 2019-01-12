@@ -9,6 +9,47 @@ $navbar-breakpoint: 0;
 
 @import "node_modules/bulma/bulma";
 
+@font-face {
+  font-family: 'AO Icons';
+  src: url("../fonts/ao-icons.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'AO Bold';
+  src: url("../fonts/AoOz-Bold.ttf") format('truetype');
+}
+
+@font-face {
+  font-family: 'AO Regular';
+  src: url("../fonts/AoOz-Regular.ttf") format('truetype');
+}
+
+h1 {
+  font-family: 'AO Bold', sans-serif;
+}
+
+h2 {
+  font-family: 'AO Regular', sans-serif;
+}
+
+h3 {
+  font-family: 'AO Regular', sans-serif;
+}
+
+.navbar-title {
+  font-family: 'AO Bold', sans-serif;
+  font-size: 1.2em;
+}
+
+.navbar-title-icon {
+  font-family: 'AO Icons', sans-serif;
+  font-size: 1.2em;
+}
+
+.card-header > .title:not(:last-child) {
+  margin-bottom: 0 !important;
+}
+
 .centered-img {
   display:block; 
   margin-left:auto; 

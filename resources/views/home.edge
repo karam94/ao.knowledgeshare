@@ -4,7 +4,7 @@
 
   <section class="section">
     <div class="container">
-      <h2 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Posts</h2>
+      <h1 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Posts</h1>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -46,11 +46,11 @@
                 <div class="card-content">
                     <div class="media">
                       <div class="media-content">
-                        <p class="title is-5">                    
+                        <h3 class="title is-5">                    
                           <a href="{{ route('details', { id: post.id }) }}">
                             {{ post.title }}
                           </a>
-                        </p>
+                        </h3>
 
                         <p class="subtitle is-6">
                           shared by {{ post.poster.username }}
@@ -94,18 +94,18 @@
       <br/><br/>
 
       <a name="latestQuestions"></a>
-      <h2 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Questions</h2>
+      <h1 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Questions</h2>
       <div class="columns is-multiline">
           @each(question in questions.data)
             <div class="column is-full">
               <div class="card">
                 <a name="question{{question.id}}">
                 <header class="card-header">
-                  <p class="card-header-title">
+                  <h3 class="title is-5 card-header-title">
                     <a href="{{ route('questionDetails', { id: question.id }) }}">
                       {{ question.title }}
                     </a>
-                  </p>
+                  </h3>
                   <span style="padding: 0.75em">
                     asked by {{ question.poster.username }}
                   </span>
