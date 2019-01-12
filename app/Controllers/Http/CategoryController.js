@@ -101,7 +101,9 @@ class CategoryController {
   }
 
   async subscriptions({ view, request, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await User.query()
+      .where("username", session.get("username"))
+      .firstOrFail();
 
     const subscriptions = await Subscription.query()
       .where("user_id", user.id)
@@ -117,10 +119,26 @@ class CategoryController {
         .with("comments")
         .paginate(Number(request.input("page", 1)), 10);
 
+      const questions = await Question.query()
+        .with("category")
+        .where("category_id", subscriptions)
+        .with("poster")
+        .with("upvotes", (builder) => {
+          builder.where("user_id", user.id);
+          builder.where("is_positive", true);
+        })
+        .with("downvotes", (builder) => {
+          builder.where("user_id", user.id);
+          builder.where("is_positive", false);
+        })
+        .with("answers.author")
+        .orderBy("score", "desc")
+        .paginate(Number(request.input("page", 1)), 10);
+
       return view.render("home", {
         posts: posts.toJSON(),
-        message: "Subscribed",
-        title: "My Subscriptions"
+        questions: questions.toJSON(),
+        message: "Subscribed"
       });
     } else {
       session.flash({
