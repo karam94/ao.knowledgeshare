@@ -18,7 +18,7 @@
 
             <input type="hidden" name="question_id" value="{{ question.id }}">
 
-            <button type="submit" class="button" style="{{ question.upvotes.length > 0 ? 'background-color: #7fba23' : 'background-color: white' }}">
+            <button type="submit" class="button" style="{{ question.upvotes.length > 0 ? 'background-color: #7fba23' : 'background-color: white' }}; border: none;">
               <span class="icon">
                 <i class="fas fa-caret-up"></i>
               </span>
@@ -32,7 +32,7 @@
 
             <input type="hidden" name="question_id" value="{{ question.id }}">
 
-            <button type="submit" class="button" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
+            <button type="submit" class="button" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}; border: none;">
               <span class="icon">
                 <i class="fas fa-caret-down"></i>
               </span>
@@ -116,7 +116,7 @@
                   <br/>
 
                   <footer class="card-footer">
-                      <form action="{{ route('answer/upvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                      <form action="{{ route('answer/upvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-upvote" onclick="this.submit();"
                       style="cursor:pointer; {{ answer.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
                         {{ csrfField() }}
     
@@ -132,7 +132,7 @@
                         {{ answer.score }}  {{ answer.score == 1 || answer.score == -1 ? 'Vote' : 'Votes' }}
                       </span>
 
-                      <form action="{{ route('answer/downvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                      <form action="{{ route('answer/downvote', { id: answer.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
                       style="cursor:pointer; {{ answer.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
                         {{ csrfField() }}
     

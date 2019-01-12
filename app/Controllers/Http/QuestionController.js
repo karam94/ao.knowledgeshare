@@ -56,30 +56,30 @@ class QuestionController {
       .where("id", params.id)
       .with("category")
       .with("poster")
-      .with("upvotes", (builder) => {
+      .with("upvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", true);
       })
-      .with("downvotes", (builder) => {
+      .with("downvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", false);
       })
-      .withCount("allupvotes", (builder) => {
+      .withCount("allupvotes", builder => {
         builder.where("is_positive", true);
       }) //rename this to make more flipping sense
-      .withCount("alldownvotes", (builder) => {
+      .withCount("alldownvotes", builder => {
         builder.where("is_positive", false);
       }) //rename this to make more flipping sense
       .with("answers.author")
-      .with("answers.upvotes", (builder) => {
+      .with("answers.upvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", true);
       })
-      .with("answers.downvotes", (builder) => {
+      .with("answers.downvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", false);
       })
-      .with("answers", (builder) => {
+      .with("answers", builder => {
         builder.orderBy("score", "desc");
       })
       .orderBy("score", "desc")
@@ -123,17 +123,17 @@ class QuestionController {
       .where("question_id", request.input("question_id"))
       .first();
 
-    if(vote && vote.is_positive){
+    if (vote && vote.is_positive) {
       vote.delete();
-      
+
       question.score--;
-      question.save(); 
-    } else if (vote && !vote.is_positive){
+      question.save();
+    } else if (vote && !vote.is_positive) {
       vote.is_positive = true;
 
       question.score++;
-      question.score++; 
-      question.save(); 
+      question.score++;
+      question.save();
 
       await user.questionVotes().save(vote);
     } else {
@@ -143,8 +143,8 @@ class QuestionController {
       newVote.is_positive = true;
 
       question.score++;
-      question.save(); 
-      
+      question.save();
+
       await user.questionVotes().save(newVote);
     }
 
@@ -163,15 +163,15 @@ class QuestionController {
       .where("question_id", request.input("question_id"))
       .first();
 
-    if(vote && vote.is_positive){
+    if (vote && vote.is_positive) {
       vote.is_positive = false;
 
       question.score--;
       question.score--;
-      question.save(); 
+      question.save();
 
       await user.questionVotes().save(vote);
-    } else if (vote && !vote.is_positive){
+    } else if (vote && !vote.is_positive) {
       question.score++;
       question.save();
 
@@ -181,7 +181,7 @@ class QuestionController {
       newVote.user_id = user.id;
       newVote.question_id = request.input("question_id");
       newVote.is_positive = false;
-      
+
       question.score--;
       question.save();
 

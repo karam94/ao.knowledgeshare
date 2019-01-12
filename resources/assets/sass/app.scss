@@ -28,3 +28,19 @@ $navbar-breakpoint: 0;
     margin-right: 3em;
   }
 }
+
+.card-footer-item-upvote:hover {
+  background-color: #73a920 !important;
+}
+
+.card-footer-item-downvote:hover {
+  background-color: #ff3860 !important;
+}
+
+.card-footer-item-upvote:hover > a > i {
+  color: #ffffff !important;
+}
+
+.card-footer-item-downvote:hover > a > i {
+  color: #ffffff !important;
+}

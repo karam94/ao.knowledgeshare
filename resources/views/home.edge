@@ -126,7 +126,7 @@
                 </div>
                 
                 <footer class="card-footer">
-                  <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                  <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-upvote" onclick="this.submit();"
                   style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
                     {{ csrfField() }}
 
@@ -146,7 +146,7 @@
                     {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
                   </span>
 
-                  <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item" onclick="this.submit();"
+                  <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
                   style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
                     {{ csrfField() }}
         
