@@ -99,6 +99,7 @@
           @each(question in questions.data)
             <div class="column is-full">
               <div class="card">
+                <a name="question{{question.id}}">
                 <header class="card-header">
                   <p class="card-header-title">
                     <a href="{{ route('questionDetails', { id: question.id }) }}">
