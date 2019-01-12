@@ -4,6 +4,7 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
 const User = use("App/Models/User");
+var md5 = require("md5");
 
 class UsernameMiddleware {
   /**
@@ -14,11 +15,14 @@ class UsernameMiddleware {
   async handle({ request, response, session, view }, next) {
     const username = require("username");
     var thisUser = await username();
-    var thisUserEmail = thisUser+"@ao.com";
+    // var thisUserEmail = thisUser+"@ao.com"; // TODO: Write plugin to fetch proper AD email
+    var thisUserEmail = "karam.kabbara@ao.com";
 
     if (thisUser) {
+      var thisGravatar = md5(thisUserEmail);
+
       await User.findOrCreate(
-        { username: thisUser, email:  thisUserEmail }
+        { username: thisUser, email: thisUserEmail, gravatar: thisGravatar }
       );
 
       view.share({

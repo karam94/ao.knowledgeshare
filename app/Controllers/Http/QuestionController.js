@@ -85,7 +85,6 @@ class QuestionController {
       .orderBy("score", "desc")
       .firstOrFail();
 
-    var test = question.toJSON();
     return view.render("question/details", {
       question: question.toJSON()
     });

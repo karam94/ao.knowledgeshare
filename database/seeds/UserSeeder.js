@@ -18,6 +18,10 @@ class UserSeeder {
       {
         username: "TestUser",
         email: "test@test.com"
+      },
+      {
+        username: "Karam",
+        email: "karam.kabbara@ao.com"
       }
     ];
 
