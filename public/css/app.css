@@ -11206,6 +11206,7 @@ h3 {
 
 .navbar-title-icon {
   font-family: "AO Icons", sans-serif;
+  font-size: 1.2em;
 }
 
 .card-header > .title:not(:last-child) {
@@ -11246,5 +11247,25 @@ h3 {
 
 .card-footer-item-downvote:hover > a > i {
   color: #ffffff !important;
+}
+
+.button-question-upvote {
+  color: #98da30 !important;
+}
+
+.button-question-downvote {
+  color: #98da30 !important;
+}
+
+.button-question-upvote:hover {
+  background-color: #73a920 !important;
+  border: 1px solid white !important;
+  color: white !important;
+}
+
+.button-question-downvote:hover {
+  background-color: #ff3860 !important;
+  border: 1px solid white !important;
+  color: white !important;
 }
 

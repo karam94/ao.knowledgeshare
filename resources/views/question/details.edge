@@ -13,26 +13,28 @@
             asked by <em>{{ question.poster.username }}</em>
           </h2>
           
-          <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding:10px;">
+          <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding-left:10px; padding-right:10px;">
             {{ csrfField() }}
 
             <input type="hidden" name="question_id" value="{{ question.id }}">
 
-            <button type="submit" class="button" style="{{ question.upvotes.length > 0 ? 'background-color: #7fba23' : 'background-color: white' }}; border: none;">
+            <button type="submit" class="button button-question-upvote" style="{{ question.upvotes.length > 0 ? 'background-color: #7fba23' : 'background-color: white' }};">
               <span class="icon">
                 <i class="fas fa-caret-up"></i>
               </span>
             </button>
           </form>
 
-          {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
+          <span style="position: relative; top: 5px;">
+            {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
+          </span>
 
-          <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding:10px;">
+          <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding-left:10px; padding-right:10px;">
             {{ csrfField() }}
 
             <input type="hidden" name="question_id" value="{{ question.id }}">
 
-            <button type="submit" class="button" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}; border: none;">
+            <button type="submit" class="button button-question-downvote" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }};">
               <span class="icon">
                 <i class="fas fa-caret-down"></i>
               </span>
