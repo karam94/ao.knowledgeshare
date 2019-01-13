@@ -4,7 +4,7 @@
 
   <section class="section">
     <div class="container">
-      <h1 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Posts</h1>
+      <h1 class="subtitle is-3">🤓 Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Posts</h1>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -94,7 +94,7 @@
       <br/><br/>
 
       <a name="latestQuestions"></a>
-      <h1 class="subtitle is-3">Latest {{ (title) ? title : '' }}{{ (message) ? message : '' }} Questions</h2>
+      <h1 class="subtitle is-3">🤔 Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Questions</h2>
       <div class="columns is-multiline">
           @each(question in questions.data)
             <div class="column is-full">
