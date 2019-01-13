@@ -141,15 +141,9 @@ class CategoryController {
         message: "Subscribed"
       });
     } else {
-      session.flash({
-        notification: {
-          type: "danger",
-          message: "You are not subscribed to any categories!"
-        }
-      });
-
       return view.render("home", {
-        title: "My Subscriptions"
+        title: "My Subscriptions",
+        message: "Subscribed"
       });
     }
   }

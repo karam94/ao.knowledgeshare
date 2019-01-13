@@ -4,7 +4,7 @@
 
   <section class="section">
     <div class="container">
-      <h1 class="subtitle is-3">🤓 Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Posts</h1>
+      <h1 class="subtitle is-3">🤓 Latest {{ (category.name) ? category.name : '' }} {{ (message) ? message : '' }} Posts</h1>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -48,7 +48,7 @@
                       <div class="media-content">
                         <h3 class="title is-5">                    
                           <a href="{{ route('details', { id: post.id }) }}">
-                            {{ post.title }}
+                            📰 &nbsp; {{ post.title }}
                           </a>
                         </h3>
 
@@ -103,7 +103,7 @@
                 <header class="card-header">
                   <h3 class="title is-5 card-header-title">
                     <a href="{{ route('questionDetails', { id: question.id }) }}">
-                      {{ question.title }}
+                      ❓ &nbsp; {{ question.title }}
                     </a>
                   </h3>
                   <span style="padding: 0.75em">
