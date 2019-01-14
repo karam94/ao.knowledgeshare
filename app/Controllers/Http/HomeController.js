@@ -19,7 +19,7 @@ class HomeController {
       .with("poster")
       .with("likes")
       .with("comments")
-      .paginate(Number(request.input("page", 1)), 10);
+      .paginate(Number(request.input("page", 1)), 8);
 
     var questions = await Question.query()
       .with("category")
