@@ -1,0 +1,26 @@
+<nav class="pagination is-centered">
+    <a
+      class="pagination-previous"
+      href="?questionpage={{ pagination.page - 1 }}"
+      {{ pagination.page <= 1 ? 'disabled' : '' }}
+    >Previous</a>
+  
+    <a
+      class="pagination-next"
+      href="?questionpage={{ pagination.page + 1 }}"
+      {{ pagination.page >= pagination.lastPage ? 'disabled' : '' }}
+    >Next</a>
+  
+    <ul class="pagination-list">
+      @each(page in paginationLinks(pagination.lastPage))
+        <li>
+          <a
+            class="pagination-link{{ pagination.page === page ? ' is-current' : '' }}"
+            href="?questionpage={{ page }}">
+              {{ page }}
+          </a>
+        </li>
+      @endeach
+    </ul>
+  </nav>
+  

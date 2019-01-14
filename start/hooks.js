@@ -23,4 +23,10 @@ hooks.after.providersBooted(() => {
       return index + 1;
     });
   });
+
+  View.global("paginationLinks2", total => {
+    return Array.from(new Array(total), (value, index) => {
+      return index + 1;
+    });
+  });
 });

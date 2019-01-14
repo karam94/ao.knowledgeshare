@@ -19,7 +19,7 @@ class HomeController {
       .with("poster")
       .with("likes")
       .with("comments")
-      .paginate(Number(request.input("page", 1)), 8);
+      .paginate(Number(request.input("postpage", 1)), 8);
 
     var questions = await Question.query()
       .with("category")
@@ -34,7 +34,7 @@ class HomeController {
       })
       .with("answers.author")
       .orderBy("score", "desc")
-      .paginate(Number(request.input("page", 1)), 10);
+      .paginate(Number(request.input("questionpage", 1)), 5);
     
     return view.render("home", {
       user: user.toJSON(),
