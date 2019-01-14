@@ -10,7 +10,7 @@
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
-            <a href="#" class="navbar-link">Hello, {{ username }}!</a>
+            <a href="#" class="navbar-link"><img src="https://www.gravatar.com/avatar/{{ gravatar }}" alt="{{ user.username }}"> &nbsp; Hello, {{ username }}!</a>
 
             <div class="navbar-dropdown">
               <a href="{{ route('home') }}" class="navbar-item">

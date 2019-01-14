@@ -26,7 +26,8 @@ class UsernameMiddleware {
       );
 
       view.share({
-        username: thisUser
+        username: thisUser,
+        gravatar: thisGravatar
       });
 
       session.put("username", thisUser);

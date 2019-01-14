@@ -78,8 +78,7 @@
                         class="textarea"
                         name="description"
                         value="{{ old('description', '') }}"
-                        placeholder="Your Question">
-                      </textarea>
+                        placeholder="Your Question"></textarea>
                     </div>
   
                     {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('description'), hasErrorFor('description')) }}
