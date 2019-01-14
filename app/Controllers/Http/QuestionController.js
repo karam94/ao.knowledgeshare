@@ -86,7 +86,8 @@ class QuestionController {
       .firstOrFail();
 
     return view.render("question/details", {
-      question: question.toJSON()
+      question: question.toJSON(),
+      user: user.toJSON()
     });
   }
 
