@@ -70,7 +70,10 @@
               </div>
 
               <div class="tabs-content hidden" id="questions-tab">
-                  This is a questions tab
+                  <h3>Popular Questions</h3>
+                  @each(question in questions)
+                    {{ question.title }}
+                  @endeach
               </div>
 
               <div class="tabs-content hidden" id="answers-tab">
