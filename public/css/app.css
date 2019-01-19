@@ -11221,6 +11221,29 @@ h3 {
   padding-bottom: 25px;
 }
 
+/*top right bottom left*/
+
+.profile-column h1 {
+  margin: 10px 0 10px 5px;
+}
+
+.profile-column h3 {
+  margin: 10px 0 10px 5px;
+}
+
+.profile-column p {
+  margin: 10px 0 10px 5px;
+  font-family: "AO Regular", sans-serif;
+}
+
+.tabs-content {
+  margin: 0 10px 0 10px;
+}
+
+.hidden {
+  display: none;
+}
+
 @media screen and (min-width: 0) {
   .navbar > .container .navbar-brand,
   .container > .navbar .navbar-brand {

@@ -3,4 +3,102 @@
 @section('content')
   @set('title', title)
 
+  <section class="section">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-one-quarter profile-column">
+            <div class="image is-square">
+              <img src="https://www.gravatar.com/avatar/b017d82484bc1b3d85dc114e8cc9ec37" alt="Karam" style="border-radius:2%;">
+            </div>
+            
+            <div>
+              <h1 class="title">
+                {{ user.username }}
+              </h1>
+            </div>
+
+            <div>
+              <h3>
+                Joined AO as a graduate Software Developer in 2015, had no idea what I was doing...
+                I've now been here 3 years and I still have no idea what I'm doing!
+              </h3>
+            </div>
+
+            <div>
+              <p>
+                <i class="fas fa-map-marker-alt"></i> &nbsp; 5B Parklands, Bolton, United Kingdom
+              </p>
+            </div>
+          </div>
+
+          <div class="column">
+              <div class="tabs">
+                <ul>
+                  <li class="is-active">
+                    <a href="#" onclick="changeTab(this, 'profile-tab')">
+                      <span class="icon is-small"><i class="fas fa-user"></i></span>
+                      <span>Profile</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changeTab(this, 'posts-tab')">
+                      <span class="icon is-small"><i class="far fa-edit"></i></span>
+                      <span>Posts</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changeTab(this, 'questions-tab')">
+                      <span class="icon is-small"><i class="far fa-question-circle"></i></span>
+                      <span>Questions</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" onclick="changeTab(this, 'answers-tab')">
+                      <span class="icon is-small"><i class="fas fa-question-circle"></i></span>
+                      <span>Answers</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="tabs-content" id="profile-tab">
+                This is a profile tab
+              </div>
+
+              <div class="tabs-content hidden" id="posts-tab">
+                  This is a posts tab
+              </div>
+
+              <div class="tabs-content hidden" id="questions-tab">
+                  This is a questions tab
+              </div>
+
+              <div class="tabs-content hidden" id="answers-tab">
+                  This is an answers tab
+              </div>
+          </div>
+        </div>
+      </div>
+  </section>
+
+  <script>
+      function changeTab(clicked, tabName) {
+        reset();
+
+        clicked.parentElement.classList.add("is-active");
+        document.getElementById(tabName).classList.remove("hidden");
+      }
+
+      function reset(){
+        [].forEach.call(document.querySelectorAll('.is-active'), function(x){
+          x.classList.remove("is-active");
+        });
+
+        document.getElementById("profile-tab").classList.add("hidden");
+        document.getElementById("posts-tab").classList.add("hidden");
+        document.getElementById("questions-tab").classList.add("hidden");
+        document.getElementById("answers-tab").classList.add("hidden");
+      }
+  </script>
+
 @endsection
