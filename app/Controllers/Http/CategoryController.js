@@ -21,13 +21,6 @@ class CategoryController {
       .with("comments")
       .paginate(Number(request.input("page", 1)), 10);
 
-    // const questions = await Question.query()
-    //   .orderBy("id", "desc")
-    //   .where("category_id", params.category_id)
-    //   .with("category")
-    //   .with("poster")
-    //   .paginate(Number(request.input("page", 1)), 10);
-
     const questions = await Question.query()
       .with("category")
       .where("category_id", params.category_id)
