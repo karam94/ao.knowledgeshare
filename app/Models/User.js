@@ -28,15 +28,19 @@ class User extends Model {
     return this.hasMany("App/Models/Comment");
   }
 
+  badges() {
+    return this.belongsToMany("App/Models/Badge");
+  }
+
   subscriptions() {
     return this.hasMany("App/Models/Subscription");
   }
 
-  questionVotes(){
+  questionVotes() {
     return this.hasMany("App/Models/QuestionVote");
   }
 
-  answerVotes(){
+  answerVotes() {
     return this.hasMany("App/Models/AnswerVote");
   }
 }
