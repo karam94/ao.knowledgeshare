@@ -37,7 +37,7 @@
                   <li class="is-active">
                     <a href="#" onclick="changeTab(this, 'profile-tab')">
                       <span class="icon is-small"><i class="fas fa-user"></i></span>
-                      <span>Profile</span>
+                      <span>Overview</span>
                     </a>
                   </li>
                   <li>
@@ -62,7 +62,32 @@
               </div>
 
               <div class="tabs-content" id="profile-tab">
-                This is a profile tab
+                  <nav class="level">
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Posts</p>
+                          <p class="title">{{ user.__meta__.posts_count }}</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Questions</p>
+                          <p class="title">{{ user.__meta__.questions_count }}</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Answers</p>
+                          <p class="title">{{ user.__meta__.answers_count }}</p>
+                        </div>
+                      </div>
+                      <div class="level-item has-text-centered">
+                        <div>
+                          <p class="heading">Likes</p>
+                          <p class="title">{{ user.__meta__.likes_count }}</p>
+                        </div>
+                      </div>
+                    </nav>
               </div>
 
               <div class="tabs-content hidden" id="posts-tab">

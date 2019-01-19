@@ -13,6 +13,10 @@ class UserController {
 
     const profileUser = await User.query()
       .where("username", params.username)
+      .withCount("posts")
+      .withCount("questions")
+      .withCount("answers")
+      .withCount("likes")
       .firstOrFail();
 
     const posts = await Post.query()
