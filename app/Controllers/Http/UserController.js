@@ -17,6 +17,8 @@ class UserController {
     var questions = await Question.query()
       .where("user_id", profileUser.id)
       .with("category")
+      .with("poster")
+      .with("answers")
       .with("upvotes", builder => {
         builder.where("is_positive", true);
       })

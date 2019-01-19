@@ -72,7 +72,69 @@
               <div class="tabs-content hidden" id="questions-tab">
                   <h3>Popular Questions</h3>
                   @each(question in questions)
-                    {{ question.title }}
+                  <div class="column is-full">
+                      <div class="card">
+                        <a name="question{{question.id}}">
+                        <header class="card-header">
+                          <h3 class="title is-5 card-header-title">
+                            <a href="{{ route('questionDetails', { id: question.id }) }}">
+                              ❓ &nbsp; {{ question.title }}
+                            </a>
+                          </h3>
+                          <span style="padding: 0.75em">
+                            asked by {{ question.poster.username }}
+                          </span>
+                        </header>
+                        <div class="card-content">
+                          <div class="content">
+                            {{ question.description.length > 250 ? question.description.substring(0, 250) + '...' : question.description }}
+                            <hr>
+                            <a href="{{ route('posts', { category_id: question.category.id }) }}">
+                              <span class="tag">
+                                {{ question.category.name }}
+                              </span>
+                            </a>                  
+                            <span style="float:right;">
+                              Created at {{ question.created_at }}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <footer class="card-footer">
+                          <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-upvote" onclick="this.submit();"
+                          style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
+                            {{ csrfField() }}
+        
+                            <input type="hidden" name="question_id" value="{{ question.id }}">
+        
+                            <a href="#" onclick="this.parentNode.submit(); return false;"
+                            style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
+                              <i class="fas fa-caret-up"></i>
+                            </a>
+                          </form>
+        
+                          <span class="card-footer-item">
+                            {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
+                          </span>
+        
+                          <span class="card-footer-item">
+                            {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
+                          </span>
+        
+                          <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
+                          style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
+                            {{ csrfField() }}
+                
+                            <input type="hidden" name="question_id" value="{{ question.id }}">
+        
+                            <a href="#" onclick="this.parentNode.submit(); return false;"
+                            style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
+                              <i class="fas fa-caret-down"></i>
+                            </a>
+                          </form>
+                        </footer>
+                      </div>
+                    </div>
                   @endeach
               </div>
 
