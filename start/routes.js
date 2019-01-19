@@ -19,6 +19,11 @@ const Route = use("Route");
 // Home
 Route.get("/", "HomeController.index").as("home");
 
+// User Profiles
+Route.group(() => {
+  Route.get("/:username", "UserController.index").as("profile");
+}).prefix("/user");
+
 // Categories
 Route.group(() => {
   Route.get("/:category_id", "CategoryController.index").as("posts");
