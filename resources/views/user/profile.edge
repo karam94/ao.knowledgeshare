@@ -89,9 +89,31 @@
                       </div>
                     </nav>
 
-                    @each(badge in user.badges)
-                      {{ badge.title }}
-                    @endeach
+                    <div class="columns">
+                      @each(badge in user.badges)
+                        <div class="column is-half">
+                          <div class="box">
+                            <article class="media">
+                              <div class="media-left">
+                                <figure class="image is-64x64">
+                                  <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                                </figure>
+                              </div>
+                              <div class="media-content">
+                                <div class="content">
+                                  <p>
+                                    <strong>{{ badge.title }}</strong>
+                                    <br>
+                                    {{ badge.description }}
+                                  </p>
+                                </div>
+                              </div>
+                            </article>
+                          </div>
+                        </div>
+                      @endeach
+                    </div>
+
               </div>
 
               <div class="tabs-content hidden" id="posts-tab">
