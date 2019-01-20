@@ -3,6 +3,7 @@
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
+const Answer = use("App/Models/Answer");
 const Badge = use("App/Models/Badge");
 
 class UserController {
@@ -47,20 +48,19 @@ class UserController {
       .limit(6)
       .fetch();
 
-    // const userBadges = await Badge.query()
-    //   .with("badges", builder => {
-    //     builder.where("user_id", profileUser.id);
-    //   })
-    //   .orderBy("id", "desc")
-    //   .fetch();
+    var answers = await Answer.query()
+      .where("user_id", profileUser.id)
+      .with("question")
+      .limit(6)
+      .fetch();
 
-    var test = profileUser.toJSON();
+    //var test = questions.toJSON();
 
     return view.render("user/profile", {
       user: profileUser.toJSON(),
-      //badges: userBadges.toJSON(),
       posts: posts.toJSON(),
       questions: questions.toJSON(),
+      answers: answers.toJSON(),
       title: params.username
     });
   }

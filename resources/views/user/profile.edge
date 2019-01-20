@@ -28,6 +28,9 @@
               <p>
                 <i class="fas fa-map-marker-alt"></i> &nbsp; 5B Parklands, Bolton, United Kingdom
               </p>
+              <p>
+                  <i class="fas fa-envelope"></i> &nbsp; {{ user.email }}
+              </p>
             </div>
           </div>
 
@@ -119,7 +122,7 @@
               <div class="tabs-content hidden" id="posts-tab">
                   <h3>Recent Posts</h3>
                   @each(post in posts)
-                  <div class="column is-one-third">
+                  <div class="column is-half">
                       <div class="card" style="height: 100%;">
                         
                           <div class="card-image">
@@ -241,7 +244,28 @@
               </div>
 
               <div class="tabs-content hidden" id="answers-tab">
-                  This is an answers tab
+                <h3>Recent Answers</h3>
+                @each(answer in answers)
+                  <div class="box" style="margin: 10px;">
+                    <article class="media">
+                      <div class="media-left">
+                        <figure class="image is-64x64">
+                          <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                        </figure>
+                      </div>
+                      <div class="media-content">
+                        <div class="content">
+                          <p>
+                            <strong>{{ user.username }}</strong>
+                            <small>on <a href="/question/details/{{ answer.question.id }}">{{ answer.question.title }}</a></small>
+                            <br>
+                            {{ answer.answer }}
+                          </p>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+                @endeach
               </div>
           </div>
         </div>
