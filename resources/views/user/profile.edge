@@ -88,6 +88,10 @@
                         </div>
                       </div>
                     </nav>
+
+                    @each(badge in user.badges)
+                      {{ badge.title }}
+                    @endeach
               </div>
 
               <div class="tabs-content hidden" id="posts-tab">

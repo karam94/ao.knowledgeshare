@@ -3,16 +3,19 @@
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
+const Badge = use("App/Models/Badge");
 
 class UserController {
   async index({ view, request, params, session }) {
-    // becomes "is logged in user etc"
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const profileUserId = await User.query()
+      .where("username", params.username)
+      .pluck("id");
 
     const profileUser = await User.query()
       .where("username", params.username)
+      .with("badges", builder => {
+        builder.where("user_id", profileUserId);
+      })
       .withCount("posts")
       .withCount("questions")
       .withCount("answers")
@@ -44,8 +47,18 @@ class UserController {
       .limit(6)
       .fetch();
 
+    // const userBadges = await Badge.query()
+    //   .with("badges", builder => {
+    //     builder.where("user_id", profileUser.id);
+    //   })
+    //   .orderBy("id", "desc")
+    //   .fetch();
+
+    var test = profileUser.toJSON();
+
     return view.render("user/profile", {
       user: profileUser.toJSON(),
+      //badges: userBadges.toJSON(),
       posts: posts.toJSON(),
       questions: questions.toJSON(),
       title: params.username
