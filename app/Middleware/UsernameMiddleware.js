@@ -3,8 +3,10 @@
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 
+const Env = use("Env");
 const User = use("App/Models/User");
 var md5 = require("md5");
+var execa = require("execa");
 
 class UsernameMiddleware {
   /**
@@ -15,8 +17,16 @@ class UsernameMiddleware {
   async handle({ request, response, session, view }, next) {
     const username = require("username");
     var thisUser = await username();
-    // var thisUserEmail = thisUser+"@ao.com"; // TODO: Write plugin to fetch proper AD email
     var thisUserEmail = "karam.kabbara@ao.com";
+
+    // TODO: Test on AD at work
+    if(Env.get("NODE_ENV") != "development"){
+      try {
+        thisUserEmail = execa.sync("whoami /upn").stdout;
+      } catch(_){
+        return response.send(view.render("errors.401"));
+      }
+    }
 
     if (thisUser) {
       var thisGravatar = md5(thisUserEmail);

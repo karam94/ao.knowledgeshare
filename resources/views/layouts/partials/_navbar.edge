@@ -10,9 +10,11 @@
     <div class="navbar-menu">
       <div class="navbar-end">
         <div class="navbar-item has-dropdown is-hoverable">
+            @if(username)
             <a href="{{ route('profile', { username: username }) }}" class="navbar-link">
               <img src="https://www.gravatar.com/avatar/{{ gravatar }}" alt="{{ user.username }}"> &nbsp; Hello, {{ username }}!</a>
-
+            @endif
+              
             <div class="navbar-dropdown">
               <a href="{{ route('home') }}" class="navbar-item">
                 <span class="icon">
