@@ -114,7 +114,7 @@ class CategoryController {
 
       const questions = await Question.query()
         .with("category")
-        .where("category_id", subscriptions)
+        .whereIn("category_id", subscriptions)
         .with("poster")
         .with("upvotes", (builder) => {
           builder.where("user_id", user.id);
