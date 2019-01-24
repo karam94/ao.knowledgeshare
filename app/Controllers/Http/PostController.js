@@ -21,16 +21,32 @@ class PostController {
     return view.render("post/create", { categories });
   }
 
-  async add({ request, response, session }) {
+  async add({ request, response, session, view }) {
     const user = await User.findByOrFail("username", session.get("username"));
 
     const targetUrl = request.input("url");
     const { body: html, url } = await got(targetUrl);
     const metadata = await metascraper({ html, url });
+    var containsMissingData = false;
+
+    for (var member in metadata) {
+      if (metadata[member] == null)
+        containsMissingData = true;
+    }
 
     var categoryId = request.input("category_id");
 
-    if (categoryId === "0") {
+    if(containsMissingData){
+      const categories = await Category.pair("id", "name");
+      return view.render("post/create", { 
+        categories,
+        postModify: true,
+        postTitle: metadata.title,
+        postDescription: metadata.description,
+        postImage: metadata.image,
+        postUrl: metadata.url
+      });
+    } else if (categoryId === "0") {
       const category = new Category();
       category.name = request.input("new_category_name");
       await category.save();

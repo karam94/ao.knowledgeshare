@@ -60,7 +60,7 @@
                       type="url"
                       class="input"
                       name="url"
-                      value="{{ old('url', '') }}"
+                      value="{{ postUrl }}"
                       placeholder="Post URL">
                   </div>
 
@@ -68,6 +68,42 @@
                 </div>
               </div>
             </div>
+
+            @if(postModify)
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      class="input"
+                      name="postTitle"
+                      value="{{ postTitle }}"
+                      placeholder="Post Title">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <textarea
+                      type="text"
+                      class="textarea"
+                      name="postDescription"
+                      value="{{ postDescription }}"
+                      placeholder="Post Description">{{ postDescription }}</textarea>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+            @endif
 
             <div class="field is-horizontal">
               <div class="field-body">
