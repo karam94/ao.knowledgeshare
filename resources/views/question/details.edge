@@ -10,7 +10,7 @@
             {{ question.title }}
           </h1>
           <h2 class="subtitle is-4">
-            asked by <em>{{ question.poster.username }}</em>
+            asked by <a href="../../user/{{ question.poster.username }}"><em>{{ question.poster.username }}</em></a>
           </h2>
           
           <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" style="display:inline; padding-left:10px; padding-right:10px;">
@@ -94,7 +94,7 @@
         
                       <input type="hidden" name="post_id" value="{{ post.id }}">
                       <input type="hidden" name="comment_id" value="{{ comment.id }}">
-                      <a class="delete" href="#" style="float:right;" onclick="this.parentNode.submit(); return false;"></a>
+                      <a class="delete" href="#" style="float:right; margin-right: 10px;" onclick="this.parentNode.submit(); return false;"></a>
                     </form>
                   @endif
                   
