@@ -4,7 +4,6 @@
 
   <section class="section">
     <div class="container">
-      <h1 class="subtitle is-3">🤓 Latest {{ (category.name) ? category.name : '' }} {{ (message) ? message : '' }} Posts</h1>
       @if(category)
       <div class="column is-full" style="height: 65px;">
         <form action="{{ route('subscribe') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -30,6 +29,24 @@
 
       @include('partials._notification')
 
+      <div class="tabs">
+        <ul>
+          <li class="is-active">
+            <a href="#" onclick="changeTab(this, 'posts-tab')">
+              <span class="icon is-small"><i class="far fa-edit"></i></span>
+              <span>Latest {{ (category.name) ? category.name : '' }} {{ (message) ? message : '' }} Posts</span>
+            </a>
+          </li>
+          <li>
+            <a href="#" onclick="changeTab(this, 'questions-tab')">
+              <span class="icon is-small"><i class="far fa-question-circle"></i></span>
+              <span>Latest Questions</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="tabs-content" id="posts-tab">
       <div class="columns is-multiline">
         @each(post in posts.data)
           <div class="column is-one-quarter">
@@ -90,11 +107,10 @@
       <hr>
       @!component('components.pagination', pagination = posts)
       @endif
+    </div>
 
-      <br/><br/>
-
+      <div class="tabs-content hidden" id="questions-tab">
       <a name="latestQuestions"></a>
-      <h1 class="subtitle is-3">🤔 Latest {{ (category.name) ? category.name : '' }}{{ (message) ? message : '' }} Questions</h2>
       <div class="columns is-multiline">
           @each(question in questions.data)
             <div class="column is-full">
@@ -170,5 +186,25 @@
         @!component('components.pagination2', pagination = questions)
         @endif
     </div>
+  </div>
   </section>
+
+  <script>
+      function changeTab(clicked, tabName) {
+        reset();
+
+        clicked.parentElement.classList.add("is-active");
+        document.getElementById(tabName).classList.remove("hidden");
+      }
+
+      function reset(){
+        [].forEach.call(document.querySelectorAll('.is-active'), function(x){
+          x.classList.remove("is-active");
+        });
+
+        document.getElementById("posts-tab").classList.add("hidden");
+        document.getElementById("questions-tab").classList.add("hidden");
+      }
+  </script>
+
 @endsection
