@@ -53,7 +53,7 @@
                         </h3>
 
                         <p class="subtitle is-6">
-                          shared by {{ post.poster.username }}
+                          shared by <a href="/user/{{ post.poster.username }}">{{ post.poster.username }}</a>
                           <br/>
                         </p>
                       </div>
@@ -107,7 +107,7 @@
                     </a>
                   </h3>
                   <span style="padding: 0.75em">
-                    asked by {{ question.poster.username }}
+                    asked by <a href="/user/{{ question.poster.username }}">{{ question.poster.username }}</a>
                   </span>
                 </header>
                 <div class="card-content">
