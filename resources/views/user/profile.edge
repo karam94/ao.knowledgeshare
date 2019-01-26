@@ -13,7 +13,7 @@
             
             <div>
               <h1 class="title">
-                {{ user.username }}
+                {{ profileUser.username }}
               </h1>
             </div>
 
@@ -29,7 +29,7 @@
                 <i class="fas fa-map-marker-alt"></i> &nbsp; 5B Parklands, Bolton, United Kingdom
               </p>
               <p>
-                  <i class="fas fa-envelope"></i> &nbsp; <a href="mailto:{{ user.email }}">{{ user.email }}</a>
+                  <i class="fas fa-envelope"></i> &nbsp; <a href="mailto:{{ profileUser.email }}">{{ profileUser.email }}</a>
               </p>
             </div>
           </div>
@@ -43,6 +43,16 @@
                       <span>Overview</span>
                     </a>
                   </li>
+
+                  @if(user.username == profileUser.username)
+                  <li>
+                    <a href="#" onclick="changeTab(this, 'editprofile-tab')">
+                      <span class="icon is-small"><i class="fas fa-user-edit"></i></span>
+                      <span>Edit Profile</span>
+                    </a>
+                  </li>
+                  @endif
+
                   <li>
                     <a href="#" onclick="changeTab(this, 'posts-tab')">
                       <span class="icon is-small"><i class="far fa-edit"></i></span>
@@ -69,31 +79,31 @@
                       <div class="level-item has-text-centered">
                         <div>
                           <p class="heading">Posts</p>
-                          <p class="title">{{ user.__meta__.posts_count }}</p>
+                          <p class="title">{{ profileUser.__meta__.posts_count }}</p>
                         </div>
                       </div>
                       <div class="level-item has-text-centered">
                         <div>
                           <p class="heading">Questions</p>
-                          <p class="title">{{ user.__meta__.questions_count }}</p>
+                          <p class="title">{{ profileUser.__meta__.questions_count }}</p>
                         </div>
                       </div>
                       <div class="level-item has-text-centered">
                         <div>
                           <p class="heading">Answers</p>
-                          <p class="title">{{ user.__meta__.answers_count }}</p>
+                          <p class="title">{{ profileUser.__meta__.answers_count }}</p>
                         </div>
                       </div>
                       <div class="level-item has-text-centered">
                         <div>
                           <p class="heading">Likes</p>
-                          <p class="title">{{ user.__meta__.likes_count }}</p>
+                          <p class="title">{{ profileUser.__meta__.likes_count }}</p>
                         </div>
                       </div>
                     </nav>
 
                     <div class="columns is-multiline">
-                      @each(badge in user.badges)
+                      @each(badge in profileUser.badges)
                         <div class="column is-half">
                           <div class="box">
                             <article class="media">
@@ -116,7 +126,30 @@
                         </div>
                       @endeach
                     </div>
+              </div>
 
+              <div class="tabs-content hidden" id="editprofile-tab">
+                  <form action="{{ route('edituser') }}" method="post" enctype="multipart/form-data">
+                    {{ csrfField() }}
+
+                    Profile Description:
+                    <div class="field is-horizontal">
+                      <div class="field-body">
+                          <div class="field">
+                            <div class="control">
+                              <textarea
+                                type="text"
+                                class="textarea"
+                                name="userDescription"
+                                value="{{ profileUser.description }}"
+                                placeholder="Your description">{{ profileUser.description }}</textarea>
+                            </div>
+          
+                            {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                          </div>
+                      </div>
+                    </div>
+                  </form>
               </div>
 
               <div class="tabs-content hidden" id="posts-tab">
@@ -258,7 +291,7 @@
                       <div class="media-content">
                         <div class="content">
                           <p>
-                            <strong><a href="/user/{{ user.username }}">{{ user.username }}</a></strong>
+                            <strong><a href="/user/{{ profileUser.username }}">{{ profileUser.username }}</a></strong>
                             <small>on <a href="/question/details/{{ answer.question.id }}">{{ answer.question.title }}</a></small>
                             <br>
                             {{ answer.answer }}
@@ -288,6 +321,7 @@
         });
 
         document.getElementById("profile-tab").classList.add("hidden");
+        document.getElementById("editprofile-tab").classList.add("hidden");
         document.getElementById("posts-tab").classList.add("hidden");
         document.getElementById("questions-tab").classList.add("hidden");
         document.getElementById("answers-tab").classList.add("hidden");

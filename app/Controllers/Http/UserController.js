@@ -8,6 +8,10 @@ const Badge = use("App/Models/Badge");
 
 class UserController {
   async index({ view, request, params, session }) {
+    const user = await User.query()
+      .where("username", session.get("username"))
+      .firstOrFail();
+
     const profileUserId = await User.query()
       .where("username", params.username)
       .pluck("id");
@@ -57,7 +61,8 @@ class UserController {
     //var test = questions.toJSON();
 
     return view.render("user/profile", {
-      user: profileUser.toJSON(),
+      user: user.toJSON(),
+      profileUser: profileUser.toJSON(),
       posts: posts.toJSON(),
       questions: questions.toJSON(),
       answers: answers.toJSON(),
