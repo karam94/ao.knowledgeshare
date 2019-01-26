@@ -29,7 +29,7 @@ class PostSchema extends Schema {
 
       table.string("title");
       
-      table.string("description");
+      table.text("description");
 
       table.string("image");
 

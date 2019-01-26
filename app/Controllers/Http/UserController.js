@@ -69,6 +69,14 @@ class UserController {
       title: params.username
     });
   }
+
+  async edit({ request, response, session }) {
+    const user = await User.findByOrFail("username", session.get("username"));
+    user.description = request.input("userDescription");
+    await user.save();
+
+    return response.route("/user/" + user.username);
+  }
 }
 
 module.exports = UserController;

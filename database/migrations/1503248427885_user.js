@@ -10,6 +10,7 @@ class UserSchema extends Schema {
       table.string("username").notNullable().unique();
       table.string("email", 254).notNullable().unique();
       table.string("gravatar", 32).notNullable().unique();
+      table.text("description");
       table.timestamps();
     });
   }

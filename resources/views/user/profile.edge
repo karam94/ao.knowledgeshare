@@ -18,10 +18,7 @@
             </div>
 
             <div>
-              <h3>
-                Joined AO as a graduate Software Developer in 2015, had no idea what I was doing...
-                I've now been here 3 years and I still have no idea what I'm doing!
-              </h3>
+              <h3>{{ profileUser.description }}</h3>
             </div>
 
             <div>
@@ -129,10 +126,10 @@
               </div>
 
               <div class="tabs-content hidden" id="editprofile-tab">
-                  <form action="{{ route('edituser') }}" method="post" enctype="multipart/form-data">
+                  <form action="{{ route('editprofile') }}" method="post" enctype="multipart/form-data">
                     {{ csrfField() }}
 
-                    Profile Description:
+                    Your profile description:
                     <div class="field is-horizontal">
                       <div class="field-body">
                           <div class="field">
@@ -149,6 +146,22 @@
                           </div>
                       </div>
                     </div>
+
+                    <div class="field is-horizontal">
+                        <div class="field-body">
+                          <div class="field">
+                            <div class="control">
+                              <button class="button is-primary" style="float:right;">
+                                <span class="icon">
+                                  <i class="far fa-save"></i>
+                                </span>
+          
+                                <span>Save Changes</span>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                   </form>
               </div>
 

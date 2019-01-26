@@ -22,6 +22,7 @@ Route.get("/", "HomeController.index").as("home");
 // User Profiles
 Route.group(() => {
   Route.get("/:username", "UserController.index").as("profile");
+  Route.post("/edit", "UserController.edit").as("editprofile");
 }).prefix("/user");
 
 // Categories
