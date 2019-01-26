@@ -19,7 +19,7 @@
                 <div class="field">
                   <div class="control">
                     <div class="select is-fullwidth">
-                      <select name="category_id" id="category_dropdown" onchange="categoryChanged()">
+                      <select name="category_id" id="category_dropdown" onchange="categoryChanged()" required>
                         <option value="">Choose a category</option>
                         @each((name, id) in categories)
                           <option value="{{ id }}">{{ name }}</option>
@@ -79,7 +79,7 @@
                       class="input"
                       name="postTitle"
                       value="{{ postTitle }}"
-                      placeholder="Post Title">
+                      placeholder="Please provide a post title.">
                   </div>
 
                   {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
@@ -96,7 +96,24 @@
                       class="textarea"
                       name="postDescription"
                       value="{{ postDescription }}"
-                      placeholder="Post Description">{{ postDescription }}</textarea>
+                      placeholder="We couldn't fetch a description from the Post URL you provided. Please provide one.">{{ postDescription }}</textarea>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      class="input"
+                      name="postImage"
+                      value="{{ postImage }}"
+                      placeholder="Please provide an image URL.">
                   </div>
 
                   {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
