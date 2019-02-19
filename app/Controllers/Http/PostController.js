@@ -1,6 +1,7 @@
 "use strict";
 
-const Category = use("App/Models/Category");
+const CategoryRepository = use("App/Repositories/CategoryRepository");
+
 const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Comment = use("App/Models/Comment");
@@ -16,8 +17,12 @@ const metascraper = require("metascraper")([
 ]);
 
 class PostController {
+  constructor() {
+    this.categoryRepository = new CategoryRepository();
+  }
+
   async create({ view }) {
-    const categories = await Category.pair("id", "name");
+    const categories = await this.categoryRepository.getAll();
     return view.render("post/create", { categories });
   }
 
@@ -30,15 +35,14 @@ class PostController {
     var containsMissingData = false;
 
     for (var member in metadata) {
-      if (metadata[member] == null)
-        containsMissingData = true;
+      if (metadata[member] == null) containsMissingData = true;
     }
 
     var categoryId = request.input("category_id");
 
-    if(containsMissingData){
-      const categories = await Category.pair("id", "name");
-      return view.render("post/create", { 
+    if (containsMissingData) {
+      const categories = await this.categoryRepository.getAll();
+      return view.render("post/create", {
         categories,
         postModify: true,
         postTitle: metadata.title,
@@ -47,12 +51,12 @@ class PostController {
         postUrl: metadata.url
       });
     } else if (categoryId === "0") {
-      const category = new Category();
-      category.name = request.input("new_category_name");
-      await category.save();
+      var newCategory = await this.categoryRepository.create(
+        request.input("new_category_name")
+      );
 
       const post = new Post();
-      post.category_id = category.id;
+      post.category_id = newCategory.id;
       post.author = metadata.author;
       post.title = metadata.title;
       post.description = metadata.description;

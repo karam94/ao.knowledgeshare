@@ -1,14 +1,19 @@
 "use strict";
 
+const CategoryRepository = use("App/Repositories/CategoryRepository");
+
 const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
-const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Answer = use("App/Models/Answer");
 
 class QuestionController {
+  constructor() {
+    this.categoryRepository = new CategoryRepository();
+  }
+
   async create({ view }) {
-    const categories = await Category.pair("id", "name");
+    const categories = await this.categoryRepository.getAll();
     return view.render("question/create", { categories });
   }
 
@@ -18,9 +23,9 @@ class QuestionController {
     var categoryId = request.input("category_id");
 
     if (categoryId === "0") {
-      const category = new Category();
-      category.name = request.input("new_category_name");
-      await category.save();
+      var category = await this.categoryRepository.create(
+        request.input("new_category_name")
+      );
 
       const question = new Question();
       question.category_id = category.id;

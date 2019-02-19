@@ -1,12 +1,17 @@
 "use strict";
 
+const CategoryRepository = use("App/Repositories/CategoryRepository");
+
 const Post = use("App/Models/Post");
-const Category = use("App/Models/Category");
 const User = use("App/Models/User");
 const Subscription = use("App/Models/Subscription");
 const Question = use("App/Models/Question");
 
 class CategoryController {
+  constructor() {
+    this.categoryRepository = new CategoryRepository();
+  }
+
   async index({ view, request, params, session }) {
     const user = await User.query()
       .where("username", session.get("username"))
@@ -25,11 +30,11 @@ class CategoryController {
       .with("category")
       .where("category_id", params.category_id)
       .with("poster")
-      .with("upvotes", (builder) => {
+      .with("upvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", true);
       })
-      .with("downvotes", (builder) => {
+      .with("downvotes", builder => {
         builder.where("user_id", user.id);
         builder.where("is_positive", false);
       })
@@ -37,9 +42,7 @@ class CategoryController {
       .orderBy("score", "desc")
       .paginate(Number(request.input("page", 1)), 10);
 
-    const category = await Category.query()
-      .where("id", params.category_id)
-      .firstOrFail();
+    const category = await this.categoryRepository.get(params.category_id);
 
     const userIsSubscribed = await Subscription.query()
       .where("user_id", user.id)
@@ -116,11 +119,11 @@ class CategoryController {
         .with("category")
         .whereIn("category_id", subscriptions)
         .with("poster")
-        .with("upvotes", (builder) => {
+        .with("upvotes", builder => {
           builder.where("user_id", user.id);
           builder.where("is_positive", true);
         })
-        .with("downvotes", (builder) => {
+        .with("downvotes", builder => {
           builder.where("user_id", user.id);
           builder.where("is_positive", false);
         })
