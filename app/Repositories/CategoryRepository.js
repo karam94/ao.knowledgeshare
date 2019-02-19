@@ -16,9 +16,9 @@ class CategoryRepository {
   }
 
   async create(name) {
-    const category = new Category();
-    category.name = name;
-    await category.save();
+    const category = await Category.create({
+      name: name
+    });
 
     return category;
   }
