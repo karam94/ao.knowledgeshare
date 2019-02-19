@@ -1,15 +1,16 @@
 "use strict";
 
+const PostRepository = use("App/Repositories/PostRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 
-const Post = use("App/Models/Post");
 const User = use("App/Models/User");
 const Subscription = use("App/Models/Subscription");
 const Question = use("App/Models/Question");
 
 class CategoryController {
   constructor() {
-    this.categoryRepository = new CategoryRepository();
+    this.postRepository = new PostRepository;
+    this.categoryRepository = new CategoryRepository;
   }
 
   async index({ view, request, params, session }) {
@@ -17,14 +18,11 @@ class CategoryController {
       .where("username", session.get("username"))
       .firstOrFail();
 
-    const posts = await Post.query()
-      .orderBy("id", "desc")
-      .where("category_id", params.category_id)
-      .with("category")
-      .with("poster")
-      .with("likes")
-      .with("comments")
-      .paginate(Number(request.input("page", 1)), 10);
+    const posts = await this.postRepository.getPostsByCategoryPaginated(
+      params.category_id,
+      request.input("page", 1),
+      10
+    );
 
     const questions = await Question.query()
       .with("category")
@@ -106,14 +104,11 @@ class CategoryController {
       .pluck("category_id");
 
     if (subscriptions.length > 0) {
-      const posts = await Post.query()
-        .orderBy("id", "desc")
-        .whereIn("category_id", subscriptions)
-        .with("category")
-        .with("poster")
-        .with("likes")
-        .with("comments")
-        .paginate(Number(request.input("page", 1)), 10);
+      const posts = await this.postRepository.getPostsByCategoriesPaginated(
+        subscriptions,
+        request.input("page", 1),
+        10
+      );
 
       const questions = await Question.query()
         .with("category")
