@@ -1,22 +1,20 @@
 "use strict";
-
+const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 
-const User = use("App/Models/User");
 const Subscription = use("App/Models/Subscription");
 const Question = use("App/Models/Question");
 
 class CategoryController {
   constructor() {
+    this.userRepository = new UserRepository;
     this.postRepository = new PostRepository;
     this.categoryRepository = new CategoryRepository;
   }
 
   async index({ view, request, params, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
 
     const posts = await this.postRepository.getPostsByCategoryPaginated(
       params.category_id,
@@ -57,7 +55,7 @@ class CategoryController {
   }
 
   async subscribe({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const existingSubscription = await Subscription.query()
       .where("user_id", user.id)
@@ -95,9 +93,7 @@ class CategoryController {
   }
 
   async subscriptions({ view, request, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
 
     const subscriptions = await Subscription.query()
       .where("user_id", user.id)

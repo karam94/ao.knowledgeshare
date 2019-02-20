@@ -1,12 +1,16 @@
 "use strict";
+const UserRepository = use("App/Repositories/UserRepository");
 
-const User = use("App/Models/User");
 const Answer = use("App/Models/Answer");
 const AnswerVote = use("App/Models/AnswerVote");
 
 class AnswerController {
+  constructor() {
+    this.userRepository = new UserRepository();
+  }
+
   async upvote({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const answer = await Answer.query()
       .where("id", request.input("answer_id"))
@@ -21,13 +25,13 @@ class AnswerController {
       vote.delete();
 
       answer.score--;
-      answer.save(); 
+      answer.save();
     } else if (vote && !vote.is_positive) {
       vote.is_positive = true;
 
       answer.score++;
-      answer.score++; 
-      answer.save(); 
+      answer.score++;
+      answer.save();
 
       await user.answerVotes().save(vote);
     } else {
@@ -37,7 +41,7 @@ class AnswerController {
       newVote.is_positive = true;
 
       answer.score++;
-      answer.save(); 
+      answer.save();
 
       await user.answerVotes().save(newVote);
     }
@@ -46,7 +50,7 @@ class AnswerController {
   }
 
   async downvote({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const answer = await Answer.query()
       .where("id", request.input("answer_id"))
@@ -62,7 +66,7 @@ class AnswerController {
 
       answer.score--;
       answer.score--;
-      answer.save(); 
+      answer.save();
 
       await user.answerVotes().save(vote);
     } else if (vote && !vote.is_positive) {

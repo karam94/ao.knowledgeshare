@@ -1,22 +1,18 @@
 "use strict";
-
-const Database = use("Database");
-
+const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 
-const User = use("App/Models/User");
 const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
 
 class HomeController {
   constructor() {
+    this.userRepository = new UserRepository();
     this.postRepository = new PostRepository();
   }
 
   async index({ view, request, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
 
     const posts = await this.postRepository.getAllPaginated(
       request.input("postpage", 1),
