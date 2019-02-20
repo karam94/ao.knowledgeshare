@@ -1,31 +1,19 @@
 "use strict";
+const UserRepository = use("App/Repositories/UserRepository");
 
-const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
 const Answer = use("App/Models/Answer");
 const Badge = use("App/Models/Badge");
 
 class UserController {
+  constructor() {
+    this.userRepository = new UserRepository;
+  }
+
   async index({ view, request, params, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
-
-    const profileUserId = await User.query()
-      .where("username", params.username)
-      .pluck("id");
-
-    const profileUser = await User.query()
-      .where("username", params.username)
-      .with("badges", builder => {
-        builder.where("user_id", profileUserId);
-      })
-      .withCount("posts")
-      .withCount("questions")
-      .withCount("answers")
-      .withCount("likes")
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
+    const profileUser = await this.userRepository.getProfileUser(params.username);
 
     const posts = await Post.query()
       .where("user_id", profileUser.id)
@@ -71,7 +59,7 @@ class UserController {
   }
 
   async edit({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
     user.description = request.input("userDescription");
     await user.save();
 

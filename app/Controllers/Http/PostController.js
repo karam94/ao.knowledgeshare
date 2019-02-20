@@ -1,8 +1,7 @@
 "use strict";
-
+const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 
-const User = use("App/Models/User");
 const Post = use("App/Models/Post");
 const Comment = use("App/Models/Comment");
 const Like = use("App/Models/Like");
@@ -18,7 +17,8 @@ const metascraper = require("metascraper")([
 
 class PostController {
   constructor() {
-    this.categoryRepository = new CategoryRepository();
+    this.userRepository = new UserRepository;
+    this.categoryRepository = new CategoryRepository;
   }
 
   async create({ view }) {
@@ -27,7 +27,7 @@ class PostController {
   }
 
   async add({ request, response, session, view }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const targetUrl = request.input("url");
     const { body: html, url } = await got(targetUrl);
@@ -85,7 +85,7 @@ class PostController {
   }
 
   async delete({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const post = await Post.query()
       .where("id", request.input("post_id"))
@@ -103,9 +103,7 @@ class PostController {
   }
 
   async details({ params, view, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
 
     const post = await Post.query()
       .where("id", params.id)
@@ -128,7 +126,7 @@ class PostController {
   }
 
   async comment({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const comment = new Comment();
     comment.user_id = user.id;
@@ -148,7 +146,7 @@ class PostController {
   }
 
   async like({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const existingLike = await Like.query()
       .where("user_id", user.id)

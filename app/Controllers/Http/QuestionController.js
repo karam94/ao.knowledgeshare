@@ -1,14 +1,14 @@
 "use strict";
-
+const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 
 const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
-const User = use("App/Models/User");
 const Answer = use("App/Models/Answer");
 
 class QuestionController {
   constructor() {
+    this.userRepository = new UserRepository();
     this.categoryRepository = new CategoryRepository();
   }
 
@@ -18,7 +18,7 @@ class QuestionController {
   }
 
   async add({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     var categoryId = request.input("category_id");
 
@@ -53,9 +53,7 @@ class QuestionController {
   }
 
   async details({ params, view, session }) {
-    const user = await User.query()
-      .where("username", session.get("username"))
-      .firstOrFail();
+    const user = await this.userRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", params.id)
@@ -97,7 +95,7 @@ class QuestionController {
   }
 
   async answer({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const answer = new Answer();
     answer.user_id = user.id;
@@ -117,7 +115,7 @@ class QuestionController {
   }
 
   async upvote({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", request.input("question_id"))
@@ -157,7 +155,7 @@ class QuestionController {
   }
 
   async downvote({ request, response, session }) {
-    const user = await User.findByOrFail("username", session.get("username"));
+    const user = await this.userRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", request.input("question_id"))
