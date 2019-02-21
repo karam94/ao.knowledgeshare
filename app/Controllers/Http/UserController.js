@@ -7,13 +7,9 @@ const Answer = use("App/Models/Answer");
 const Badge = use("App/Models/Badge");
 
 class UserController {
-  constructor() {
-    this.userRepository = new UserRepository;
-  }
-
   async index({ view, request, params, session }) {
-    const user = await this.userRepository.get(session.get("username"));
-    const profileUser = await this.userRepository.getProfileUser(params.username);
+    const user = await UserRepository.get(session.get("username"));
+    const profileUser = await UserRepository.getProfileUser(params.username);
 
     const posts = await Post.query()
       .where("user_id", profileUser.id)

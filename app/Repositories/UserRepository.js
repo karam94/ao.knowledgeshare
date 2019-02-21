@@ -1,5 +1,3 @@
-"use strict";
-
 const User = use("App/Models/User");
 
 class UserRepository {
@@ -37,4 +35,4 @@ class UserRepository {
   }
 }
 
-module.exports = UserRepository;
+module.exports = new UserRepository();
