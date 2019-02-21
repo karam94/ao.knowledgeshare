@@ -12,7 +12,8 @@ tmp
 database/development.sqlite
 
 # Uploads
-public/*
+public/css/*
+public/fonts/*
 resources/assets/fonts/ao-icons.ttf
 resources/assets/fonts/AoOz-Bold.ttf
 resources/assets/fonts/AoOz-Regular.ttf
