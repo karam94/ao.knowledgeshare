@@ -17,7 +17,6 @@ const metascraper = require("metascraper")([
 
 class PostController {
   constructor() {
-    this.userRepository = new UserRepository;
     this.categoryRepository = new CategoryRepository;
   }
 
@@ -27,7 +26,7 @@ class PostController {
   }
 
   async add({ request, response, session, view }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const targetUrl = request.input("url");
     const { body: html, url } = await got(targetUrl);
@@ -85,7 +84,7 @@ class PostController {
   }
 
   async delete({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const post = await Post.query()
       .where("id", request.input("post_id"))
@@ -103,7 +102,7 @@ class PostController {
   }
 
   async details({ params, view, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const post = await Post.query()
       .where("id", params.id)
@@ -126,7 +125,7 @@ class PostController {
   }
 
   async comment({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const comment = new Comment();
     comment.user_id = user.id;
@@ -146,7 +145,7 @@ class PostController {
   }
 
   async like({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const existingLike = await Like.query()
       .where("user_id", user.id)

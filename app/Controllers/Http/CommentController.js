@@ -4,12 +4,8 @@ const UserRepository = use("App/Repositories/UserRepository");
 const Comment = use("App/Models/Comment");
 
 class CommentController {
-  constructor() {
-    this.userRepository = new UserRepository();
-  }
-
   async delete({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const comment = await Comment.query()
       .where("id", request.input("comment_id"))

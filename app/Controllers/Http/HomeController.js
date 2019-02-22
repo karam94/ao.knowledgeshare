@@ -7,7 +7,6 @@ const QuestionVote = use("App/Models/QuestionVote");
 
 class HomeController {
   constructor() {
-    //this.userRepository = new UserRepository();
     this.postRepository = new PostRepository();
   }
 

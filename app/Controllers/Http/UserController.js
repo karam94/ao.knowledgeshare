@@ -55,7 +55,7 @@ class UserController {
   }
 
   async edit({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
     user.description = request.input("userDescription");
     await user.save();
 

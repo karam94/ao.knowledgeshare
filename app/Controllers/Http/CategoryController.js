@@ -8,13 +8,12 @@ const Question = use("App/Models/Question");
 
 class CategoryController {
   constructor() {
-    this.userRepository = new UserRepository;
     this.postRepository = new PostRepository;
     this.categoryRepository = new CategoryRepository;
   }
 
   async index({ view, request, params, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const posts = await this.postRepository.getPostsByCategoryPaginated(
       params.category_id,
@@ -55,7 +54,7 @@ class CategoryController {
   }
 
   async subscribe({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const existingSubscription = await Subscription.query()
       .where("user_id", user.id)
@@ -93,7 +92,7 @@ class CategoryController {
   }
 
   async subscriptions({ view, request, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const subscriptions = await Subscription.query()
       .where("user_id", user.id)

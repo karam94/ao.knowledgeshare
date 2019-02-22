@@ -8,7 +8,6 @@ const Answer = use("App/Models/Answer");
 
 class QuestionController {
   constructor() {
-    this.userRepository = new UserRepository();
     this.categoryRepository = new CategoryRepository();
   }
 
@@ -18,7 +17,7 @@ class QuestionController {
   }
 
   async add({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     var categoryId = request.input("category_id");
 
@@ -53,7 +52,7 @@ class QuestionController {
   }
 
   async details({ params, view, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", params.id)
@@ -95,7 +94,7 @@ class QuestionController {
   }
 
   async answer({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const answer = new Answer();
     answer.user_id = user.id;
@@ -115,7 +114,7 @@ class QuestionController {
   }
 
   async upvote({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", request.input("question_id"))
@@ -155,7 +154,7 @@ class QuestionController {
   }
 
   async downvote({ request, response, session }) {
-    const user = await this.userRepository.get(session.get("username"));
+    const user = await UserRepository.get(session.get("username"));
 
     const question = await Question.query()
       .where("id", request.input("question_id"))
