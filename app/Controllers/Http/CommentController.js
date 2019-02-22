@@ -1,16 +1,14 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
-
-const Comment = use("App/Models/Comment");
+const CommentRepository = use("App/Repositories/CommentRepository");
 
 class CommentController {
   async delete({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const comment = await Comment.query()
-      .where("id", request.input("comment_id"))
-      .where("user_id", user.id)
-      .delete();
+    const comment = await CommentRepository.delete(
+      request.input("comment_id"),
+      user.id
+    );
 
     session.flash({
       notification: {

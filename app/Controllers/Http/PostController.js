@@ -1,9 +1,9 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
+const CommentRepository = use("App/Repositories/CommentRepository");
 
 const Post = use("App/Models/Post");
-const Comment = use("App/Models/Comment");
 const Like = use("App/Models/Like");
 
 const got = require("got");
@@ -122,12 +122,11 @@ class PostController {
 
   async comment({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const comment = new Comment();
-    comment.user_id = user.id;
-    comment.post_id = request.input("post_id");
-    comment.comment = request.input("comment");
-    await user.comments().save(comment);
+    const comment = CommentRepository.create(
+      user.id,
+      request.input("post_id"),
+      request.input("comment")
+    );
 
     session.flash({
       notification: {
