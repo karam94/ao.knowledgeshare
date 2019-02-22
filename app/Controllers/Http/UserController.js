@@ -1,9 +1,9 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
+const AnswerRepository = use("App/Repositories/AnswerRepository");
 
 const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
-const Answer = use("App/Models/Answer");
 const Badge = use("App/Models/Badge");
 
 class UserController {
@@ -36,13 +36,7 @@ class UserController {
       .limit(6)
       .fetch();
 
-    var answers = await Answer.query()
-      .where("user_id", profileUser.id)
-      .with("question")
-      .limit(6)
-      .fetch();
-
-    //var test = questions.toJSON();
+    var answers = await AnswerRepository.getUserAnswers(profileUser.id);
 
     return view.render("user/profile", {
       user: user.toJSON(),

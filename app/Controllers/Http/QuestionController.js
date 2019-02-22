@@ -1,10 +1,10 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
+const AnswerRepository = use("App/Repositories/AnswerRepository");
 
 const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
-const Answer = use("App/Models/Answer");
 
 class QuestionController {
   async create({ view }) {
@@ -91,12 +91,11 @@ class QuestionController {
 
   async answer({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const answer = new Answer();
-    answer.user_id = user.id;
-    answer.question_id = request.input("question_id");
-    answer.answer = request.input("answer");
-    await user.answers().save(answer);
+    const answer = await AnswerRepository.create(
+      user.id,
+      request.input("question_id"),
+      request.input("answer")
+    );
 
     session.flash({
       notification: {

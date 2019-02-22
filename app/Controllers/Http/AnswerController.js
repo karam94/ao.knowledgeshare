@@ -1,16 +1,14 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
+const AnswerRepository = use("App/Repositories/AnswerRepository");
 
-const Answer = use("App/Models/Answer");
 const AnswerVote = use("App/Models/AnswerVote");
 
 class AnswerController {
   async upvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
 
-    const answer = await Answer.query()
-      .where("id", request.input("answer_id"))
-      .first();
+    const answer = await AnswerRepository.get(request.input("answer_id"));
 
     const vote = await AnswerVote.query()
       .where("user_id", user.id)
@@ -48,9 +46,7 @@ class AnswerController {
   async downvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
 
-    const answer = await Answer.query()
-      .where("id", request.input("answer_id"))
-      .first();
+    const answer = await AnswerRepository.get(request.input("answer_id"));
 
     const vote = await AnswerVote.query()
       .where("user_id", user.id)
