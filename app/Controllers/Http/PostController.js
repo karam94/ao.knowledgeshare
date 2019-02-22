@@ -16,12 +16,8 @@ const metascraper = require("metascraper")([
 ]);
 
 class PostController {
-  constructor() {
-    this.categoryRepository = new CategoryRepository;
-  }
-
   async create({ view }) {
-    const categories = await this.categoryRepository.getAll();
+    const categories = await CategoryRepository.getAll();
     return view.render("post/create", { categories });
   }
 
@@ -40,7 +36,7 @@ class PostController {
     var categoryId = request.input("category_id");
 
     if (containsMissingData) {
-      const categories = await this.categoryRepository.getAll();
+      const categories = await CategoryRepository.getAll();
       return view.render("post/create", {
         categories,
         postModify: true,
@@ -50,7 +46,7 @@ class PostController {
         postUrl: metadata.url
       });
     } else if (categoryId === "0") {
-      var newCategory = await this.categoryRepository.create(
+      var newCategory = await CategoryRepository.create(
         request.input("new_category_name")
       );
 

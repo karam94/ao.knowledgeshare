@@ -7,15 +7,10 @@ const Subscription = use("App/Models/Subscription");
 const Question = use("App/Models/Question");
 
 class CategoryController {
-  constructor() {
-    this.postRepository = new PostRepository;
-    this.categoryRepository = new CategoryRepository;
-  }
-
   async index({ view, request, params, session }) {
     const user = await UserRepository.get(session.get("username"));
 
-    const posts = await this.postRepository.getPostsByCategoryPaginated(
+    const posts = await PostRepository.getPostsByCategoryPaginated(
       params.category_id,
       request.input("page", 1),
       10
@@ -37,7 +32,7 @@ class CategoryController {
       .orderBy("score", "desc")
       .paginate(Number(request.input("page", 1)), 10);
 
-    const category = await this.categoryRepository.get(params.category_id);
+    const category = await CategoryRepository.get(params.category_id);
 
     const userIsSubscribed = await Subscription.query()
       .where("user_id", user.id)
@@ -99,7 +94,7 @@ class CategoryController {
       .pluck("category_id");
 
     if (subscriptions.length > 0) {
-      const posts = await this.postRepository.getPostsByCategoriesPaginated(
+      const posts = await PostRepository.getPostsByCategoriesPaginated(
         subscriptions,
         request.input("page", 1),
         10

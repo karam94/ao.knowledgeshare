@@ -6,14 +6,10 @@ const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
 
 class HomeController {
-  constructor() {
-    this.postRepository = new PostRepository();
-  }
-
   async index({ view, request, session }) {
     const user = await UserRepository.get(session.get("username"));
 
-    const posts = await this.postRepository.getAllPaginated(
+    const posts = await PostRepository.getAllPaginated(
       request.input("postpage", 1),
       8
     );

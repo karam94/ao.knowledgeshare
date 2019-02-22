@@ -7,12 +7,8 @@ const QuestionVote = use("App/Models/QuestionVote");
 const Answer = use("App/Models/Answer");
 
 class QuestionController {
-  constructor() {
-    this.categoryRepository = new CategoryRepository();
-  }
-
   async create({ view }) {
-    const categories = await this.categoryRepository.getAll();
+    const categories = await CategoryRepository.getAll();
     return view.render("question/create", { categories });
   }
 
@@ -22,7 +18,7 @@ class QuestionController {
     var categoryId = request.input("category_id");
 
     if (categoryId === "0") {
-      var category = await this.categoryRepository.create(
+      var category = await CategoryRepository.create(
         request.input("new_category_name")
       );
 
