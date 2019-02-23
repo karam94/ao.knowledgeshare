@@ -3,7 +3,6 @@ const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 
 const Question = use("App/Models/Question");
-const QuestionVote = use("App/Models/QuestionVote");
 
 class HomeController {
   async index({ view, request, session }) {

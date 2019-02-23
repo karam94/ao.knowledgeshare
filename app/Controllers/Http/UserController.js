@@ -2,6 +2,7 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const AnswerRepository = use("App/Repositories/AnswerRepository");
 const PostRepository = use("App/Repositories/PostRepository");
+const QuestionRepository = use("App/Repositories/QuestionRepository");
 
 const Question = use("App/Models/Question");
 const Badge = use("App/Models/Badge");
@@ -15,20 +16,10 @@ class UserController {
       6
     );
 
-    var questions = await Question.query()
-      .where("user_id", profileUser.id)
-      .with("category")
-      .with("poster")
-      .with("answers")
-      .with("upvotes", builder => {
-        builder.where("is_positive", true);
-      })
-      .with("downvotes", builder => {
-        builder.where("is_positive", false);
-      })
-      .orderBy("id", "desc")
-      .limit(6)
-      .fetch();
+    var questions = await QuestionRepository.getQuestionsForUserProfile(
+      profileUser.id,
+      6
+    );
 
     var answers = await AnswerRepository.getUserAnswers(profileUser.id);
 
