@@ -1,8 +1,8 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
 const AnswerRepository = use("App/Repositories/AnswerRepository");
+const PostRepository = use("App/Repositories/PostRepository");
 
-const Post = use("App/Models/Post");
 const Question = use("App/Models/Question");
 const Badge = use("App/Models/Badge");
 
@@ -10,16 +10,10 @@ class UserController {
   async index({ view, request, params, session }) {
     const user = await UserRepository.get(session.get("username"));
     const profileUser = await UserRepository.getProfileUser(params.username);
-
-    const posts = await Post.query()
-      .where("user_id", profileUser.id)
-      .with("category")
-      .with("poster")
-      .with("likes")
-      .with("comments")
-      .orderBy("id", "desc")
-      .limit(6)
-      .fetch();
+    const posts = await PostRepository.getPostsForUserProfile(
+      profileUser.id,
+      6
+    );
 
     var questions = await Question.query()
       .where("user_id", profileUser.id)

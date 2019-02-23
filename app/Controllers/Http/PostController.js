@@ -2,8 +2,8 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const CommentRepository = use("App/Repositories/CommentRepository");
+const PostRepository = use("App/Repositories/PostRepository");
 
-const Post = use("App/Models/Post");
 const Like = use("App/Models/Like");
 
 const got = require("got");
@@ -50,23 +50,25 @@ class PostController {
         request.input("new_category_name")
       );
 
-      const post = new Post();
-      post.category_id = newCategory.id;
-      post.author = metadata.author;
-      post.title = metadata.title;
-      post.description = metadata.description;
-      post.image = metadata.image;
-      post.url = metadata.url;
-      await user.posts().save(post);
+      await PostRepository.create(
+        user.id,
+        newCategory.id,
+        metadata.author,
+        metadata.title,
+        metadata.description,
+        metadata.image,
+        metadata.url
+      );
     } else {
-      const post = new Post();
-      post.category_id = categoryId;
-      post.author = metadata.author;
-      post.title = metadata.title;
-      post.description = metadata.description;
-      post.image = metadata.image;
-      post.url = metadata.url;
-      await user.posts().save(post);
+      await PostRepository.create(
+        user.id,
+        categoryId,
+        metadata.author,
+        metadata.title,
+        metadata.description,
+        metadata.image,
+        metadata.url
+      );
     }
 
     session.flash({
@@ -81,11 +83,7 @@ class PostController {
 
   async delete({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const post = await Post.query()
-      .where("id", request.input("post_id"))
-      .where("user_id", user.id)
-      .delete();
+    await PostRepository.delete(request.input("post_id"), user.id);
 
     session.flash({
       notification: {
@@ -99,14 +97,7 @@ class PostController {
 
   async details({ params, view, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const post = await Post.query()
-      .where("id", params.id)
-      .with("category")
-      .with("poster")
-      .with("likes")
-      .with("comments.author")
-      .firstOrFail();
+    const post = await PostRepository.get(params.id);
 
     const userLikesPost = await Like.query()
       .where("user_id", user.id)
