@@ -3,8 +3,7 @@ const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
-
-const Subscription = use("App/Models/Subscription");
+const SubscriptionRepository = use("App/Repositories/SubscriptionRepository");
 
 class CategoryController {
   async index({ view, request, params, session }) {
@@ -21,10 +20,10 @@ class CategoryController {
       10
     );
     const category = await CategoryRepository.get(params.category_id);
-    const userIsSubscribed = await Subscription.query()
-      .where("user_id", user.id)
-      .where("category_id", params.category_id)
-      .first();
+    const userIsSubscribed = await SubscriptionRepository.getSubscriptionByUser(
+      user.id,
+      params.category_id
+    );
 
     return view.render("home", {
       posts: posts.toJSON(),
@@ -38,16 +37,16 @@ class CategoryController {
   async subscribe({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
 
-    const existingSubscription = await Subscription.query()
-      .where("user_id", user.id)
-      .where("category_id", request.input("category_id"))
-      .first();
+    const existingSubscription = await SubscriptionRepository.getSubscriptionByUser(
+      user.id,
+      request.input("category_id")
+    );
 
     if (existingSubscription) {
-      await Subscription.query()
-        .where("user_id", user.id)
-        .where("category_id", request.input("category_id"))
-        .delete();
+      await SubscriptionRepository.deleteSubscription(
+        user.id,
+        request.input("category_id")
+      );
 
       session.flash({
         notification: {
@@ -56,10 +55,10 @@ class CategoryController {
         }
       });
     } else {
-      const subscription = new Subscription();
-      subscription.user_id = user.id;
-      subscription.category_id = request.input("category_id");
-      await user.subscriptions().save(subscription);
+      await SubscriptionRepository.create(
+        user.id,
+        request.input("category_id")
+      );
 
       session.flash({
         notification: {
@@ -75,10 +74,9 @@ class CategoryController {
 
   async subscriptions({ view, request, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const subscriptions = await Subscription.query()
-      .where("user_id", user.id)
-      .pluck("category_id");
+    const subscriptions = await SubscriptionRepository.getSubscriptionsByUser(
+      user.id
+    );
 
     if (subscriptions.length > 0) {
       const posts = await PostRepository.getPostsByCategoriesPaginated(
