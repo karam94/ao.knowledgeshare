@@ -1,32 +1,20 @@
 "use strict";
 const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
-
-const Question = use("App/Models/Question");
+const QuestionRepository = use("App/Repositories/QuestionRepository");
 
 class HomeController {
   async index({ view, request, session }) {
     const user = await UserRepository.get(session.get("username"));
-
     const posts = await PostRepository.getAllPaginated(
       request.input("postpage", 1),
       8
     );
-
-    var questions = await Question.query()
-      .with("category")
-      .with("poster")
-      .with("upvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", true);
-      })
-      .with("downvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", false);
-      })
-      .with("answers.author")
-      .orderBy("score", "desc")
-      .paginate(Number(request.input("questionpage", 1)), 5);
+    const questions = await QuestionRepository.getQuestions(
+      user.id,
+      Number(request.input("questionpage", 1)),
+      5
+    );
 
     return view.render("home", {
       user: user.toJSON(),

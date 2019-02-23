@@ -2,8 +2,8 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const AnswerRepository = use("App/Repositories/AnswerRepository");
+const QuestionRepository = use("App/Repositories/QuestionRepository");
 
-const Question = use("App/Models/Question");
 const QuestionVote = use("App/Models/QuestionVote");
 
 class QuestionController {
@@ -22,19 +22,19 @@ class QuestionController {
         request.input("new_category_name")
       );
 
-      const question = new Question();
-      question.category_id = category.id;
-      question.title = request.input("title");
-      question.description = request.input("description");
-
-      await user.questions().save(question);
+      await QuestionRepository.create(
+        user.id,
+        category.id,
+        request.input("title"),
+        request.input("description")
+      );
     } else {
-      const question = new Question();
-      question.category_id = categoryId;
-      question.title = request.input("title");
-      question.description = request.input("description");
-
-      await user.questions().save(question);
+      await QuestionRepository.create(
+        user.id,
+        categoryId,
+        request.input("title"),
+        request.input("description")
+      );
     }
 
     session.flash({
@@ -49,39 +49,10 @@ class QuestionController {
 
   async details({ params, view, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const question = await Question.query()
-      .where("id", params.id)
-      .with("category")
-      .with("poster")
-      .with("upvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", true);
-      })
-      .with("downvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", false);
-      })
-      .withCount("allupvotes", builder => {
-        builder.where("is_positive", true);
-      }) //rename this to make more flipping sense
-      .withCount("alldownvotes", builder => {
-        builder.where("is_positive", false);
-      }) //rename this to make more flipping sense
-      .with("answers.author")
-      .with("answers.upvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", true);
-      })
-      .with("answers.downvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", false);
-      })
-      .with("answers", builder => {
-        builder.orderBy("score", "desc");
-      })
-      .orderBy("score", "desc")
-      .firstOrFail();
+    const question = await QuestionRepository.getQuestionById(
+      params.id,
+      user.id
+    );
 
     return view.render("question/details", {
       question: question.toJSON(),
@@ -110,10 +81,7 @@ class QuestionController {
 
   async upvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const question = await Question.query()
-      .where("id", request.input("question_id"))
-      .first();
+    const question = await QuestionRepository.get(request.input("question_id"));
 
     const vote = await QuestionVote.query()
       .where("user_id", user.id)
@@ -150,10 +118,7 @@ class QuestionController {
 
   async downvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const question = await Question.query()
-      .where("id", request.input("question_id"))
-      .first();
+    const question = await QuestionRepository.get(request.input("question_id"));
 
     const vote = await QuestionVote.query()
       .where("user_id", user.id)
