@@ -43,6 +43,12 @@
               <span>Latest Questions</span>
             </a>
           </li>
+          <li>
+            <a href="#" onclick="changeTab(this, 'videos-tab')">
+              <span class="icon is-small"><i class="fas fa-video"></i></span>
+              <span>Latest Videos</span>
+            </a>
+          </li>
         </ul>
       </div>
 
@@ -186,6 +192,17 @@
         @!component('components.pagination2', pagination = questions)
         @endif
     </div>
+
+    <div class="tabs-content hidden" id="videos-tab">
+      <div class="columns is-multiline">
+          <p>No videos to display.</p>
+      </div>
+
+      @if(posts.data.length)
+      <hr>
+      @!component('components.pagination', pagination = posts)
+      @endif
+    </div>
   </div>
   </section>
 
@@ -204,6 +221,7 @@
 
         document.getElementById("posts-tab").classList.add("hidden");
         document.getElementById("questions-tab").classList.add("hidden");
+        document.getElementById("videos-tab").classList.add("hidden");
       }
   </script>
 

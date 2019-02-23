@@ -4,7 +4,7 @@ const AnswerRepository = use("App/Repositories/AnswerRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
 
-const Badge = use("App/Models/Badge");
+//const Badge = use("App/Models/Badge");
 
 class UserController {
   async index({ view, request, params, session }) {
