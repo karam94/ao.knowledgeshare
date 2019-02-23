@@ -3,8 +3,7 @@ const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const CommentRepository = use("App/Repositories/CommentRepository");
 const PostRepository = use("App/Repositories/PostRepository");
-
-const Like = use("App/Models/Like");
+const LikeRepository = use("App/Repositories/LikeRepository");
 
 const got = require("got");
 const metascraper = require("metascraper")([
@@ -98,16 +97,12 @@ class PostController {
   async details({ params, view, session }) {
     const user = await UserRepository.get(session.get("username"));
     const post = await PostRepository.get(params.id);
-
-    const userLikesPost = await Like.query()
-      .where("user_id", user.id)
-      .where("post_id", post.id)
-      .first();
+    const userLikesPost = await LikeRepository.userLikesPost(user.id, post.id);
 
     return view.render("post/details", {
       post: post.toJSON(),
       user: user.toJSON(),
-      userLikesPost: userLikesPost ? true : false
+      userLikesPost: userLikesPost > 0 ? true : false
     });
   }
 
@@ -132,22 +127,15 @@ class PostController {
 
   async like({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-
-    const existingLike = await Like.query()
-      .where("user_id", user.id)
-      .where("post_id", request.input("post_id"))
-      .getCount();
+    const existingLike = await LikeRepository.userLikesPost(
+      user.id,
+      request.input("post_id")
+    );
 
     if (existingLike > 0) {
-      await Like.query()
-        .where("user_id", user.id)
-        .where("post_id", request.input("post_id"))
-        .delete();
+      await LikeRepository.delete(user.id, request.input("post_id"));
     } else {
-      const like = new Like();
-      like.user_id = user.id;
-      like.post_id = request.input("post_id");
-      await user.likes().save(like);
+      await LikeRepository.create(user.id, request.input("post_id"));
     }
 
     var route = "/post/details/" + request.input("post_id");
