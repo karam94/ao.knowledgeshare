@@ -4,7 +4,6 @@ const AnswerRepository = use("App/Repositories/AnswerRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
 
-const Question = use("App/Models/Question");
 const Badge = use("App/Models/Badge");
 
 class UserController {

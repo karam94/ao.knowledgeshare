@@ -2,38 +2,25 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
+const QuestionRepository = use("App/Repositories/QuestionRepository");
 
 const Subscription = use("App/Models/Subscription");
-const Question = use("App/Models/Question");
 
 class CategoryController {
   async index({ view, request, params, session }) {
     const user = await UserRepository.get(session.get("username"));
-
     const posts = await PostRepository.getPostsByCategoryPaginated(
       params.category_id,
       request.input("page", 1),
       10
     );
-
-    const questions = await Question.query()
-      .with("category")
-      .where("category_id", params.category_id)
-      .with("poster")
-      .with("upvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", true);
-      })
-      .with("downvotes", builder => {
-        builder.where("user_id", user.id);
-        builder.where("is_positive", false);
-      })
-      .with("answers.author")
-      .orderBy("score", "desc")
-      .paginate(Number(request.input("page", 1)), 10);
-
+    const questions = await QuestionRepository.getQuestionsByCategoryPaginated(
+      params.category_id,
+      user.id,
+      request.input("page", 1),
+      10
+    );
     const category = await CategoryRepository.get(params.category_id);
-
     const userIsSubscribed = await Subscription.query()
       .where("user_id", user.id)
       .where("category_id", params.category_id)
@@ -100,21 +87,12 @@ class CategoryController {
         10
       );
 
-      const questions = await Question.query()
-        .with("category")
-        .whereIn("category_id", subscriptions)
-        .with("poster")
-        .with("upvotes", builder => {
-          builder.where("user_id", user.id);
-          builder.where("is_positive", true);
-        })
-        .with("downvotes", builder => {
-          builder.where("user_id", user.id);
-          builder.where("is_positive", false);
-        })
-        .with("answers.author")
-        .orderBy("score", "desc")
-        .paginate(Number(request.input("page", 1)), 10);
+      const questions = await QuestionRepository.getQuestionsByCategoriesPaginated(
+        subscriptions,
+        user.id,
+        1,
+        10
+      );
 
       return view.render("home", {
         posts: posts.toJSON(),
