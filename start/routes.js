@@ -44,6 +44,12 @@ Route.group(() => {
   Route.post("/delete", "PostController.delete").as("post/delete");
 }).prefix("/post");
 
+// Videos
+Route.group(() => {
+  Route.get("/create", "VideoController.create").as("video/create");
+  Route.post("/add", "VideoController.add").as("video/add");
+}).prefix("/video");
+
 Route.group(() => {
   Route.get("/create", "QuestionController.create").as("question/create");
   Route.post("/add", "QuestionController.add").as("question/add");

@@ -1,0 +1,162 @@
+@layout('layouts.app')
+
+@section('content')
+  @set('title', 'Add Video')
+
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-three-fifths is-offset-one-fifth">
+          <h2 class="title has-text-centered">Add Video</h2>
+          
+          @include('partials._notification')
+
+          <form action="{{ route('video/add') }}" method="post" enctype="multipart/form-data">
+            {{ csrfField() }}
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <div class="select is-fullwidth">
+                      <select name="category_id" id="category_dropdown" onchange="categoryChanged()" required>
+                        <option value="">Choose a category</option>
+                        @each((name, id) in categories)
+                          <option value="{{ id }}">{{ name }}</option>
+                        @endeach
+                        <option value="0">New Category</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('category'), hasErrorFor('category')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal" id="category_input_field">
+                <div class="field-body">
+                  <div class="field">
+                    <div class="control">
+                      <input
+                        id="category_input"
+                        type="string"
+                        class="input"
+                        name="new_category_name"
+                        value="{{ old('new_category_name', '') }}"
+                        placeholder="New Category Name">
+                    </div>
+  
+                    {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('new_category_name'), hasErrorFor('new_category_name')) }}
+                  </div>
+                </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="url"
+                      class="input"
+                      name="url"
+                      value="{{ postUrl }}"
+                      placeholder="Video YouTube URL">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+
+            @if(postModify)
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      class="input"
+                      name="postTitle"
+                      value="{{ postTitle }}"
+                      placeholder="Please provide a video title.">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <textarea
+                      type="text"
+                      class="textarea"
+                      name="postDescription"
+                      value="{{ postDescription }}"
+                      placeholder="We couldn't fetch a description from the Video YouTube URL you provided. Please provide one.">{{ postDescription }}</textarea>
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <input
+                      type="text"
+                      class="input"
+                      name="postImage"
+                      value="{{ postImage }}"
+                      placeholder="Please provide a video thumbnail image URL.">
+                  </div>
+
+                  {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                </div>
+              </div>
+            </div>
+            @endif
+
+            <div class="field is-horizontal">
+              <div class="field-body">
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-primary" style="float:right;">
+                      <span class="icon">
+                        <i class="far fa-edit"></i>
+                      </span>
+
+                      <span>Add Video</span>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    var categoryDropdown = document.getElementById("category_dropdown");
+    var categoryInput = document.getElementById("category_input");
+    var categoryInputField = document.getElementById("category_input_field");
+    categoryInputField.style.display = "none";
+
+    function categoryChanged() {
+      categoryInput.value = "";
+
+      if(categoryDropdown.value == 0){
+        categoryInputField.style.display = "block";
+      } else {
+        categoryInputField.style.display = "none";
+      }
+    }
+  </script>
+@endsection

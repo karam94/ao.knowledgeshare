@@ -11,6 +11,10 @@ class Like extends Model {
   post() {
     return this.belongsTo("App/Models/Post");
   }
+
+  // video() {
+  //   return this.belongsTo("App/Models/Video");
+  // }
 }
 
 module.exports = Like;

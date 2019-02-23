@@ -3,11 +3,12 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use("Schema");
 
-class CommentSchema extends Schema {
-  up() {
-    this.create("comments", table => {
+class VideosSchema extends Schema {
+  up () {
+    this.create("videos", (table) => {
       table.increments();
 
+      // Poster User Id
       table
         .integer("user_id")
         .unsigned()
@@ -17,25 +18,28 @@ class CommentSchema extends Schema {
         .onDelete("cascade");
 
       table
-        .integer("post_id")
+        .integer("category_id")
         .unsigned()
         .notNullable()
         .references("id")
-        .inTable("posts")
+        .inTable("categories")
         .onDelete("cascade");
 
-      table
-        .string("comment")
-        .notNullable()
-        .unique();
+      table.string("title");
+      
+      table.text("description");
+
+      table.string("image");
+
+      table.string("url").notNullable();
 
       table.timestamps();
     });
   }
 
-  down() {
-    this.drop("comments");
+  down () {
+    this.drop("videos");
   }
 }
 
-module.exports = CommentSchema;
+module.exports = VideosSchema;
