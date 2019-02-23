@@ -3,8 +3,7 @@ const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const AnswerRepository = use("App/Repositories/AnswerRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
-
-const QuestionVote = use("App/Models/QuestionVote");
+const QuestionVoteRepository = use("App/Repositories/QuestionVoteRepository");
 
 class QuestionController {
   async create({ view }) {
@@ -82,11 +81,11 @@ class QuestionController {
   async upvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
     const question = await QuestionRepository.get(request.input("question_id"));
-
-    const vote = await QuestionVote.query()
-      .where("user_id", user.id)
-      .where("question_id", request.input("question_id"))
-      .first();
+    const vote = await QuestionVoteRepository.getUserVote(
+      user.id,
+      request.input("question_id"),
+      true
+    );
 
     if (vote && vote.is_positive) {
       vote.delete();
@@ -102,15 +101,14 @@ class QuestionController {
 
       await user.questionVotes().save(vote);
     } else {
-      const newVote = new QuestionVote();
-      newVote.user_id = user.id;
-      newVote.question_id = request.input("question_id");
-      newVote.is_positive = true;
+      const newVote = await QuestionVoteRepository.create(
+        user.id,
+        request.input("question_id"),
+        true
+      );
 
       question.score++;
       question.save();
-
-      await user.questionVotes().save(newVote);
     }
 
     return response.route("back");
@@ -119,35 +117,30 @@ class QuestionController {
   async downvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
     const question = await QuestionRepository.get(request.input("question_id"));
-
-    const vote = await QuestionVote.query()
-      .where("user_id", user.id)
-      .where("question_id", request.input("question_id"))
-      .first();
+    const vote = await QuestionVoteRepository.getUserVote(
+      user.id,
+      request.input("question_id")
+    );
 
     if (vote && vote.is_positive) {
       vote.is_positive = false;
-
       question.score--;
       question.score--;
       question.save();
-
       await user.questionVotes().save(vote);
     } else if (vote && !vote.is_positive) {
       question.score++;
       question.save();
-
       vote.delete();
     } else {
-      const newVote = new QuestionVote();
-      newVote.user_id = user.id;
-      newVote.question_id = request.input("question_id");
-      newVote.is_positive = false;
+      const newVote = await QuestionVoteRepository.create(
+        user.id,
+        request.input("question_id"),
+        false
+      );
 
       question.score--;
       question.save();
-
-      await user.questionVotes().save(newVote);
     }
 
     return response.route("back");
