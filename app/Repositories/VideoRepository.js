@@ -7,7 +7,7 @@ class VideoRepository {
       .where("id", id)
       .with("category")
       .with("poster")
-      // .with("likes")
+      .with("likes")
       .with("comments.author")
       .firstOrFail();
   }
@@ -28,7 +28,7 @@ class VideoRepository {
       .orderBy("id", "desc")
       .with("category")
       .with("poster")
-      // .with("likes")
+      .with("likes")
       .with("comments")
       .paginate(page, limit);
   }

@@ -1,5 +1,6 @@
 "use strict";
 const Like = use("App/Models/Like");
+const Video = use("App/Models/Video");
 
 class LikeRepository {
   async create(userId, postId) {
@@ -23,6 +24,15 @@ class LikeRepository {
       .getCount();
 
     return userLikesPost;
+  }
+
+  async userLikesVideo(userId, videoId) {
+    const userLikesVideo = await Like.query()
+      .where("user_id", userId)
+      .where("video_id", videoId)
+      .getCount();
+
+    return userLikesVideo;
   }
 }
 

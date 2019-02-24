@@ -12,9 +12,9 @@ class Like extends Model {
     return this.belongsTo("App/Models/Post");
   }
 
-  // video() {
-  //   return this.belongsTo("App/Models/Video");
-  // }
+  video() {
+    return this.belongsTo("App/Models/Video");
+  }
 }
 
 module.exports = Like;

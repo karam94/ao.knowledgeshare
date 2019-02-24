@@ -2,6 +2,7 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const VideoRepository = use("App/Repositories/VideoRepository");
+const LikeRepository = use("App/Repositories/LikeRepository");
 
 const got = require("got");
 const metascraper = require("metascraper")([
@@ -78,12 +79,12 @@ class VideoController {
   async details({ params, view, session }) {
     const user = await UserRepository.get(session.get("username"));
     const video = await VideoRepository.get(params.id);
-    // const userLikesPost = await LikeRepository.userLikesPost(user.id, post.id);
+    const userLikesVideo = await LikeRepository.userLikesVideo(user.id, video.id);
 
     return view.render("video/details", {
       video: video.toJSON(),
-      user: user.toJSON()
-      // userLikesPost: userLikesPost > 0 ? true : false
+      user: user.toJSON(),
+      userLikesVideo: userLikesVideo > 0 ? true : false
     });
   }
 }

@@ -12,9 +12,9 @@ class Video extends Model {
     return this.belongsTo("App/Models/Category");
   }
 
-  // likes() {
-  //   return this.hasMany("App/Models/Like");
-  // }
+  likes() {
+    return this.hasMany("App/Models/Like");
+  }
 
   comments() {
     return this.hasMany("App/Models/Comment");
