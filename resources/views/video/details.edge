@@ -29,13 +29,13 @@
           </p>
 
           <div style="padding-top: 25px">
-            <form action="{{ route('like') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+            <form action="{{ route('video/like') }}" method="post" enctype="multipart/form-data" style="display:inline;">
               {{ csrfField() }}
 
-              <input type="hidden" name="post_id" value="{{ post.id }}">
+              <input type="hidden" name="video_id" value="{{ video.id }}">
 
-              <button type="submit" class="button {{ userLikesPost ? 'is-light' : 'is-danger' }}">
-                @if(userLikesPost)
+              <button type="submit" class="button {{ userLikesVideo ? 'is-light' : 'is-danger' }}">
+                @if(userLikesVideo)
                   <span class="icon">
                     <i class="far fa-frown"></i>
                   </span>
@@ -109,7 +109,6 @@
                   <article class="media">
                     <div class="media-left">
                       <figure class="image is-64x64">
-                        <!-- <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"> -->
                         <img src="https://www.gravatar.com/avatar/{{ user.gravatar }}" alt="{{ user.username }}">
                       </figure>
                     </div>
@@ -126,10 +125,10 @@
               </div>
               @endeach
 
-              <form action="{{ route('comment') }}" method="post" enctype="multipart/form-data">
+              <form action="{{ route('video/comment') }}" method="post" enctype="multipart/form-data">
                 {{ csrfField() }}
 
-                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <input type="hidden" name="video_id" value="{{ video.id }}">
 
                 <div class="field is-horizontal">
                     <div class="field-body">

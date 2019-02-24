@@ -133,9 +133,9 @@ class PostController {
     );
 
     if (existingLike > 0) {
-      await LikeRepository.delete(user.id, request.input("post_id"));
+      await LikeRepository.deletePostLike(user.id, request.input("post_id"));
     } else {
-      await LikeRepository.create(user.id, request.input("post_id"));
+      await LikeRepository.createPostLike(user.id, request.input("post_id"));
     }
 
     var route = "/post/details/" + request.input("post_id");

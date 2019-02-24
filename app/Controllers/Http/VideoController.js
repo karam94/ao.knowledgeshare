@@ -87,6 +87,23 @@ class VideoController {
       userLikesVideo: userLikesVideo > 0 ? true : false
     });
   }
+
+  async like({ request, response, session }) {
+    const user = await UserRepository.get(session.get("username"));
+    const existingLike = await LikeRepository.userLikesVideo(
+      user.id,
+      request.input("video_id")
+    );
+
+    if (existingLike > 0) {
+      await LikeRepository.deleteVideoLike(user.id, request.input("video_id"));
+    } else {
+      await LikeRepository.createVideoLike(user.id, request.input("video_id"));
+    }
+
+    var route = "/video/details/" + request.input("video_id");
+    return response.route(route);
+  }
 }
 
 module.exports = VideoController;

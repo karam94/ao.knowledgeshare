@@ -3,17 +3,31 @@ const Like = use("App/Models/Like");
 const Video = use("App/Models/Video");
 
 class LikeRepository {
-  async create(userId, postId) {
+  async createPostLike(userId, postId) {
     await Like.create({
       user_id: userId,
       post_id: postId
     });
   }
 
-  async delete(userId, postId) {
+  async createVideoLike(userId, videoId) {
+    await Like.create({
+      user_id: userId,
+      video_id: videoId
+    });
+  }
+
+  async deletePostLike(userId, postId) {
     await Like.query()
       .where("user_id", userId)
       .where("post_id", postId)
+      .delete();
+  }
+
+  async deleteVideoLike(userId, videoId) {
+    await Like.query()
+      .where("user_id", userId)
+      .where("video_id", videoId)
       .delete();
   }
 
