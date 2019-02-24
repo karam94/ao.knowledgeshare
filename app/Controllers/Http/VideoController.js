@@ -74,6 +74,18 @@ class VideoController {
 
     return response.route("home");
   }
+
+  async details({ params, view, session }) {
+    const user = await UserRepository.get(session.get("username"));
+    const video = await VideoRepository.get(params.id);
+    // const userLikesPost = await LikeRepository.userLikesPost(user.id, post.id);
+
+    return view.render("video/details", {
+      video: video.toJSON(),
+      user: user.toJSON()
+      // userLikesPost: userLikesPost > 0 ? true : false
+    });
+  }
 }
 
 module.exports = VideoController;

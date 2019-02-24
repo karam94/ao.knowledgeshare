@@ -10,39 +10,39 @@ $navbar-breakpoint: 0;
 @import "node_modules/bulma/bulma";
 
 @font-face {
-  font-family: 'AO Icons';
-  src: url("../fonts/ao-icons.ttf") format('truetype');
+  font-family: "AO Icons";
+  src: url("../fonts/ao-icons.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'AO Bold';
-  src: url("../fonts/AoOz-Bold.ttf") format('truetype');
+  font-family: "AO Bold";
+  src: url("../fonts/AoOz-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'AO Regular';
-  src: url("../fonts/AoOz-Regular.ttf") format('truetype');
+  font-family: "AO Regular";
+  src: url("../fonts/AoOz-Regular.ttf") format("truetype");
 }
 
 h1 {
-  font-family: 'AO Bold', sans-serif;
+  font-family: "AO Bold", sans-serif;
 }
 
 h2 {
-  font-family: 'AO Regular', sans-serif;
+  font-family: "AO Regular", sans-serif;
 }
 
 h3 {
-  font-family: 'AO Regular', sans-serif;
+  font-family: "AO Regular", sans-serif;
 }
 
 .navbar-title {
-  font-family: 'AO Bold', sans-serif;
+  font-family: "AO Bold", sans-serif;
   font-size: 1.2em;
 }
 
 .navbar-title-icon {
-  font-family: 'AO Icons', sans-serif;
+  font-family: "AO Icons", sans-serif;
   font-size: 1.2em;
 }
 
@@ -51,9 +51,9 @@ h3 {
 }
 
 .centered-img {
-  display:block; 
-  margin-left:auto; 
-  margin-right:auto; 
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
   width: 450px;
   padding-bottom: 25px;
 }
@@ -69,7 +69,7 @@ h3 {
 
 .profile-column p {
   margin: 10px 0 10px 5px;
-  font-family: 'AO Regular', sans-serif;
+  font-family: "AO Regular", sans-serif;
 }
 
 .tabs-content {
@@ -130,4 +130,21 @@ h3 {
 
 .section {
   padding: 1.5rem !important;
+}
+
+.embed-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+}
+.embed-container iframe,
+.embed-container object,
+.embed-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }

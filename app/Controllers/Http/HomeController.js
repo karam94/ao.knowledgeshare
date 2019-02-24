@@ -2,6 +2,7 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
+const VideoRepository = use("App/Repositories/VideoRepository");
 
 class HomeController {
   async index({ view, request, session }) {
@@ -12,14 +13,19 @@ class HomeController {
     );
     const questions = await QuestionRepository.getQuestions(
       user.id,
-      Number(request.input("questionpage", 1)),
+      request.input("questionpage", 1),
       5
+    );
+    const videos = await VideoRepository.getAllPaginated(
+      request.input("videopage", 1),
+      8
     );
 
     return view.render("home", {
       user: user.toJSON(),
       posts: posts.toJSON(),
       questions: questions.toJSON(),
+      videos: videos.toJSON(),
       title: "Home"
     });
   }

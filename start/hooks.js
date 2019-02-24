@@ -8,7 +8,6 @@ hooks.after.providersBooted(() => {
 
   View.global("appUrl", path => {
     const Env = use("Env");
-
     const APP_URL = Env.get("APP_URL");
 
     return path ? `${APP_URL}/${path}` : APP_URL;
@@ -28,5 +27,9 @@ hooks.after.providersBooted(() => {
     return Array.from(new Array(total), (value, index) => {
       return index + 1;
     });
+  });
+
+  View.global("convertYoutube", url => {
+    return url.replace("watch?v=", "embed/");
   });
 });

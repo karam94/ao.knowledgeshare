@@ -1,0 +1,172 @@
+@layout('layouts.app')
+
+@section('content')
+  @set('title', video.title)
+
+  <section class="hero is-primary has-text-centered" style="background-color: #73a920">
+      <div class="hero-body">
+        <div class="container">
+          <h1 class="title">
+            {{ video.title }}
+          </h1>
+          <h3 class="subtitle is-6">
+              shared by <a href="../user/{{ video.poster.username }}"><em>{{ video.poster.username }}</em></a>
+          </h3>
+          
+          <p>
+            <i class="far fa-heart"></i> {{ video.likes.length }} &nbsp;
+            <i class="far fa-comment"></i> {{ video.comments.length }}
+          </p>
+
+          <br/>
+
+          <p>
+            <a href="{{ route('videos', { category_id: video.category_id }) }}">
+              <span class="tag ">
+                {{ video.category.name }}
+              </span>
+            </a>
+          </p>
+
+          <div style="padding-top: 25px">
+            <form action="{{ route('like') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+              {{ csrfField() }}
+
+              <input type="hidden" name="post_id" value="{{ post.id }}">
+
+              <button type="submit" class="button {{ userLikesPost ? 'is-light' : 'is-danger' }}">
+                @if(userLikesPost)
+                  <span class="icon">
+                    <i class="far fa-frown"></i>
+                  </span>
+                  <span>Unrecommend Video</span>
+                @else
+                  <span class="icon">
+                    <i class="far fa-heart"></i>
+                  </span>
+                  <span>Recommend Video</span>
+                @endif
+              </button>
+            </form>
+          </div>
+
+          @if(post.poster.username === user.username) 
+            <div style="padding-top: 25px">
+              <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+                {{ csrfField() }}
+
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <button class="button is-danger">
+                    <span class="icon">
+                        <i class="far fa-trash-alt"></i>
+                    </span>
+                    <span>Delete Post</span>
+                </button>
+              </form>
+            </div>
+          @endif
+
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="columns">
+            <div class="column">
+                <div class='embed-container'>
+                    <iframe src='{{ convertYoutube(video.url) }}' frameborder='0' allowfullscreen></iframe>
+                  </div>
+            </div>
+        </div>
+      </div>
+      <div class="container">
+          <div class="columns">
+            <div class="column is-three-fifths is-offset-one-fifth">
+              <p class="has-text-centered">
+                {{ video.description }}
+              </p>
+
+              <br/>
+
+              <hr>
+
+              <h3 class="title has-text-centered">Video Comments</h3>
+              @include('partials._notification')
+              
+              @each(comment in video.comments)
+              <div class="box">
+                  @if(comment.author.username === user.username) 
+                    <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+                      {{ csrfField() }}
+        
+                      <input type="hidden" name="video_id" value="{{ video.id }}">
+                      <input type="hidden" name="comment_id" value="{{ comment.id }}">
+                      <a class="delete" href="#" style="float:right;" onclick="this.parentNode.submit(); return false;"></a>
+                    </form>
+                  @endif
+                  
+                  <article class="media">
+                    <div class="media-left">
+                      <figure class="image is-64x64">
+                        <!-- <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"> -->
+                        <img src="https://www.gravatar.com/avatar/{{ user.gravatar }}" alt="{{ user.username }}">
+                      </figure>
+                    </div>
+                    <div class="media-content">
+                      <div class="content">
+                        <p>
+                          <strong>{{ comment.author.username }}</strong> <small>{{ comment.created_at }}</small>
+                          <br>
+                          {{ comment.comment }}
+                        </p>
+                      </div>
+                    </div>
+                  </article>
+              </div>
+              @endeach
+
+              <form action="{{ route('comment') }}" method="post" enctype="multipart/form-data">
+                {{ csrfField() }}
+
+                <input type="hidden" name="post_id" value="{{ post.id }}">
+
+                <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field">
+                        <div class="control">
+                          <input
+                            type="textarea"
+                            class="input"
+                            name="comment"
+                            value="{{ old('url', '') }}"
+                            placeholder="Your comment...">
+                        </div>
+      
+                        {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
+                      </div>
+                    </div>
+                  </div>
+      
+                  <div class="field is-horizontal">
+                    <div class="field-body">
+                      <div class="field">
+                        <div class="control">
+                          <button class="button is-primary" style="float:right;">
+                            <span class="icon">
+                              <i class="far fa-edit"></i>
+                            </span>
+                            <span>
+                            Submit
+                            </span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              </form>
+            </div>
+          </div>
+      </div>
+    </section>
+@endsection
