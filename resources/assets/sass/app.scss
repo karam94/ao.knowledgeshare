@@ -148,3 +148,16 @@ h3 {
   width: 100%;
   height: 100%;
 }
+
+.video-play {
+  opacity: 0.85;
+  z-index: 1;
+}
+
+.video-play:hover {
+  opacity: 0.2;
+  transition: opacity .3s ease-out;
+  -moz-transition: opacity .3s ease-out;
+  -webkit-transition: opacity .3s ease-out;
+  -o-transition: opacity .3s ease-out;
+}
