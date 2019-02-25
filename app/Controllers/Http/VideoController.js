@@ -135,7 +135,7 @@ class VideoController {
     session.flash({
       notification: {
         type: "danger",
-        message: "Post deleted!"
+        message: "Video deleted!"
       }
     });
 

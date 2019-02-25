@@ -55,7 +55,7 @@
               <form action="{{ route('video/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                 {{ csrfField() }}
 
-                <input type="hidden" name="video" value="{{ video.id }}">
+                <input type="hidden" name="video_id" value="{{ video.id }}">
                 <button class="button is-danger">
                     <span class="icon">
                         <i class="far fa-trash-alt"></i>
