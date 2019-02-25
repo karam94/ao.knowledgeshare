@@ -107,7 +107,7 @@
                     <div class="media-content">
                       <div class="content">
                         <p>
-                          <strong>{{ answer.author.username }}</strong> <small>{{ answer.created_at }}</small>
+                          <strong><a href="/user/{{ answer.author.username }}">{{ answer.author.username }}</a></strong> <small>{{ answer.created_at }}</small>
                           <br>
                           {{ answer.answer }}
                         </p>

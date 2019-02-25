@@ -114,14 +114,13 @@
                   <article class="media">
                     <div class="media-left">
                       <figure class="image is-64x64">
-                        <!-- <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image"> -->
                         <img src="https://www.gravatar.com/avatar/{{ user.gravatar }}" alt="{{ user.username }}">
                       </figure>
                     </div>
                     <div class="media-content">
                       <div class="content">
                         <p>
-                          <strong>{{ comment.author.username }}</strong> <small>{{ comment.created_at }}</small>
+                          <strong><a href="/user/{{ comment.author.username }}">{{ comment.author.username }}</a></strong> <small>{{ comment.created_at }}</small>
                           <br>
                           {{ comment.comment }}
                         </p>
