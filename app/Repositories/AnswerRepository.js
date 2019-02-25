@@ -15,6 +15,7 @@ class AnswerRepository {
     const answers = await Answer.query()
       .where("user_id", id)
       .with("question")
+      .with("author")
       .limit(6)
       .fetch();
 

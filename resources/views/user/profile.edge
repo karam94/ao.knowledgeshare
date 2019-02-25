@@ -190,7 +190,7 @@
                                   </h3>
           
                                   <p class="subtitle is-6">
-                                    shared by {{ post.poster.username }}
+                                    shared by <strong><a href="/user/{{ post.poster.username }}">{{ post.poster.username }}</a></strong>
                                     <br/>
                                   </p>
                                 </div>
@@ -235,7 +235,7 @@
                             </a>
                           </h3>
                           <span style="padding: 0.75em">
-                            asked by {{ question.poster.username }}
+                            asked by <strong><a href="/user/{{ question.poster.username }}">{{ question.poster.username }}</a></strong>
                           </span>
                         </header>
                         <div class="card-content">
@@ -298,7 +298,7 @@
                     <article class="media">
                       <div class="media-left">
                         <figure class="image is-64x64">
-                          <img src="https://bulma.io/images/placeholders/128x128.png" alt="Image">
+                          <img src="https://www.gravatar.com/avatar/{{ answer.author.gravatar }}" alt="{{ user.username }}">
                         </figure>
                       </div>
                       <div class="media-content">
