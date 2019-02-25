@@ -36,7 +36,7 @@
               <span class="icon">
                 <i class="fas fa-glasses"></i>
               </span>
-              <span>Read Article</span>
+              <span>Read</span>
             </a>
 
             <form action="{{ route('like') }}" method="post" enctype="multipart/form-data" style="display:inline;">
@@ -49,32 +49,29 @@
                   <span class="icon">
                     <i class="far fa-frown"></i>
                   </span>
-                  <span>Unrecommend Article</span>
+                  <span>Unrecommend</span>
                 @else
                   <span class="icon">
                     <i class="far fa-heart"></i>
                   </span>
-                  <span>Recommend Article</span>
+                  <span>Recommend</span>
                 @endif
               </button>
             </form>
+
+            @if(post.poster.username === user.username) 
+            <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+              {{ csrfField() }}
+
+              <input type="hidden" name="post_id" value="{{ post.id }}">
+              <button class="button is-warning">
+                  <span class="icon">
+                      <i class="far fa-trash-alt"></i>
+                  </span>
+              </button>
+            </form>
+        @endif
           </div>
-
-          @if(post.poster.username === user.username) 
-            <div style="padding-top: 25px">
-              <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
-                {{ csrfField() }}
-
-                <input type="hidden" name="post_id" value="{{ post.id }}">
-                <button class="button is-danger">
-                    <span class="icon">
-                        <i class="far fa-trash-alt"></i>
-                    </span>
-                    <span>Delete Post</span>
-                </button>
-              </form>
-            </div>
-          @endif
 
         </div>
       </div>
