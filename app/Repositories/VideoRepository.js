@@ -32,6 +32,13 @@ class VideoRepository {
       .with("comments")
       .paginate(page, limit);
   }
+
+  async delete(videoId, userId) {
+    await Video.query()
+      .where("id", videoId)
+      .where("user_id", userId)
+      .delete();
+  }
 }
 
 module.exports = new VideoRepository();

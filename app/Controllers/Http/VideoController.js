@@ -2,6 +2,7 @@
 const UserRepository = use("App/Repositories/UserRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const VideoRepository = use("App/Repositories/VideoRepository");
+const CommentRepository = use("App/Repositories/CommentRepository");
 const LikeRepository = use("App/Repositories/LikeRepository");
 
 const got = require("got");
@@ -79,13 +80,35 @@ class VideoController {
   async details({ params, view, session }) {
     const user = await UserRepository.get(session.get("username"));
     const video = await VideoRepository.get(params.id);
-    const userLikesVideo = await LikeRepository.userLikesVideo(user.id, video.id);
+    const userLikesVideo = await LikeRepository.userLikesVideo(
+      user.id,
+      video.id
+    );
 
     return view.render("video/details", {
       video: video.toJSON(),
       user: user.toJSON(),
       userLikesVideo: userLikesVideo > 0 ? true : false
     });
+  }
+
+  async comment({ request, response, session }) {
+    const user = await UserRepository.get(session.get("username"));
+    const comment = await CommentRepository.createVideoComment(
+      user.id,
+      request.input("video_id"),
+      request.input("comment")
+    );
+
+    session.flash({
+      notification: {
+        type: "success",
+        message: "Comment added!"
+      }
+    });
+
+    var route = "/video/details/" + request.input("video_id");
+    return response.route(route);
   }
 
   async like({ request, response, session }) {
@@ -103,6 +126,20 @@ class VideoController {
 
     var route = "/video/details/" + request.input("video_id");
     return response.route(route);
+  }
+
+  async delete({ request, response, session }) {
+    const user = await UserRepository.get(session.get("username"));
+    await VideoRepository.delete(request.input("video_id"), user.id);
+
+    session.flash({
+      notification: {
+        type: "danger",
+        message: "Post deleted!"
+      }
+    });
+
+    return response.route("/");
   }
 }
 

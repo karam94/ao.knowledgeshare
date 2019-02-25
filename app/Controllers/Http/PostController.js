@@ -108,7 +108,7 @@ class PostController {
 
   async comment({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
-    const comment = CommentRepository.create(
+    const comment = await CommentRepository.createPostComment(
       user.id,
       request.input("post_id"),
       request.input("comment")

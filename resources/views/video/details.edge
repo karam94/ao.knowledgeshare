@@ -50,17 +50,17 @@
             </form>
           </div>
 
-          @if(post.poster.username === user.username) 
+          @if(video.poster.username === user.username) 
             <div style="padding-top: 25px">
-              <form action="{{ route('post/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+              <form action="{{ route('video/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                 {{ csrfField() }}
 
-                <input type="hidden" name="post_id" value="{{ post.id }}">
+                <input type="hidden" name="video" value="{{ video.id }}">
                 <button class="button is-danger">
                     <span class="icon">
                         <i class="far fa-trash-alt"></i>
                     </span>
-                    <span>Delete Post</span>
+                    <span>Delete Video</span>
                 </button>
               </form>
             </div>

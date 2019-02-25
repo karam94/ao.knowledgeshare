@@ -10,10 +10,18 @@ class CommentRepository {
       .delete();
   }
 
-  async create(userId, postId, theComment) {
+  async createPostComment(userId, postId, theComment) {
     const comment = await Comment.create({
       user_id: userId,
       post_id: postId,
+      comment: theComment
+    });
+  }
+
+  async createVideoComment(userId, videoId, theComment) {
+    const comment = await Comment.create({
+      user_id: userId,
+      video_id: videoId,
       comment: theComment
     });
   }
