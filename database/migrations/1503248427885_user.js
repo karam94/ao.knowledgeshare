@@ -11,6 +11,8 @@ class UserSchema extends Schema {
       table.string("email", 254).notNullable().unique();
       table.string("gravatar", 32).notNullable().unique();
       table.text("description");
+      // location_id needs removing from here and then we have a joint user_location table joining user_id and location_id
+      // shambles like this happens when can't hear myself think gg
       table
         .integer("location_id")
         .unsigned()
