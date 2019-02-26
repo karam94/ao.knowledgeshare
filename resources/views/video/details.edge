@@ -97,7 +97,7 @@
               @each(comment in video.comments)
               <div class="box">
                   @if(comment.author.username === user.username) 
-                    <form action="{{ route('comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
+                    <form action="{{ route('video/comment/delete') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
         
                       <input type="hidden" name="video_id" value="{{ video.id }}">

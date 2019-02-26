@@ -40,6 +40,7 @@ Route.group(() => {
   Route.post("/add", "PostController.add").as("add");
   Route.get("/details/:id", "PostController.details").as("details");
   Route.post("/comment", "PostController.comment").as("comment");
+  Route.post("/delete", "PostController.deleteComment").as("post/comment/delete");
   Route.post("/like", "PostController.like").as("like");
   Route.post("/delete", "PostController.delete").as("post/delete");
 }).prefix("/post");
@@ -50,6 +51,7 @@ Route.group(() => {
   Route.post("/add", "VideoController.add").as("video/add");
   Route.get("/details/:id", "VideoController.details").as("video/details");
   Route.post("/comment", "VideoController.comment").as("video/comment");
+  Route.post("/delete", "VideoController.deleteComment").as("video/comment/delete");
   Route.post("/like", "VideoController.like").as("video/like");
   Route.post("/delete", "VideoController.delete").as("video/delete");
 }).prefix("/video");
@@ -68,8 +70,3 @@ Route.group(() => {
   Route.post("/upvote/:id", "AnswerController.upvote").as("answer/upvote");
   Route.post("/downvote/:id", "AnswerController.downvote").as("answer/downvote");
 }).prefix("/answer");
-
-// Comments
-Route.group(() => {
-  Route.post("/delete", "CommentController.delete").as("comment/delete");
-}).prefix("/comment");
