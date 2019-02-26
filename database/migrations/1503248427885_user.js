@@ -11,6 +11,14 @@ class UserSchema extends Schema {
       table.string("email", 254).notNullable().unique();
       table.string("gravatar", 32).notNullable().unique();
       table.text("description");
+      table
+        .integer("location_id")
+        .unsigned()
+        .notNullable()
+        .references("id")
+        .inTable("locations")
+        .defaultTo(1)
+        .onDelete("cascade");
       table.timestamps();
     });
   }

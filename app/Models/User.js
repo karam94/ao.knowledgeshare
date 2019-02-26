@@ -43,6 +43,10 @@ class User extends Model {
   answerVotes() {
     return this.hasMany("App/Models/AnswerVote");
   }
+
+  location() {
+    return this.hasOne("App/Models/Location");
+  }
 }
 
 module.exports = User;

@@ -23,7 +23,7 @@
 
             <div>
               <p>
-                <i class="fas fa-map-marker-alt"></i> &nbsp; 5B Parklands, Bolton, United Kingdom
+                <i class="fas fa-map-marker-alt"></i> &nbsp; {{ profileUser.location.name }}
               </p>
               <p>
                   <i class="fas fa-envelope"></i> &nbsp; <a href="mailto:{{ profileUser.email }}">{{ profileUser.email }}</a>
@@ -144,6 +144,26 @@
           
                             {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('url'), hasErrorFor('url')) }}
                           </div>
+                      </div>
+                    </div>
+
+                    Your location:
+                    <div class="field is-horizontal">
+                      <div class="field-body">
+                        <div class="field">
+                          <div class="control">
+                            <div class="select is-fullwidth">
+                              <select name="location_id" id="location_dropdown" required>
+                                <option value="">Choose a location</option>
+                                @each(location in locations)
+                                  <option value="{{ location.id }}">{{ location.name }}</option>
+                                @endeach
+                              </select>
+                            </div>
+                          </div>
+        
+                          {{ elIf('<p class="help is-danger">$self</p>', getErrorFor('category'), hasErrorFor('category')) }}
+                        </div>
                       </div>
                     </div>
 

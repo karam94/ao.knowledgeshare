@@ -4,6 +4,8 @@ const AnswerRepository = use("App/Repositories/AnswerRepository");
 const PostRepository = use("App/Repositories/PostRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
 
+const Location = use("App/Models/Location");
+
 //const Badge = use("App/Models/Badge");
 
 class UserController {
@@ -21,6 +23,7 @@ class UserController {
     );
 
     var answers = await AnswerRepository.getUserAnswers(profileUser.id);
+    const locations = await Location.all();
 
     return view.render("user/profile", {
       user: user.toJSON(),
@@ -28,13 +31,15 @@ class UserController {
       posts: posts.toJSON(),
       questions: questions.toJSON(),
       answers: answers.toJSON(),
-      title: params.username
+      title: params.username,
+      locations: locations.toJSON()
     });
   }
 
   async edit({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
     user.description = request.input("userDescription");
+    user.location_id = request.input("location_id");
     await user.save();
 
     return response.route("/user/" + user.username);

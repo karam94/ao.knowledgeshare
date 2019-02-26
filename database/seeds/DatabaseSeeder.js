@@ -4,13 +4,28 @@ const User = use("App/Models/User");
 const Category = use("App/Models/Category");
 const Question = use("App/Models/Question");
 const Badge = use("App/Models/Badge");
+const Location = use("App/Models/Location");
 
 class QuestionSeeder {
   async run() {
+    await this.seedLocations();
     await this.seedUsers();
     await this.seedCategories();
     await this.seedQuestions();
     await this.seedBadges();
+  }
+
+  async seedLocations() {
+    const locations = [
+      {
+        name: "5A Parklands, Bolton, United Kingdom"
+      },
+      {
+        name: "5B Parklands, Bolton, United Kingdom"
+      }
+    ];
+
+    await Location.createMany(locations);
   }
 
   async seedUsers() {
