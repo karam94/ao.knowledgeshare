@@ -1,5 +1,6 @@
 "use strict";
 
+const moment = require("moment");
 const { hooks } = require("@adonisjs/ignitor");
 
 // https://adonisjs.com/docs/4.1/ignitor
@@ -31,5 +32,9 @@ hooks.after.providersBooted(() => {
 
   View.global("convertYoutube", url => {
     return url.replace("watch?v=", "embed/");
+  });
+
+  View.global("formatDate", datetime => {
+    return moment(datetime).format("DD/MM/YYYY h:mm a");
   });
 });

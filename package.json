@@ -38,6 +38,7 @@
     "metascraper-image": "^4.8.5",
     "metascraper-title": "^4.8.5",
     "metascraper-url": "^4.8.5",
+    "moment": "^2.24.0",
     "mysql": "^2.16.0"
   },
   "devDependencies": {

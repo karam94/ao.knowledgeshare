@@ -117,7 +117,7 @@
                     <div class="media-content">
                       <div class="content">
                         <p>
-                          <strong><a href="/user/{{ comment.author.username }}">{{ comment.author.username }}</a></strong> <small>{{ comment.created_at }}</small>
+                          <strong><a href="/user/{{ comment.author.username }}">{{ comment.author.username }}</a></strong> <small>{{ formatDate(comment.created_at) }}</small>
                           <br>
                           {{ comment.comment }}
                         </p>
