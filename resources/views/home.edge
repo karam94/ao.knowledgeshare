@@ -40,13 +40,13 @@
           <li>
             <a href="#" onclick="changeTab(this, 'videos-tab')">
               <span class="icon is-small"><i class="fas fa-video"></i></span>
-              <span>Latest Videos</span>
+              <span>Latest {{ (category.name) ? category.name : '' }} {{ (message) ? message : '' }} Videos</span>
             </a>
           </li>
           <li>
             <a href="#" onclick="changeTab(this, 'questions-tab')">
               <span class="icon is-small"><i class="far fa-question-circle"></i></span>
-              <span>Latest Questions</span>
+              <span>Latest {{ (category.name) ? category.name : '' }} {{ (message) ? message : '' }} Questions</span>
             </a>
           </li>
         </ul>
