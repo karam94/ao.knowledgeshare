@@ -4,6 +4,7 @@ const PostRepository = use("App/Repositories/PostRepository");
 const CategoryRepository = use("App/Repositories/CategoryRepository");
 const QuestionRepository = use("App/Repositories/QuestionRepository");
 const SubscriptionRepository = use("App/Repositories/SubscriptionRepository");
+const VideoRepository = use("App/Repositories/VideoRepository");
 
 class CategoryController {
   async index({ view, request, params, session }) {
@@ -19,6 +20,10 @@ class CategoryController {
       request.input("page", 1),
       10
     );
+    const videos = await VideoRepository.getAllPaginated(
+      request.input("videopage", 1),
+      8
+    );
     const category = await CategoryRepository.get(params.category_id);
     const userIsSubscribed = await SubscriptionRepository.getSubscriptionByUser(
       user.id,
@@ -29,6 +34,7 @@ class CategoryController {
       posts: posts.toJSON(),
       questions: questions.toJSON(),
       category: category.toJSON(),
+      videos: videos.toJSON(),
       userIsSubscribed: userIsSubscribed ? true : false,
       title: category.name
     });
