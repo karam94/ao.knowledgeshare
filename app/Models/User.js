@@ -45,7 +45,7 @@ class User extends Model {
   }
 
   location() {
-    return this.hasOne("App/Models/Location");
+    return this.belongsTo("App/Models/Location");
   }
 }
 

@@ -4,13 +4,25 @@
 const Schema = use("Schema");
 
 class UserSchema extends Schema {
-  up () {
-    this.create("users", (table) => {
+  up() {
+    this.create("users", table => {
       table.increments();
-      table.string("username").notNullable().unique();
-      table.string("email", 254).notNullable().unique();
-      table.string("gravatar", 32).notNullable().unique();
-      table.text("description");
+      table
+        .string("username")
+        .notNullable()
+        .unique();
+      table
+        .string("email", 254)
+        .notNullable()
+        .unique();
+      table
+        .string("gravatar", 32)
+        .notNullable()
+        .unique();
+
+      table.string("description", 160)
+        .notNullable()
+        .defaultTo("AO! Lets go!");
       // location_id needs removing from here and then we have a joint user_location table joining user_id and location_id
       // shambles like this happens when can't hear myself think gg
       table
@@ -25,7 +37,7 @@ class UserSchema extends Schema {
     });
   }
 
-  down () {
+  down() {
     this.drop("users");
   }
 }

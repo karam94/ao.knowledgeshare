@@ -31,6 +31,7 @@ class UsernameMiddleware {
     if (thisUser) {
       var thisGravatar = md5(thisUserEmail);
 
+      // TODO: Move this to a repository
       await User.findOrCreate(
         { username: thisUser, email: thisUserEmail, gravatar: thisGravatar }
       );

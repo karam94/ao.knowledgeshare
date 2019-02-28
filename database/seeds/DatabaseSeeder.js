@@ -33,7 +33,8 @@ class QuestionSeeder {
       {
         username: "TestUser",
         email: "test@test.com",
-        gravatar: "lol"
+        gravatar: "lol",
+        description: "I am a test user!"
       }
     ];
 
