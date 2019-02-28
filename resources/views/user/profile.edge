@@ -5,8 +5,8 @@
 
   <section class="section">
       <div class="container">
-        <div class="columns">
-          <div class="column is-one-quarter profile-column">
+        <div class="columns is-multiline">
+          <div class="column is-one-quarter profile-column" style="overflow-wrap: break-word;">
             <div class="image is-square">
               <img src="https://www.gravatar.com/avatar/b017d82484bc1b3d85dc114e8cc9ec37?s=500" alt="Karam" style="border-radius:2%;">
             </div>
@@ -18,7 +18,9 @@
             </div>
 
             <div>
-              <h3>{{ profileUser.description }}</h3>
+              <h3>
+                {{ profileUser.description }}
+              </h3>
             </div>
 
             <div>
