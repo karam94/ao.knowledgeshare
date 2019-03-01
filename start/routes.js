@@ -62,6 +62,7 @@ Route.group(() => {
   Route.get("/details/:id", "QuestionController.details").as("questionDetails");
   Route.post("/answer", "QuestionController.answer").as("question/answer");
   Route.post("/upvote/:id", "QuestionController.upvote").as("question/upvote");
+  Route.post("api/upvote/:id", "QuestionController.upvote_api").as("api/question/upvote");
   Route.post("/downvote/:id", "QuestionController.downvote").as("question/downvote");
   Route.post("/delete", "QuestionController.delete").as("question/delete");
 }).prefix("/question");

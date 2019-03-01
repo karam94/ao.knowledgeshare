@@ -114,6 +114,46 @@ class QuestionController {
     return response.route("back");
   }
 
+  // TODO: Let's make some separate API controllers and need to set header X-XSRF-TOKEN with each ajax request
+  // async upvote_api({ request, response, session }) {
+  //   const user = await UserRepository.get(session.get("username"));
+  //   const question = await QuestionRepository.get(request.input("question_id"));
+  //   const vote = await QuestionVoteRepository.getUserVote(
+  //     user.id,
+  //     request.input("question_id"),
+  //     true
+  //   );
+
+  //   if (vote && vote.is_positive) {
+  //     vote.delete();
+
+  //     question.score--;
+  //     question.save();
+  //   } else if (vote && !vote.is_positive) {
+  //     vote.is_positive = true;
+
+  //     question.score++;
+  //     question.score++;
+  //     question.save();
+
+  //     await user.questionVotes().save(vote);
+  //   } else {
+  //     const newVote = await QuestionVoteRepository.create(
+  //       user.id,
+  //       request.input("question_id"),
+  //       true
+  //     );
+
+  //     question.score++;
+  //     question.save();
+  //   }
+
+  //   return response.status(200);
+  // }
+
+
+
+
   async downvote({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
     const question = await QuestionRepository.get(request.input("question_id"));
