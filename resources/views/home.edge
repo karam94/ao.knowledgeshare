@@ -213,9 +213,10 @@
                 <footer class="card-footer">
                   <div 
                   class="card-footer-item card-footer-item-upvote" id="btnUpvote{{ question.id }}" onclick="upvoteQuestion({{ question.id }})"
-                  style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
+                  style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">        
 
-                    <a href="#" id="btnUpvote{{ question.id }}caret">
+                    <a href="#" id="btnUpvote{{ question.id }}caret" 
+                    style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
                       <i class="fas fa-caret-up"></i>
                     </a>
                   </div>
@@ -232,7 +233,8 @@
                   class="card-footer-item card-footer-item-downvote" id="btnDownvote{{ question.id }}" onclick="downvoteQuestion({{ question.id }})"
                   style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
 
-                    <a href="#" id="btnDownvote{{ question.id }}caret">
+                    <a href="#" id="btnDownvote{{ question.id }}caret" 
+                    style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
                       <i class="fas fa-caret-down"></i>
                     </a>
                   </div>
