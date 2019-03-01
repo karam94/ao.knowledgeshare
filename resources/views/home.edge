@@ -231,7 +231,7 @@
                     {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
                   </span>
 
-                  <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
+                  <!-- <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
                   style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
                     {{ csrfField() }}
         
@@ -241,7 +241,16 @@
                     style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
                       <i class="fas fa-caret-down"></i>
                     </a>
-                  </form>
+                  </form> -->
+
+                  <div 
+                  class="card-footer-item card-footer-item-downvote" onclick="upvoteQuestion({{ question.id }})"
+                  style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
+
+                    <a href="#" style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
+                      <i class="fas fa-caret-down"></i>
+                    </a>
+                  </div>
                 </footer>
               </div>
             </div>
@@ -274,6 +283,38 @@
         document.getElementById("posts-tab").classList.add("hidden");
         document.getElementById("videos-tab").classList.add("hidden");
         document.getElementById("questions-tab").classList.add("hidden");
+      }
+
+      function getCookie(name) {
+        if (!document.cookie) {
+          return null;
+        }
+
+        const xsrfCookies = document.cookie.split(';')
+          .map(c => c.trim())
+          .filter(c => c.startsWith(name + '='));
+
+        if (xsrfCookies.length === 0) {
+          return null;
+        }
+
+        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+      }
+
+      var config = {
+        headers: {'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')}
+      };
+
+      function upvoteQuestion(questionId){
+        axios.post('/api/question/upvote/', { question_id: questionId }, config)
+          .then(function(response) {
+            // get api to return new question object
+            // update values e.g. vote count, answers count
+            console.log(response.data);
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
       }
   </script>
 
