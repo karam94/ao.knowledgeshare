@@ -5,6 +5,8 @@ const VideoRepository = use("App/Repositories/VideoRepository");
 const CommentRepository = use("App/Repositories/CommentRepository");
 const LikeRepository = use("App/Repositories/LikeRepository");
 
+const { validateAll, rule } = use("Validator");
+
 const got = require("got");
 const metascraper = require("metascraper")([
   require("metascraper-description")(),
@@ -22,6 +24,7 @@ class VideoController {
   async add({ request, response, session, view }) {
     const user = await UserRepository.get(session.get("username"));
 
+    // TODO: Make a service class for "scraping" to be generic and reusable
     const targetUrl = request.input("url");
     const { body: html, url } = await got(targetUrl);
     const metadata = await metascraper({ html, url });
@@ -32,6 +35,20 @@ class VideoController {
     }
 
     var categoryId = request.input("category_id");
+
+    const rules = {
+      url: [
+        rule("regex", new RegExp("^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+"))
+      ]
+    };
+
+    const validation = await validateAll(metadata.url, rules);
+
+    if (validation.fails()) {
+      session.withErrors(validation.messages());
+
+      return response.redirect("back");
+    }
 
     if (containsMissingData) {
       const categories = await CategoryRepository.getAll();
