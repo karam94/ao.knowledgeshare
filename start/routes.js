@@ -51,7 +51,7 @@ Route.group(() => {
   Route.post("/add", "VideoController.add").as("video/add");
   Route.get("/details/:id", "VideoController.details").as("video/details");
   Route.post("/comment", "VideoController.comment").as("video/comment");
-  Route.post("/delete", "VideoController.deleteComment").as("video/comment/delete");
+  Route.post("/comment/delete", "VideoController.deleteComment").as("video/comment/delete");
   Route.post("/like", "VideoController.like").as("video/like");
   Route.post("/delete", "VideoController.delete").as("video/delete");
 }).prefix("/video");
