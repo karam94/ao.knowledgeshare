@@ -38,7 +38,7 @@ class QuestionController {
       question.save();
     }
 
-    return response.status(200).json(question);
+    return response.status(200).json(null);
   }
 }
 
