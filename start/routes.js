@@ -73,4 +73,5 @@ Route.group(() => {
 
 Route.group(() => {
   Route.post("/question/upvote/", "Api/QuestionController.upvote").as("api/question/upvote");
+  Route.post("/question/downvote/", "Api/QuestionController.downvote").as("api/question/downvote");
 }).prefix("/api");

@@ -211,43 +211,28 @@
                 </div>
                 
                 <footer class="card-footer">
-                  <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-upvote" onclick="this.submit();"
-                  style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
-                    {{ csrfField() }}
+                  <div 
+                  class="card-footer-item card-footer-item-upvote" id="btnUpvote{{ question.id }}" onclick="upvoteQuestion({{ question.id }})"
+                  style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
 
-                    <input type="hidden" name="question_id" value="{{ question.id }}">
-
-                    <a href="#" onclick="this.parentNode.submit(); return false;"
-                    style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
+                    <a href="#" id="btnUpvote{{ question.id }}caret">
                       <i class="fas fa-caret-up"></i>
                     </a>
-                  </form>
+                  </div>
 
                   <span class="card-footer-item">
-                    {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
+                    <span id="scoreForQuestion{{ question.id }}">{{ question.score }}</span>&nbsp;{{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
                   </span>
 
                   <span class="card-footer-item">
                     {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
                   </span>
 
-                  <!-- <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
-                  style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
-                    {{ csrfField() }}
-        
-                    <input type="hidden" name="question_id" value="{{ question.id }}">
-
-                    <a href="#" onclick="this.parentNode.submit(); return false;"
-                    style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
-                      <i class="fas fa-caret-down"></i>
-                    </a>
-                  </form> -->
-
                   <div 
-                  class="card-footer-item card-footer-item-downvote" onclick="upvoteQuestion({{ question.id }})"
+                  class="card-footer-item card-footer-item-downvote" id="btnDownvote{{ question.id }}" onclick="downvoteQuestion({{ question.id }})"
                   style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
 
-                    <a href="#" style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
+                    <a href="#" id="btnDownvote{{ question.id }}caret">
                       <i class="fas fa-caret-down"></i>
                     </a>
                   </div>
@@ -308,10 +293,45 @@
       function upvoteQuestion(questionId){
         axios.post('/api/question/upvote/', { question_id: questionId }, config)
           .then(function(response) {
-            // get api to return new question object
-            // update values e.g. vote count, answers count
-            //console.log(response.data);
-            // change of plan, pain in the ass to do this without Vue or something
+            if(response.data.upvoted){
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#73a920';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#ffffff';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#73a920';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            } else {
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId).style.color = '#ff3860';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            }
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
+      }
+
+      function downvoteQuestion(questionId){
+        axios.post('/api/question/downvote/', { question_id: questionId }, config)
+          .then(function(response) {
+            if(response.data.downvoted){
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ff3860';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#ffffff';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            } else {
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#7fba23';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            }
           })
           .catch(error => {
             console.log(error.response);
