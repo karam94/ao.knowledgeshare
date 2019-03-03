@@ -161,3 +161,17 @@ h3 {
   -webkit-transition: opacity .3s ease-out;
   -o-transition: opacity .3s ease-out;
 }
+
+.correct {
+  font-size: 20.5px;
+  color: rgba(10, 10, 10, 0.2);
+}
+
+.correct:hover {
+  color: rgba(10, 10, 10, 0.3);
+}
+
+.correct-selected {
+  font-size: 20px;
+  color: #73a920;
+}
