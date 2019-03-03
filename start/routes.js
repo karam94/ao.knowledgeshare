@@ -69,6 +69,7 @@ Route.group(() => {
 Route.group(() => {
   Route.post("/upvote/:id", "AnswerController.upvote").as("answer/upvote");
   Route.post("/downvote/:id", "AnswerController.downvote").as("answer/downvote");
+  Route.post("/correct", "AnswerController.correct").as("answer/correct");
 }).prefix("/answer");
 
 Route.group(() => {

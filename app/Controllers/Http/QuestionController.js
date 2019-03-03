@@ -59,7 +59,6 @@ class QuestionController {
     });
   }
 
-  // TODO: When we do selecting a correct answer, it can only go through when we don't have a question_id + correct_answer combination already in answers table 
   async answer({ request, response, session }) {
     const user = await UserRepository.get(session.get("username"));
     const answer = await AnswerRepository.create(

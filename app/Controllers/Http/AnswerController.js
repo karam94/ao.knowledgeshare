@@ -67,6 +67,16 @@ class AnswerController {
 
     return response.route("back");
   }
+
+  // TODO: When we do selecting a correct answer, it can only go through when we don't have a question_id + correct_answer combination already in answers table
+  async correct({ request, response, session }) {
+    const user = await UserRepository.get(session.get("username"));
+    const answer = await AnswerRepository.get(request.input("answer_id"));
+
+    answer.is_correct = !answer.is_correct;
+    answer.save();
+    return response.route("back");
+  }
 }
 
 module.exports = AnswerController;
