@@ -96,12 +96,14 @@
                       <input type="hidden" name="comment_id" value="{{ comment.id }}">
                       <a class="delete" href="#" style="float:right; margin-right: 10px;" onclick="this.parentNode.submit(); return false;"></a>
                     </form>
-                    
+
                     <form action="{{ route('answer/correct') }}" method="post" enctype="multipart/form-data" style="display:inline;">
                       {{ csrfField() }}
         
                       <input type="hidden" name="answer_id" value="{{ answer.id }}">
-                      <a class="fas fa-check-circle correct" href="#" style="float:right; margin-right: 10px;" onclick="this.parentNode.submit(); return false;"></a>
+                      <input type="hidden" name="question_id" value="{{ answer.question_id }}">
+                      <a class="fas fa-check-circle {{ answer.is_correct ? 'correct-selected' : 'correct' }} " href="#" style="float:right; margin-right: 10px;" 
+                        onclick="this.parentNode.submit(); return false;"></a>
                     </form>
                   @endif
                   

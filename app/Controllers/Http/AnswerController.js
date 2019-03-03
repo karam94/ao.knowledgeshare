@@ -68,14 +68,30 @@ class AnswerController {
     return response.route("back");
   }
 
-  // TODO: When we do selecting a correct answer, it can only go through when we don't have a question_id + correct_answer combination already in answers table
   async correct({ request, response, session }) {
-    const user = await UserRepository.get(session.get("username"));
     const answer = await AnswerRepository.get(request.input("answer_id"));
 
-    answer.is_correct = !answer.is_correct;
-    answer.save();
-    return response.route("back");
+    if(answer.is_correct){
+      answer.is_correct = false;
+      await answer.save();
+    } else {
+      const questionAnswers = await AnswerRepository.getQuestionCorrectAnswers(request.input("question_id"));
+
+      if(questionAnswers > 0){
+        session.flash({
+          notification: {
+            type: "danger",
+            message: "You have already selected a correct answer for this question!"
+          }
+        });
+      } else {
+        answer.is_correct = true;
+        await answer.save();
+      }
+    }
+
+    var route = "/question/details/" + request.input("question_id");
+    return response.route(route);
   }
 }
 

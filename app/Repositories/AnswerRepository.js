@@ -22,6 +22,15 @@ class AnswerRepository {
     return answers;
   }
 
+  async getQuestionCorrectAnswers(id) {
+    const answers = await Answer.query()
+      .where("question_id", id)
+      .where("is_correct", true)
+      .getCount();
+
+    return answers;
+  }
+
   async create(userId, questionId, theAnswer) {
     const createdAnswer = await Answer.create({
       user_id: userId,
