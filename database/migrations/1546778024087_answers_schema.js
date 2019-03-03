@@ -32,6 +32,10 @@ class AnswersSchema extends Schema {
       table.integer("score")
         .notNullable()
         .defaultTo(0);
+
+      table
+        .boolean("is_correct")
+        .defaultTo(0);
       
       table.timestamps();
     });
