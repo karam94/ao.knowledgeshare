@@ -249,68 +249,64 @@
                   <h3>Recent Questions</h3>
                   @each(question in questions)
                   <div class="column is-full">
-                      <div class="card">
-                        <a name="question{{question.id}}">
-                        <header class="card-header">
-                          <h3 class="title is-5 card-header-title">
-                            <a href="{{ route('questionDetails', { id: question.id }) }}">
-                              ❓ &nbsp; {{ question.title }}
-                            </a>
-                          </h3>
-                          <span style="padding: 0.75em">
-                            asked by <strong><a href="/user/{{ question.poster.username }}">{{ question.poster.username }}</a></strong>
-                          </span>
-                        </header>
-                        <div class="card-content">
-                          <div class="content">
-                            {{ question.description.length > 250 ? question.description.substring(0, 250) + '...' : question.description }}
-                            <hr>
-                            <a href="{{ route('posts', { category_id: question.category.id }) }}">
-                              <span class="tag">
-                                {{ question.category.name }}
-                              </span>
-                            </a>                  
-                            <span style="float:right;">
-                              Created at {{ formatDate(question.created_at) }}
+                    <div class="card">
+                      <a name="question{{question.id}}">
+                      <header class="card-header">
+                        <h3 class="title is-5 card-header-title">
+                          <a href="{{ route('questionDetails', { id: question.id }) }}">
+                            ❓ &nbsp; {{ question.title }}
+                          </a>
+                        </h3>
+                        <span style="padding: 0.75em">
+                          asked by <a href="/user/{{ question.poster.username }}">{{ question.poster.username }}</a>
+                        </span>
+                      </header>
+                      <div class="card-content">
+                        <div class="content">
+                          {{ question.description.length > 250 ? question.description.substring(0, 250) + '...' : question.description }}
+                          <hr>
+                          <a href="{{ route('posts', { category_id: question.category.id }) }}">
+                            <span class="tag">
+                              {{ question.category.name }}
                             </span>
-                          </div>
+                          </a>                  
+                          <span style="float:right;">
+                            Created at {{ formatDate(question.created_at) }}
+                          </span>
                         </div>
-                        
-                        <footer class="card-footer">
-                          <form action="{{ route('question/upvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-upvote" onclick="this.submit();"
-                          style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">
-                            {{ csrfField() }}
-        
-                            <input type="hidden" name="question_id" value="{{ question.id }}">
-        
-                            <a href="#" onclick="this.parentNode.submit(); return false;"
-                            style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
-                              <i class="fas fa-caret-up"></i>
-                            </a>
-                          </form>
-        
-                          <span class="card-footer-item">
-                            {{ question.score }}  {{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
-                          </span>
-        
-                          <span class="card-footer-item">
-                            {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
-                          </span>
-        
-                          <form action="{{ route('question/downvote', { id: question.id }) }}" method="post" enctype="multipart/form-data" class="card-footer-item card-footer-item-downvote" onclick="this.submit();"
-                          style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
-                            {{ csrfField() }}
-                
-                            <input type="hidden" name="question_id" value="{{ question.id }}">
-        
-                            <a href="#" onclick="this.parentNode.submit(); return false;"
-                            style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
-                              <i class="fas fa-caret-down"></i>
-                            </a>
-                          </form>
-                        </footer>
                       </div>
+                      
+                      <footer class="card-footer">
+                        <div 
+                        class="card-footer-item card-footer-item-upvote" id="btnUpvote{{ question.id }}" onclick="upvoteQuestion({{ question.id }})"
+                        style="cursor:pointer; {{ question.upvotes.length > 0 ? 'background-color: #73a920' : 'background-color: white' }}">        
+      
+                          <a href="#" id="btnUpvote{{ question.id }}caret" 
+                          style="{{ question.upvotes.length > 0 ? 'color: white' : '' }}">
+                            <i class="fas fa-caret-up"></i>
+                          </a>
+                        </div>
+      
+                        <span class="card-footer-item">
+                          <span id="scoreForQuestion{{ question.id }}">{{ question.score }}</span>&nbsp;{{ question.score == 1 || question.score == -1 ? 'Vote' : 'Votes' }}
+                        </span>
+      
+                        <span class="card-footer-item">
+                          {{ question.answers.length }} {{ question.answers.length == 1 ? 'Answer' : 'Answers' }}
+                        </span>
+      
+                        <div 
+                        class="card-footer-item card-footer-item-downvote" id="btnDownvote{{ question.id }}" onclick="downvoteQuestion({{ question.id }})"
+                        style="cursor:pointer; {{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">        
+      
+                          <a href="#" id="btnDownvote{{ question.id }}caret" 
+                          style="{{ question.downvotes.length > 0 ? 'color: white' : '' }}">
+                            <i class="fas fa-caret-down"></i>
+                          </a>
+                        </div>
+                      </footer>
                     </div>
+                  </div>
                   @endeach
               </div>
 
@@ -361,6 +357,74 @@
         document.getElementById("posts-tab").classList.add("hidden");
         document.getElementById("questions-tab").classList.add("hidden");
         document.getElementById("answers-tab").classList.add("hidden");
+      }
+
+      function getCookie(name) {
+        if (!document.cookie) {
+          return null;
+        }
+
+        const xsrfCookies = document.cookie.split(';')
+          .map(c => c.trim())
+          .filter(c => c.startsWith(name + '='));
+
+        if (xsrfCookies.length === 0) {
+          return null;
+        }
+
+        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+      }
+
+      var config = {
+        headers: {'X-XSRF-TOKEN': getCookie('XSRF-TOKEN')}
+      };
+
+      function upvoteQuestion(questionId){
+        axios.post('/api/question/upvote/', { question_id: questionId }, config)
+          .then(function(response) {
+            if(response.data.upvoted){
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#73a920';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#ffffff';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#73a920';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            } else {
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId).style.color = '#ff3860';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            }
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
+      }
+
+      function downvoteQuestion(questionId){
+        axios.post('/api/question/downvote/', { question_id: questionId }, config)
+          .then(function(response) {
+            if(response.data.downvoted){
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ff3860';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#ffffff';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            } else {
+              document.getElementById("btnUpvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnUpvote" + questionId + "caret").style.color = '#7fba23';
+              document.getElementById("btnDownvote" + questionId).style.backgroundColor = '#ffffff';
+              document.getElementById("btnDownvote" + questionId + "caret").style.color = '#7fba23';
+
+              document.getElementById("scoreForQuestion" + questionId).innerHTML = response.data.score;
+            }
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
       }
   </script>
 
