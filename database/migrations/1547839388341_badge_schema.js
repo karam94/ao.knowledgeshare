@@ -20,6 +20,8 @@ class BadgeSchema extends Schema {
 
       table.text("description");
 
+      table.string("icon");
+
       table.timestamps();
     });
   }

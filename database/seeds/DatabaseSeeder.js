@@ -71,8 +71,9 @@ class QuestionSeeder {
   async seedBadges() {
     const badge = {
       category_id: 1,
-      title: "C# Expert",
-      description: "A C# Expert."
+      title: "JavaScript Expert",
+      description: "A JS Expert.",
+      icon: "fab fa-js-square"
     };
 
     var createdBadge = await Badge.create(badge);
