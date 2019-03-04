@@ -46,7 +46,8 @@ class QuestionRepository {
         builder.where("is_positive", false);
       })
       .with("answers", builder => {
-        builder.orderBy("score", "desc");
+        //builder.orderBy("score", "desc");
+        builder.orderByRaw("is_correct DESC, score DESC");
       })
       .orderBy("score", "desc")
       .firstOrFail();
