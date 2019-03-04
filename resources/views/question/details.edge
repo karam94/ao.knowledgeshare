@@ -20,7 +20,7 @@
 
             <button type="submit" class="button button-question-upvote" style="{{ question.upvotes.length > 0 ? 'background-color: #7fba23' : 'background-color: white' }};">
               <span class="icon">
-                <i class="fas fa-caret-up"></i>
+                <i class="fas fa-caret-up" style="{{ question.upvotes.length > 0 ? 'color: white' : ''}}"></i>
               </span>
             </button>
           </form>
@@ -34,9 +34,9 @@
 
             <input type="hidden" name="question_id" value="{{ question.id }}">
 
-            <button type="submit" class="button button-question-downvote" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }};">
+            <button type="submit" class="button button-question-downvote" style="{{ question.downvotes.length > 0 ? 'background-color: #ff3860' : 'background-color: white' }}">
               <span class="icon">
-                <i class="fas fa-caret-down"></i>
+                <i class="fas fa-caret-down" style="{{ question.downvotes.length > 0 ? 'color: white' : ''}}"></i>
               </span>
             </button>
           </form>
