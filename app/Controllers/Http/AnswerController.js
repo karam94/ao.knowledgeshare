@@ -87,6 +87,13 @@ class AnswerController {
       } else {
         answer.is_correct = true;
         await answer.save();
+
+        session.flash({
+          notification: {
+            type: "success",
+            message: "You have selected a correct answer for this question!"
+          }
+        });
       }
     }
 
