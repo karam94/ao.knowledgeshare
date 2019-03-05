@@ -17,3 +17,7 @@ public/fonts/*
 resources/assets/fonts/ao-icons.ttf
 resources/assets/fonts/AoOz-Bold.ttf
 resources/assets/fonts/AoOz-Regular.ttf
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
