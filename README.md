@@ -5,11 +5,11 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 # Table of Contents
 
 * [Features](#features)
-  * [User Profile Pages & Badges](#userprofilepages)
-  * [Categorised Posts & Videos](#categorisedposts)
-  * [Categorised Questions](#categorisedquestions)
-  * [Post User Comments](#usercomments)
-  * [Question User Answers](#useranswers)
+  * [User Profile Pages & Badges](#user-profile-pages)
+  * [Categorised Posts & Videos](#categorised-posts)
+  * [Categorised Questions](#categorised-questions)
+  * [Post User Comments](#post-user-comments)
+  * [Question User Answers](#question-user-answers)
   * and more...
 * [Prerequisites](#prerequisites)
 * [Getting Started](#getting-started)
@@ -41,3 +41,15 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 - `adonis seed` to *optionally* seed the database.
 - `adonis serve` to run the application.
 - Browse to [http://localhost:3333](http://localhost:3333).
+
+# Features:
+## User Profile Pages & Badges
+![](github/images/1.gif)
+
+## Categorised Posts & Videos
+
+## Categorised Questions
+
+## Post User Comments
+
+## Question User Answers
