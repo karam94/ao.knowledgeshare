@@ -47,6 +47,7 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 ![](github/images/1.gif)
 
 ## Categorised Posts & Videos
+![](github/images/2.gif)
 
 ## Categorised Questions
 
