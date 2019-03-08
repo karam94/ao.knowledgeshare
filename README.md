@@ -4,6 +4,7 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 
 # Table of Contents
 
+* [Tech](#tech)
 * [Features](#features)
   * [User Profile Pages & Badges](#user-profile-pages)
   * [Categorised Posts & Videos](#categorised-posts)
@@ -14,7 +15,7 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 * [Prerequisites](#prerequisites)
 * [Getting Started](#getting-started)
 
-# Features
+# Tech:
 
 - **[AdonisJS v4.1](https://adonisjs.com/docs/4.1/installation)**
   - Node.js based Web Framework
