@@ -8,8 +8,8 @@ A casual side project (currently an MVP being trialled and accumulating feedback
   * [User Profile Pages & Badges](#user-profile-pages)
   * [Categorised Posts & Videos](#categorised-posts)
   * [Categorised Questions](#categorised-questions)
-  * [Post User Comments](#post-user-comments)
-  * [Question User Answers](#question-user-answers)
+  * Post User Comments
+  * Question User Answers
   * and more...
 * [Prerequisites](#prerequisites)
 * [Getting Started](#getting-started)
@@ -51,7 +51,3 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 
 ## Categorised Questions
 ![](github/images/3.gif)
-
-## Post User Comments
-
-## Question User Answers
