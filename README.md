@@ -50,6 +50,7 @@ A casual side project (currently an MVP being trialled and accumulating feedback
 ![](github/images/2.gif)
 
 ## Categorised Questions
+![](github/images/3.gif)
 
 ## Post User Comments
 
